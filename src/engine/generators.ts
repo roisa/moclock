@@ -341,13 +341,13 @@ export const routineTime = (ctx: GenCtx): Question => {
   if (ctx.level === 3 && ctx.index % 2 === 1) {
     return {
       type: "set-clock", skill: "routine-time", start: make(hourOf(t) + 4, 0), target: t, check: "full", step: 15, showDigital: true,
-      stimulus: { v: "story", card, t }, prompt: msg("q.routineSet", { c: msg("card." + card), t: { time: t } }),
+      stimulus: { v: "card", id: card }, prompt: msg("q.routineSet", { c: msg("card." + card), t: { time: t } }),
       hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }), pose: "mo-point",
     };
   }
   const wrong = timeDistractors(ctx.rng, t, nOpts(ctx.level) - 1, pool);
   return {
-    type: "choice", skill: "routine-time", stimulus: { v: "story", card, t },
+    type: "choice", skill: "routine-time", stimulus: { v: "card", id: card },
     prompt: msg("q.routineWhich", { c: msg("card." + card), t: { time: t } }), hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }),
     ...options(ctx.rng, t, wrong, (x) => ({ v: "clock", t: x })),
   };
@@ -415,10 +415,10 @@ export const whatFirst = (ctx: GenCtx): Question => {
   };
 };
 
-const UNTIL = ["snack", "play", "dinner", "tennis", "sleep"];
+const UNTIL = ["snack", "play", "tennis", "garden"];
 export const timeLeft = (ctx: GenCtx): Question => {
   const card = pick(ctx.rng, UNTIL);
-  const evt = make(int(ctx.rng, 2, 11), ctx.level === 1 ? 0 : pick(ctx.rng, [0, 30]));
+  const evt = make(int(ctx.rng, 3, 5), ctx.level === 1 ? 0 : pick(ctx.rng, [0, 30]));
   const gapPool = ctx.level === 1 ? [60, 120, 180] : ctx.level === 2 ? [30, 60, 90, 120] : [15, 30, 45, 60, 90];
   const gap = pick(ctx.rng, gapPool);
   const now = norm(evt - gap);
