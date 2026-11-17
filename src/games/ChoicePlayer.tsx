@@ -24,7 +24,7 @@ export function ChoicePlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<
     }
   };
   return (
-    <div className="board choice">
+    <div className={"board choice stim-" + (q.stimulus?.v || "none")}>
       {q.stimulus && (
         <div className="stimulus rise">
           <Visual v={q.stimulus} size="l" />

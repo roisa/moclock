@@ -6,28 +6,35 @@ import { useDrag } from "./drag";
 import { sfx, haptic } from "../platform/audio";
 import { useStore } from "../state";
 import { msg } from "../i18n/types";
+import { useLater } from "./useLater";
+import { useRef } from "react";
 
 export function SequencePlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of<"sequence">>) {
   const { t, lang } = useStore();
   const [placed, setPlaced] = useState<(string | null)[]>(() => q.items.map(() => null));
   const [bounce, setBounce] = useState<string | null>(null);
+  const later = useLater();
+  const done = useRef(false);
   const byId = Object.fromEntries(q.items.map((i) => [i.id, i]));
   const tray = q.shuffled.filter((id) => !placed.includes(id));
   const nextSlot = placed.indexOf(null);
 
   const place = (id: string, slot: number) => {
-    if (solved || slot < 0 || placed[slot]) return;
+    if (solved || done.current || slot < 0 || placed[slot]) return;
     if (q.items[slot].id === id) {
       const np = placed.slice();
       np[slot] = id;
       setPlaced(np);
       sfx("snap");
       haptic("light");
-      if (np.every(Boolean)) setTimeout(() => onSolve(), 250);
+      if (np.every(Boolean)) {
+        done.current = true;
+        later(() => onSolve(), 250);
+      }
     } else {
       sfx("gentle");
       setBounce(id);
-      setTimeout(() => setBounce(null), 500);
+      later(() => setBounce(null), 500);
       onMiss(msg("fb.sequence.wrong"));
     }
   };

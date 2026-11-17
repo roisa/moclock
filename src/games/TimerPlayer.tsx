@@ -14,6 +14,7 @@ import { msg } from "../i18n/types";
 import { keepAwake } from "../platform/device";
 import { Icon } from "../ui/Icon";
 import { randomRng } from "../engine/rng";
+import { useLater } from "./useLater";
 
 function Ring({ k, label, hidden, warn }: { k: number; label: string; hidden?: boolean; warn?: boolean }) {
   const r = 54, c = 2 * Math.PI * r;
@@ -62,6 +63,7 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
   const said = useRef(0);
   const sec = ms / 1000;
   const [result, setResult] = useState<number | null>(null);
+  const later = useLater();
   const [far, setFar] = useState<ReturnType<typeof msg> | null>(null);
 
   // count out loud together (not in the blind round)
@@ -76,7 +78,7 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
         setPhase("done");
         setResult(q.seconds);
         sfx("fanfare");
-        setTimeout(() => onSolve(), 900);
+        later(() => onSolve(), 900);
       }
     }
   }, [sec, phase, blind, q.seconds, lang, onSolve]);
@@ -141,6 +143,7 @@ function Tapper({ q, onSolve }: PlayerProps<Of<"timer">>) {
   const rng = useRef(randomRng());
   const left = Math.max(0, q.seconds - ms / 1000);
   const lastTick = useRef(99);
+  const later = useLater();
   const pop = q.mode === "pop";
   const now = performance.now();
 
@@ -168,7 +171,7 @@ function Tapper({ q, onSolve }: PlayerProps<Of<"timer">>) {
       setPhase("done");
       sfx("fanfare");
       const n = score;
-      setTimeout(() => onSolve(msg(pop ? "timer.popped" : "timer.tidied", { n: { num: n } })), 400);
+      later(() => onSolve(msg(pop ? "timer.popped" : "timer.tidied", { n: { num: n } })), 400);
     }
   }, [left, phase, pop, score, onSolve]);
 
@@ -208,12 +211,12 @@ function Tapper({ q, onSolve }: PlayerProps<Of<"timer">>) {
             return (
               <button key={th.id} className={"thing bubble-b " + (th.gone ? "gone" : "")}
                 style={{ left: p.x + "%", top: p.y * 100 + "%", ["--hue" as string]: (th.id * 47) % 360 }}
-                onPointerDown={() => hit(th)} aria-label="bubble" />
+                onPointerDown={() => hit(th)} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && hit(th)} aria-label="bubble" />
             );
           }
           return (
             <button key={th.id} className={`thing toy t-${TOYS[th.kind]} ${th.gone ? "gone" : ""}`} style={{ left: th.x + "%", top: th.y + "%" }}
-              onPointerDown={() => hit(th)} aria-label={TOYS[th.kind]}>
+              onPointerDown={() => hit(th)} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && hit(th)} aria-label={TOYS[th.kind]}>
               <ToyArt kind={TOYS[th.kind]} />
             </button>
           );

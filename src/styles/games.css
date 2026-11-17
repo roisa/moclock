@@ -249,7 +249,11 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; border-radius
 :root[data-size="phone-land"] .clock-stage .clock-wrap { width: min(54vh, 260px) !important; gap: 4px; }
 :root[data-size="phone-land"] .clock-stage .digital { font-size: 24px; padding: 4px 12px; }
 :root[data-size="phone-land"] .board.choice { flex-direction: row; flex-wrap: nowrap; }
-:root[data-size="phone-land"] .board.choice .stimulus .clock-wrap { width: min(56vh, 220px) !important; }
+:root[data-size="phone-land"] .board.choice .stimulus > .clock-wrap { width: min(56vh, 220px) !important; }
+:root[data-size="phone-land"] .board.choice.stim-two-clocks { flex-direction: column; gap: 6px; }
+:root[data-size="phone-land"] .board.choice.stim-two-clocks .tc .clock-wrap { width: min(28vh, 104px) !important; }
+:root[data-size="phone-land"] .board.choice.stim-two-clocks .options { max-width: 560px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+:root[data-size="phone-land"] .board.choice.stim-two-clocks .option { min-height: 54px; }
 :root[data-size="phone-land"] .board.choice .options { max-width: 420px; }
 :root[data-size="phone-land"] .board.choice .options.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 :root[data-size="phone-land"] .option { min-height: 70px; padding: 8px; }
@@ -270,3 +274,12 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; border-radius
 :root[data-size="phone-land"] .tapper-top { flex-direction: column; }
 :root[data-size="phone-land"] .ring { width: min(50vh, 180px); }
 .tutorial.two-pane > * { min-height: 0; }
+.tapper.pop .play-field { background:
+  radial-gradient(circle at 18% 30%, rgba(255,255,255,.55) 0 14px, transparent 15px),
+  radial-gradient(circle at 76% 18%, rgba(255,255,255,.45) 0 9px, transparent 10px),
+  radial-gradient(circle at 62% 56%, rgba(255,255,255,.35) 0 20px, transparent 21px),
+  radial-gradient(circle at 30% 74%, rgba(255,255,255,.4) 0 7px, transparent 8px),
+  linear-gradient(180deg, #d6efff, #fff3dc); }
+.week-day.asked { background: var(--card); box-shadow: 0 0 0 3px var(--orange), var(--shadow-soft); animation: pulse 1.6s ease-in-out infinite; }
+.week-day.asked b { color: var(--orange-d); font-size: 22px; }
+.week-day .hop-dot { display: block; width: 8px; height: 8px; margin: 4px auto 0; border-radius: 50%; background: var(--orange); }

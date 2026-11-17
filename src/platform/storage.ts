@@ -22,7 +22,18 @@ function openDb(): Promise<IDBDatabase | null> {
   });
 }
 let dbp: Promise<IDBDatabase | null> | null = null;
-const db = () => (dbp ??= openDb());
+/** open once; a failed or timed-out open is retried next time instead of being cached */
+const db = () => {
+  if (!dbp) dbp = openDb().then((d) => {
+    if (!d) dbp = null;
+    return d;
+  });
+  return dbp;
+};
+type Stamped<T> = { __at: number; v: T };
+const stamp = <T,>(v: T): Stamped<T> => ({ __at: Date.now(), v });
+const unstamp = <T,>(x: unknown): { at: number; v: T } | null =>
+  x && typeof x === "object" && "__at" in (x as object) ? { at: (x as Stamped<T>).__at, v: (x as Stamped<T>).v } : x != null ? { at: 0, v: x as T } : null;
 const mem = new Map<string, string>();
 
 function lsGet(k: string): string | null {
@@ -40,35 +51,40 @@ function lsSet(k: string, v: string) {
   }
 }
 
+/** Reads both copies and returns the newer one: localStorage is written
+ *  synchronously (it survives a tab closed mid-save), IndexedDB asynchronously. */
 export async function load<T>(key: string): Promise<T | null> {
+  let idb: { at: number; v: T } | null = null;
   const d = await db();
   if (d) {
     try {
-      const v = await new Promise<unknown>((res, rej) => {
+      idb = unstamp<T>(await new Promise<unknown>((res, rej) => {
         const tx = d.transaction(STORE, "readonly").objectStore(STORE).get(key);
         tx.onsuccess = () => res(tx.result);
         tx.onerror = () => rej(tx.error);
-      });
-      if (v != null) return v as T;
+      }));
     } catch {
       /* fall through */
     }
   }
+  let ls: { at: number; v: T } | null = null;
   const s = lsGet("bmt_" + key);
   if (s) {
     try {
-      return JSON.parse(s) as T;
+      ls = unstamp<T>(JSON.parse(s));
     } catch {
-      return null;
+      ls = null;
     }
   }
-  return null;
+  if (idb && ls) return (ls.at >= idb.at ? ls : idb).v;
+  return (idb || ls)?.v ?? null;
 }
 
 export async function save<T>(key: string, value: T): Promise<void> {
+  const st = stamp(value);
   // localStorage mirror first: synchronous, so a closing tab still keeps it
   try {
-    lsSet("bmt_" + key, JSON.stringify(value));
+    lsSet("bmt_" + key, JSON.stringify(st));
   } catch {
     /* ignore */
   }
@@ -77,7 +93,7 @@ export async function save<T>(key: string, value: T): Promise<void> {
   try {
     await new Promise<void>((res, rej) => {
       const tx = d.transaction(STORE, "readwrite");
-      tx.objectStore(STORE).put(value, key);
+      tx.objectStore(STORE).put(st, key);
       tx.oncomplete = () => res();
       tx.onerror = () => rej(tx.error);
     });

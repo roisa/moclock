@@ -127,20 +127,22 @@ export function Toast() {
   return <div className="toast" role="status">{toastText}</div>;
 }
 
-export function PwaBanner() {
+export function PwaBanner({ playing }: { playing: boolean }) {
   const { pwa, t } = useStore();
-  const [hide, setHide] = useState(false);
-  if (pwa.updateReady && !hide)
+  const [hideUpdate, setHideUpdate] = useState(false);
+  const [hideOffline, setHideOffline] = useState(false);
+  if (playing) return null; // reloading for an update would lose the game in progress
+  if (pwa.updateReady && !hideUpdate)
     return (
       <div className="toast update" role="status">
         {t("update.ready")}
         <button className="btn small" onClick={() => applyUpdate()}>{t("update.reload")}</button>
-        <button className="icon-btn" style={{ width: 40, height: 40 }} onClick={() => setHide(true)} aria-label={t("nav.close")}><Icon name="close" size={20} /></button>
+        <button className="icon-btn" style={{ width: 40, height: 40 }} onClick={() => setHideUpdate(true)} aria-label={t("nav.close")}><Icon name="close" size={20} /></button>
       </div>
     );
-  if (!pwa.online && !hide)
+  if (!pwa.online && !hideOffline)
     return (
-      <div className="toast offline" role="status" onClick={() => setHide(true)}>
+      <div className="toast offline" role="status" onClick={() => setHideOffline(true)}>
         {t("offline.banner")}
       </div>
     );

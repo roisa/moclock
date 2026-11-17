@@ -295,3 +295,5 @@
 .hero-clock .clock-wrap { animation: float 5s ease-in-out infinite; }
 .hero-bubble { order: 2; }
 @media (max-width: 520px) { .celebrate .row-btns .btn.big { padding: 0 22px; font-size: 21px; min-height: 64px; } }
+:root[data-theme="dark"] .sticker-slot.locked .sticker .char, :root[data-theme="dark"] .sticker.locked .char { filter: grayscale(1) brightness(1.6) opacity(0.28); }
+:root[data-theme="dark"] .sticker-slot.locked .sticker { background: #2a4335; border-color: #35513f; }

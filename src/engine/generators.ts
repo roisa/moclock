@@ -54,6 +54,13 @@ function options<T>(rng: Rng, correct: T, wrong: T[], toOpt: (x: T) => Visual): 
 
 const nOpts = (level: Level) => (level === 1 ? 3 : 4);
 
+/** "Short hand on 3, long hand on 12" or "Short hand between 3 and 4…" (never "near 3" for 3:45). */
+export function makeTimeHint(t: number) {
+  const h = hourOf(t);
+  if (minuteOf(t) === 0) return msg("hint.makeTimeOn", { h: { num: h }, t: { time: t } });
+  return msg("hint.makeTime", { h: { num: h }, h2: { num: h === 12 ? 1 : h + 1 }, t: { time: t } });
+}
+
 /* ------------------------------------------------------------- Clock Town */
 
 const PARTS: ClockPart[] = ["numbers", "hour", "minute", "center"];
@@ -121,7 +128,7 @@ export const moveHands = (ctx: GenCtx): Question => {
   return {
     type: "set-clock", skill: "set-time", start, target, check: "full", step: ctx.level === 3 ? 15 : 30, showDigital: true,
     stimulus: { v: "digital", t: target },
-    prompt: msg("q.makeTime", { t: { time: target } }), hint: msg("hint.makeTime", { h: { num: hourOf(target) }, t: { time: target } }),
+    prompt: msg("q.makeTime", { t: { time: target } }), hint: makeTimeHint(target),
     pose: "mo-point",
   };
 };
@@ -160,7 +167,7 @@ export const timeQuiz = (minutes: readonly number[], skill?: Skill) => (ctx: Gen
     if (start === t) start = norm(t + 120);
     return {
       type: "set-clock", skill: sk, start, target: t, check: "full", step, showDigital: ctx.level < 3,
-      prompt: msg("q.makeTime", { t: { time: t } }), hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }),
+      prompt: msg("q.makeTime", { t: { time: t } }), hint: makeTimeHint(t),
       stimulus: { v: "time-words", t }, pose: "mo-point",
     };
   }
@@ -168,7 +175,7 @@ export const timeQuiz = (minutes: readonly number[], skill?: Skill) => (ctx: Gen
   if (kind === "match") {
     return {
       type: "choice", skill: sk, stimulus: { v: "time-words", t },
-      prompt: msg("q.whichClockShows", { t: { time: t } }), hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }),
+      prompt: msg("q.whichClockShows", { t: { time: t } }), hint: makeTimeHint(t),
       ...options(ctx.rng, t, wrong, (x) => ({ v: "clock", t: x })),
     };
   }
@@ -342,13 +349,13 @@ export const routineTime = (ctx: GenCtx): Question => {
     return {
       type: "set-clock", skill: "routine-time", start: make(hourOf(t) + 4, 0), target: t, check: "full", step: 15, showDigital: true,
       stimulus: { v: "card", id: card }, prompt: msg("q.routineSet", { c: msg("card." + card), t: { time: t } }),
-      hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }), pose: "mo-point",
+      hint: makeTimeHint(t), pose: "mo-point",
     };
   }
   const wrong = timeDistractors(ctx.rng, t, nOpts(ctx.level) - 1, pool);
   return {
     type: "choice", skill: "routine-time", stimulus: { v: "card", id: card },
-    prompt: msg("q.routineWhich", { c: msg("card." + card), t: { time: t } }), hint: msg("hint.makeTime", { h: { num: hourOf(t) }, t: { time: t } }),
+    prompt: msg("q.routineWhich", { c: msg("card." + card), t: { time: t } }), hint: makeTimeHint(t),
     ...options(ctx.rng, t, wrong, (x) => ({ v: "clock", t: x })),
   };
 };

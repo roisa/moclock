@@ -194,3 +194,13 @@ describe("session & progress", () => {
     expect(learnerLevel(10).level).toBe(3);
   });
 });
+
+import { makeTimeHint } from "./generators";
+import { t as tr } from "../i18n";
+describe("review fixes", () => {
+  it("set-time hint never says 'near 3' for 3:45", () => {
+    expect(tr(makeTimeHint(T.make(3, 45)), "en")).toContain("between 3 and 4");
+    expect(tr(makeTimeHint(T.make(12, 30)), "id")).toContain("antara angka 12 dan 1");
+    expect(tr(makeTimeHint(T.make(5, 0)), "en")).toContain("points at 5");
+  });
+});

@@ -51,8 +51,11 @@ self.addEventListener("fetch", (e) => {
   if (req.mode === "navigate") {
     e.respondWith(
       fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put("./", copy)).catch(() => {});
+        // only a real page of ours may replace the offline shell (not a captive portal or an error page)
+        if (res.ok && res.type === "basic" && (res.headers.get("content-type") || "").includes("text/html")) {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put("./", copy)).catch(() => {});
+        }
         return res;
       }).catch(() => caches.match("./", { ignoreSearch: true }).then((r) => r || caches.match("./index.html")))
     );

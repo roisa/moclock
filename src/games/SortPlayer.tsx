@@ -7,6 +7,8 @@ import { sfx, haptic } from "../platform/audio";
 import { msg } from "../i18n/types";
 import { Sky } from "../ui/Scene";
 import { CARDS } from "../content/cards";
+import { useLater } from "./useLater";
+import { useRef } from "react";
 
 const SKY_MIN = { morning: 450, afternoon: 840, evening: 1110, night: 1290 } as const;
 
@@ -14,10 +16,12 @@ export function SortPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of
   const [done, setDone] = useState<Record<string, string>>({});
   const [sel, setSel] = useState<string | null>(null);
   const [bounce, setBounce] = useState<string | null>(null);
+  const later = useLater();
+  const finished = useRef(false);
   const left = q.items.filter((i) => !done[i.id]);
 
   const put = (id: string, bin: string) => {
-    if (solved) return;
+    if (solved || finished.current) return;
     const it = q.items.find((i) => i.id === id)!;
     if (it.bin === bin) {
       const nd = { ...done, [id]: bin };
@@ -25,11 +29,14 @@ export function SortPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of
       setSel(null);
       sfx("snap");
       haptic("light");
-      if (Object.keys(nd).length === q.items.length) setTimeout(() => onSolve(), 300);
+      if (Object.keys(nd).length === q.items.length) {
+        finished.current = true;
+        later(() => onSolve(), 300);
+      }
     } else {
       sfx("gentle");
       setBounce(id);
-      setTimeout(() => setBounce(null), 500);
+      later(() => setBounce(null), 500);
       onMiss(msg("hint.explore." + it.bin, { c: msg("card." + id) }));
     }
   };
@@ -66,7 +73,8 @@ export function SortPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of
       </div>
       <div className="tray">
         {left.map((it) => (
-          <button key={it.id} data-id={it.id} className={`tile card ${sel === it.id ? "selected" : ""} ${bounce === it.id ? "shake" : ""} ${drag?.id === it.id ? "lifted" : ""}`} {...bind(it.id)}>
+          <button key={it.id} data-id={it.id} className={`tile card ${sel === it.id ? "selected" : ""} ${bounce === it.id ? "shake" : ""} ${drag?.id === it.id ? "lifted" : ""}`} {...bind(it.id)}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setSel(sel === it.id ? null : it.id))} aria-pressed={sel === it.id}>
             <Visual v={it.visual} size="s" />
           </button>
         ))}

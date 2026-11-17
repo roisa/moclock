@@ -5,6 +5,8 @@ import { sfx, haptic, speak } from "../platform/audio";
 import { useStore } from "../state";
 import { numberWord } from "../i18n/words";
 import type { ClockPart } from "../engine/types";
+import { useLater } from "./useLater";
+import { useRef } from "react";
 
 /** Meet the clock: tap the part Mo asks for. */
 export function ClockTapPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of<"clock-tap">>) {
@@ -36,9 +38,11 @@ export function ClockTapPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProp
 export function ClockNumbersPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of<"clock-numbers">>) {
   const { lang } = useStore();
   const [lit, setLit] = useState<number[]>([]);
+  const later = useLater();
+  const done = useRef(false);
   const next = lit.length + 1;
   const tap = (n: number) => {
-    if (solved) return;
+    if (solved || done.current) return;
     if (q.mode === "order") {
       if (lit.includes(n)) return;
       if (n === next) {
@@ -46,7 +50,10 @@ export function ClockNumbersPlayer({ q, hints, onMiss, onSolve, solved }: Player
         setLit(nl);
         sfx("pop");
         speak(numberWord(n, lang), lang);
-        if (n === 12) setTimeout(() => onSolve(), 700);
+        if (n === 12) {
+          done.current = true;
+          later(() => onSolve(), 700);
+        }
       } else {
         sfx("gentle");
         onMiss();

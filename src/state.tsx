@@ -95,9 +95,18 @@ export function StoreProvider({ children, initial }: { children: ReactNode; init
 
   // daily mission (same all day)
   useEffect(() => {
-    const d = todayStr();
-    if (p.daily.date !== d) update((x) => ({ ...x, daily: { date: d, id: dailyMission(x, d), done: false } }));
-  }, [p.daily.date, update]);
+    const check = () => {
+      const d = todayStr();
+      update((x) => (x.daily.date === d ? x : { ...x, daily: { date: d, id: dailyMission(x, d), done: false } }));
+    };
+    check();
+    const id = setInterval(check, 60_000);
+    document.addEventListener("visibilitychange", check);
+    return () => {
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", check);
+    };
+  }, [update]);
 
   const t = useCallback((m: Msg | string, mode?: Mode) => tr(m, lang, mode), [lang]);
   const say = useCallback((m: Msg | string) => speak(tr(m, lang, "say"), lang), [lang]);

@@ -10,6 +10,8 @@ import { Character } from "../ui/Character";
 import { CARDS } from "../content/cards";
 import { msg } from "../i18n/types";
 import { Icon } from "../ui/Icon";
+import { useLater } from "./useLater";
+import { useRef } from "react";
 
 export function CalendarTapPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of<"calendar-tap">>) {
   const [wrong, setWrong] = useState<number[]>([]);
@@ -43,19 +45,24 @@ export function CalendarFillPlayer({ q, hints, onMiss, onSolve, solved }: Player
   const [sel, setSel] = useState<number | null>(null);
   const [tiles] = useState(() => shuffle(randomRng(), q.missing));
   const [bounce, setBounce] = useState<number | null>(null);
+  const later = useLater();
+  const done = useRef(false);
   const put = (n: number, slot: number) => {
-    if (solved || filled.includes(slot)) return;
+    if (solved || done.current || filled.includes(slot)) return;
     if (n === slot) {
       const nf = [...filled, n];
       setFilled(nf);
       setSel(null);
       sfx("snap");
       speak(numberWord(n, lang), lang);
-      if (nf.length === q.missing.length) setTimeout(() => onSolve(), 300);
+      if (nf.length === q.missing.length) {
+        done.current = true;
+        later(() => onSolve(), 300);
+      }
     } else {
       sfx("gentle");
       setBounce(n);
-      setTimeout(() => setBounce(null), 500);
+      later(() => setBounce(null), 500);
       onMiss();
     }
   };
@@ -80,7 +87,8 @@ export function CalendarFillPlayer({ q, hints, onMiss, onSolve, solved }: Player
       />
       <div className="tray numbers">
         {tiles.filter((n) => !filled.includes(n)).map((n) => (
-          <button key={n} data-id={n} className={`tile num-tile card ${sel === n ? "selected" : ""} ${bounce === n ? "shake" : ""} ${drag?.id === String(n) ? "lifted" : ""}`} {...bind(String(n))}>
+          <button key={n} data-id={n} className={`tile num-tile card ${sel === n ? "selected" : ""} ${bounce === n ? "shake" : ""} ${drag?.id === String(n) ? "lifted" : ""}`} {...bind(String(n))}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setSel(sel === n ? null : n))} aria-pressed={sel === n}>
             {n}
           </button>
         ))}
@@ -93,18 +101,21 @@ export function CalendarFillPlayer({ q, hints, onMiss, onSolve, solved }: Player
 export function CountdownPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of<"countdown">>) {
   const { lang, t } = useStore();
   const [count, setCount] = useState(0);
+  const later = useLater();
+  const done = useRef(false);
   const next = q.today + count + 1;
   const card = CARDS[q.card];
   const tap = (d: number) => {
-    if (solved || d <= q.today + count) return;
+    if (solved || done.current || d <= q.today + count) return;
     if (d === next) {
       const c = count + 1;
       setCount(c);
       sfx("pop");
       speak(numberWord(c, lang), lang);
       if (d === q.eventDay) {
+        done.current = true;
         sfx("fanfare");
-        setTimeout(() => onSolve(msg("countdown.result", { n: { num: c } })), 600);
+        later(() => onSolve(msg("countdown.result", { n: { num: c } })), 600);
       }
     } else {
       sfx("gentle");

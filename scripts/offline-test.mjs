@@ -14,10 +14,10 @@ const controlled = await p.evaluate(() => !!navigator.serviceWorker.controller);
 await ctx.setOffline(true);
 await p.reload({ waitUntil: "load" });
 await p.waitForSelector(".hero", { timeout: 8000 });
+const banner = await p.locator(".toast.offline").count(); // shown on Home (hidden during play on purpose)
 await p.goto(BASE + "/#/play/half-past");
 await p.waitForSelector(".tut-actions, .play-board", { timeout: 8000 });
 const imgsOk = await p.evaluate(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0));
-const banner = await p.locator(".toast.offline").count();
 console.log(JSON.stringify({ controlled, offlineHome: true, offlinePlay: true, imagesLoaded: imgsOk, offlineBanner: banner > 0 }));
 await b.close();
-if (!controlled || !imgsOk) process.exit(1);
+if (!controlled || !imgsOk || !banner) process.exit(1);

@@ -137,6 +137,15 @@ export function Clock({
   };
 
   const can = (w: "hour" | "minute") => drag === "both" || drag === w;
+  const press = (fn: () => void) => (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fn();
+    }
+  };
+  /** accessibility props for a tappable clock part in "find the part" games */
+  const partBtn = (p: ClockPart, name: string) =>
+    onPart ? { tabIndex: 0, role: "button", "aria-label": name, onKeyDown: press(() => onPart(p)) } : {};
   const hl = (p: ClockPart) => (highlight === p ? " hl" : "");
   const gA = ghost != null ? handAngles(ghost) : null;
   const sizeCss = typeof size === "number" ? size + "px" : size;
@@ -151,7 +160,7 @@ export function Clock({
         onPointerMove={(e) => grab.current && move(e)}
         onPointerUp={up}
         onPointerCancel={up}
-        role="img"
+        role="group"
         aria-label={label}
       >
         <defs>
@@ -186,14 +195,15 @@ export function Clock({
           <line key={i} className={i % 5 ? "tick" : "tick big"} x1="0" y1={i % 5 ? -86 : -88} x2="0" y2={i % 5 ? -82 : -79} transform={`rotate(${i * 6})`} />
         ))}
         {/* numbers */}
-        <g className={"nums" + hl("numbers")} data-part="numbers">
+        <g className={"nums" + hl("numbers")} data-part="numbers" {...partBtn("numbers", "numbers")}>
           {Array.from({ length: 12 }, (_, i) => {
             const n = i + 1;
             const a = ((n * 30 - 90) * Math.PI) / 180;
             const x = Math.cos(a) * R_NUM, y = Math.sin(a) * R_NUM;
             const on = lit?.includes(n);
             return (
-              <g key={n} data-num={n} className={"num" + (on ? " lit" : "") + (onNumber ? " tappable" : "")} transform={`translate(${x} ${y})`}>
+              <g key={n} data-num={n} className={"num" + (on ? " lit" : "") + (onNumber ? " tappable" : "")} transform={`translate(${x} ${y})`}
+                {...(onNumber ? { tabIndex: 0, role: "button", "aria-label": String(n), onKeyDown: press(() => onNumber(n)) } : {})}>
                 <circle r="15" className="num-bg" />
                 <text y="6.5">{n}</text>
               </g>
@@ -215,6 +225,7 @@ export function Clock({
           tabIndex={can("hour") ? 0 : -1}
           role={can("hour") ? "slider" : undefined}
           aria-label={can("hour") ? "hour" : undefined}
+          {...(!can("hour") ? partBtn("hour", "short hand") : {})}
           aria-valuemin={1} aria-valuemax={12} aria-valuenow={hourOf(t)} aria-valuetext={digital(t)}
           onKeyDown={key("hour")}
         >
@@ -229,6 +240,7 @@ export function Clock({
           tabIndex={can("minute") ? 0 : -1}
           role={can("minute") ? "slider" : undefined}
           aria-label={can("minute") ? "minute" : undefined}
+          {...(!can("minute") ? partBtn("minute", "long hand") : {})}
           aria-valuemin={0} aria-valuemax={59} aria-valuenow={minuteOf(t)} aria-valuetext={digital(t)}
           onKeyDown={key("minute")}
         >
@@ -243,7 +255,7 @@ export function Clock({
             <circle cy="-62" r="4.5" />
           </g>
         )}
-        <g data-part="center" className={"center" + hl("center")}>
+        <g data-part="center" className={"center" + hl("center")} {...partBtn("center", "middle")}>
           <circle r="16" className="center-hit" />
           <circle r="8" className="cap" />
           <circle r="3" cx="-2" cy="-2" fill="rgba(255,255,255,.7)" />

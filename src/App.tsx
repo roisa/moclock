@@ -52,7 +52,7 @@ export function App() {
         />
       )}
       <Toast />
-      <PwaBanner />
+      <PwaBanner playing={route.name === "play"} />
     </div>
   );
 }

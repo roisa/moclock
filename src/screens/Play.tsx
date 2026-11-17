@@ -199,7 +199,7 @@ function PlayInner({ def }: { def: ActivityDef }) {
 
   // QA hook for automated play-through tests (only with ?qa in the URL)
   useEffect(() => {
-    if (!/[?&]qa\b/.test(location.search)) return;
+    if (!/[?&]qa/.test(location.search)) return;
     (window as unknown as { __qa: unknown }).__qa = { q, phase, solved, solve: () => onSolve(), next };
   });
 
@@ -218,7 +218,7 @@ function PlayInner({ def }: { def: ActivityDef }) {
         <h1 className="play-title">{t(def.title)}</h1>
         {phase === "play" && progressDots}
       </div>
-      {phase === "play" && (
+      {phase === "play" && !solved && (
         <button className="icon-btn" onClick={() => setPhase("intro")} aria-label={t("fb.hint")} title={t("fb.hint")}>
           <Icon name="hint" />
         </button>
@@ -341,7 +341,7 @@ function Celebrate({ def, result, stickers, onAgain, total }: { def: ActivityDef
         </div>
         <h2>{t("play.doneTitle")}</h2>
         <div className="cele-stars"><Stars n={result.stars} size={64} /></div>
-        <p>{t({ k: "play.doneStars", p: { n: result.stars } })} · ⭐ {total}</p>
+        <p>{result.stars === 1 ? t("play.doneStars1") : t({ k: "play.doneStars", p: { n: result.stars } })} · ⭐ {total}</p>
         {st.map((s) => (
           <div key={s.id} className="new-sticker pop-in">
             <span className={`sticker bg-${s.bg}`}><Character id={s.pose} h={70} /></span>

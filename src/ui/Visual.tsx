@@ -85,18 +85,27 @@ export function PictureCard({ id, size = "m", label = true }: { id: string; size
   );
 }
 
+const ASK_SHIFT: Record<string, number> = { tomorrow: 1, yesterday: -1, "after-tomorrow": 2, "before-yesterday": -2 };
+/**
+ * Seven days centred on today, so "tomorrow" is always one step to the right and
+ * "yesterday" one step to the left, even when the week wraps (Sunday → Monday).
+ * The day being asked about is a "?" card; the steps to it are marked with dots.
+ */
 export function WeekStrip({ today, ask }: { today: number; ask?: string }) {
   const { lang } = useStore();
+  const shift = ask ? ASK_SHIFT[ask] ?? 0 : 0;
   return (
     <div className="week" role="list">
-      {DAYS[lang].map((d, i) => {
-        const rel = i - today;
+      {[-3, -2, -1, 0, 1, 2, 3].map((rel) => {
+        const i = (today + rel + 7) % 7;
+        const asked = ask && rel === shift;
+        const onPath = ask && rel !== 0 && Math.sign(rel) === Math.sign(shift) && Math.abs(rel) < Math.abs(shift);
         return (
-          <div key={i} role="listitem" className={`week-day ${i === today ? "today" : ""} ${i >= 5 ? "weekend" : ""}`} style={{ ["--c" as string]: DAY_COLORS[i] }}>
-            <b>{DAYS_SHORT[lang][i]}</b>
-            {i === today && <span className="tag">{lang === "en" ? "Today" : "Hari ini"}</span>}
-            {ask && rel !== 0 && <span className="q">{ask && Math.abs(rel) <= 2 ? "?" : ""}</span>}
-            <span className="sr">{d}</span>
+          <div key={rel} role="listitem" className={`week-day ${rel === 0 ? "today" : ""} ${i >= 5 ? "weekend" : ""} ${asked ? "asked" : ""}`} style={{ ["--c" as string]: DAY_COLORS[i] }}>
+            <b>{asked ? "?" : DAYS_SHORT[lang][i]}</b>
+            {rel === 0 && <span className="tag">{lang === "en" ? "Today" : "Hari ini"}</span>}
+            {onPath && <span className="hop-dot" />}
+            {!asked && <span className="sr">{DAYS[lang][i]}</span>}
           </div>
         );
       })}
