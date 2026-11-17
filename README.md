@@ -69,6 +69,7 @@ included in the next iOS build automatically.
 ```bash
 npm test               # unit tests (vitest): clock maths, time words, every generator at every level, i18n completeness, progress
 npm run build && npm run e2e   # Playwright: plays all 29 activities in EN and ID, checks rewards persist, screenshots 6 device sizes + dark mode → qa-shots/
+npm run test:offline   # with `npm run preview` running: service worker + offline reload + offline play
 ```
 
 Manual test checklist and the results so far: [docs/TESTING.md](docs/TESTING.md).

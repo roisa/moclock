@@ -31,8 +31,8 @@
 .mission small { color: var(--ink-2); font-weight: 700; display: block; }
 .mission-art { width: 84px; display: flex; justify-content: center; flex-shrink: 0; }
 .mission.done { background: linear-gradient(135deg, var(--green-l), var(--card) 70%); }
-.mission .chip { background: var(--orange); color: #fff; }
-.mission.done .chip { background: var(--green); color: #fff; }
+.mission .chip, :root[data-theme="dark"] .mission .chip { background: var(--orange); color: #fff; }
+.mission.done .chip, :root[data-theme="dark"] .mission.done .chip { background: var(--green); color: #fff; }
 
 .section-title { font-size: 24px; margin: 22px 4px 12px; display: flex; align-items: baseline; gap: 10px; }
 .section-title small { font: 800 15px var(--f-body); color: var(--ink-2); }
@@ -280,3 +280,13 @@
   .act-art { width: 64px; }
   .act-info h3 { font-size: 18px; }
 }
+/* landscape phones: two panes, compact */
+:root[data-size="phone-land"] .tutorial.two-pane { grid-template-columns: minmax(220px, 40%) 1fr; gap: 8px; }
+:root[data-size="phone-land"] .tut-actions { padding-bottom: calc(var(--safe-b) + 2px); }
+:root[data-size="phone-land"] .tut-actions .btn.big { min-height: 52px; font-size: 20px; }
+:root[data-size="phone-land"] .play.two-pane .play-guide { flex-basis: 34%; }
+:root[data-size="phone-land"] .play.two-pane .play-guide .bubble { font-size: calc(var(--fs) - 1px); padding: 10px 14px; }
+:root[data-size="phone-land"] .play-title { font-size: 17px; }
+:root[data-size="phone-land"] .clock-stage .clock-wrap, :root[data-size="phone-land"] .tut-demo .clock-wrap { width: min(62vh, 300px) !important; }
+:root[data-size="phone-land"] .tut-demo .digital { font-size: 26px; padding: 4px 12px; }
+:root[data-size="phone-land"] .check-btn, :root[data-size="phone-land"] .next-bar .btn { min-height: 52px; }

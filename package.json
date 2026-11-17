@@ -14,7 +14,8 @@
     "typecheck": "tsc -b",
     "e2e": "node scripts/e2e.mjs",
     "assets:sync": "node scripts/sync-assets.mjs",
-    "voice:lines": "node scripts/voice-lines.mjs"
+    "voice:lines": "node scripts/voice-lines.mjs",
+    "test:offline": "node scripts/offline-test.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

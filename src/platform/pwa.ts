@@ -31,7 +31,12 @@ export function initPwa() {
   });
   // In the hub, play.babymo.id's own service worker caches us. In a native
   // wrapper the files are already on the device.
-  if (IN_HUB || isNative() || !("serviceWorker" in navigator) || import.meta.env.DEV) return;
+  if (isNative() || !("serviceWorker" in navigator) || import.meta.env.DEV) return;
+  if (IN_HUB) {
+    // play.babymo.id's own worker (scope "/") caches this game with the rest of the hub
+    navigator.serviceWorker.register("../sw.js").then(() => ((state.offlineReady = true), emit())).catch(() => {});
+    return;
+  }
   navigator.serviceWorker
     .register("./sw.js")
     .then((reg) => {

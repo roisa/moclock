@@ -246,7 +246,8 @@ function PlayInner({ def }: { def: ActivityDef }) {
 }
 
 function Tutorial({ def, twoPane, onDone }: { def: ActivityDef; twoPane: boolean; onDone: () => void }) {
-  const { t, say } = useStore();
+  const { t, say, device } = useStore();
+  const guideH = twoPane ? Math.min(220, Math.max(100, device.h * 0.3)) : Math.min(150, device.h * 0.18);
   const [i, setI] = useState(0);
   const step = def.tutorial[i];
   useEffect(() => {
@@ -257,7 +258,7 @@ function Tutorial({ def, twoPane, onDone }: { def: ActivityDef; twoPane: boolean
   return (
     <div className={`tutorial ${twoPane ? "two-pane" : ""}`}>
       <div className="tut-guide">
-        <Guide pose={step.pose} text={step.say} h={twoPane ? 220 : 150} anim="pop" layout={twoPane ? "stack" : "side"} key={i} />
+        <Guide pose={step.pose} text={step.say} h={guideH} anim="pop" layout={twoPane ? "stack" : "side"} key={i} />
       </div>
       <div className="tut-demo">{step.demo && <Demo demo={step.demo} key={i} />}</div>
       <div className="tut-actions">

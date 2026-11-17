@@ -225,3 +225,37 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; border-radius
   .tray.numbers .num-tile { width: 80px; height: 80px; font-size: 34px; }
   .cal { max-width: 640px; }
 }
+
+/* ---------- short landscape phones: boards go side by side ---------- */
+:root[data-size="phone-land"] .tutorial.two-pane { grid-template-rows: minmax(0, 1fr) auto; height: calc(100dvh - 70px); }
+:root[data-size="phone-land"] .tut-demo { overflow: hidden; }
+:root[data-size="phone-land"] .tut-demo .clock-wrap { width: min(44vh, 210px) !important; gap: 4px; }
+:root[data-size="phone-land"] .board { padding: 0; gap: 10px; }
+:root[data-size="phone-land"] .board.set-clock { display: grid; grid-template-columns: auto auto; grid-template-rows: 1fr auto; align-items: center; justify-content: center; column-gap: 22px; row-gap: 8px; }
+:root[data-size="phone-land"] .board.set-clock .clock-stage { grid-row: 1 / span 2; grid-column: 1; }
+:root[data-size="phone-land"] .board.set-clock .stimulus { grid-column: 2; grid-row: 1; align-self: end; }
+:root[data-size="phone-land"] .board.set-clock .check-btn { grid-column: 2; grid-row: 2; align-self: start; min-width: 160px; }
+:root[data-size="phone-land"] .clock-stage .clock-wrap { width: min(54vh, 260px) !important; gap: 4px; }
+:root[data-size="phone-land"] .clock-stage .digital { font-size: 24px; padding: 4px 12px; }
+:root[data-size="phone-land"] .board.choice { flex-direction: row; flex-wrap: nowrap; }
+:root[data-size="phone-land"] .board.choice .stimulus .clock-wrap { width: min(56vh, 220px) !important; }
+:root[data-size="phone-land"] .board.choice .options { max-width: 420px; }
+:root[data-size="phone-land"] .board.choice .options.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+:root[data-size="phone-land"] .option { min-height: 70px; padding: 8px; }
+:root[data-size="phone-land"] .options .clock-wrap { max-width: 96px; }
+:root[data-size="phone-land"] .cal { max-width: 380px; }
+:root[data-size="phone-land"] .cal-cell { aspect-ratio: 1 / 0.62; font-size: 15px; }
+:root[data-size="phone-land"] .cal-head { padding: 10px 12px 6px; font-size: 18px; }
+:root[data-size="phone-land"] .board.calendar { flex-direction: row; align-items: flex-start; }
+:root[data-size="phone-land"] .board.calendar .tray.numbers, :root[data-size="phone-land"] .count-big { flex-direction: column; width: auto; }
+:root[data-size="phone-land"] .slot { min-height: 100px; }
+:root[data-size="phone-land"] .explorer-scene { height: 150px; min-height: 0; }
+:root[data-size="phone-land"] .board.explorer { flex-direction: row; align-items: center; }
+:root[data-size="phone-land"] .explorer-controls { flex-direction: column; width: auto; gap: 6px; }
+:root[data-size="phone-land"] .explorer-controls .clock-wrap { width: min(40vh, 160px) !important; }
+:root[data-size="phone-land"] .dayline { min-width: 200px; }
+:root[data-size="phone-land"] .play-field { min-height: 200px; }
+:root[data-size="phone-land"] .board.timer.tapper { flex-direction: row; }
+:root[data-size="phone-land"] .tapper-top { flex-direction: column; }
+:root[data-size="phone-land"] .ring { width: min(50vh, 180px); }
+.tutorial.two-pane > * { min-height: 0; }

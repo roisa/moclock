@@ -55,7 +55,7 @@ export function readDevice(): DeviceInfo {
     hinge = { x, w: Math.max(0, segs[1].left - segs[0].right) };
   }
   const posture = (navigator as unknown as { devicePosture?: { type?: string } }).devicePosture?.type || "continuous";
-  const twoPane = !!hinge || (landscape && w >= 900) || (w >= 1100);
+  const twoPane = !!hinge || (landscape && w >= 640) || w >= 1100;
   return { w, h, size, landscape, twoPane, segments: segs ? segs.length : 1, hinge, posture, coarse };
 }
 

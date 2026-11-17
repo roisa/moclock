@@ -23,10 +23,11 @@ if (!BASE) {
   await new Promise((r) => setTimeout(r, 2500));
 }
 
-const ACTS = ["meet-clock", "numbers", "hour-hand", "minute-hand", "move-hands", "match", "full-hours", "half-past", "quarter", "five-minutes", "clock-challenge",
+const ALL = ["meet-clock", "numbers", "hour-hand", "minute-hand", "move-hands", "match", "full-hours", "half-past", "quarter", "five-minutes", "clock-challenge",
   "arrange-days", "tomorrow", "find-date", "calendar-puzzle", "countdown", "missing-month",
   "mo-day", "morning", "whole-day", "routine-time", "day-parts",
   "ten-seconds", "thirty-seconds", "one-minute", "longer", "first", "time-left", "elapsed"];
+const ACTS = process.env.ONLY ? process.env.ONLY.split(",") : ALL;
 
 const fwd = (a, b) => (((b - a) % 720) + 720) % 720;
 const fails = [];
@@ -63,7 +64,7 @@ async function playAll(lang) {
           }
           await p.locator(".option").nth(ans).click();
         } else if (q.type === "set-clock") {
-          const hand = q.lock === "minute" ? ".hand.hour" : ".hand.minute";
+          const hand = q.lock === "minute" ? ".clock-stage .hand.hour" : ".clock-stage .hand.minute";
           await p.locator(hand).focus();
           const n = q.lock === "minute" ? fwd(q.start, q.target) / 60 : fwd(q.start, q.target) / q.step;
           for (let i = 0; i < Math.round(n); i++) await p.keyboard.press("ArrowRight");
@@ -86,7 +87,8 @@ async function playAll(lang) {
       await p.waitForSelector(".celebrate", { timeout: 3000 });
       if (process.env.VERBOSE) console.log("  ok", lang, id);
     } catch (e) {
-      fails.push(`${lang}/${id}: ${String(e.message).split("\n")[0]}`);
+      fails.push(`${lang}/${id}: ${String(e.message).split("\n").slice(0, process.env.VERBOSE ? 12 : 1).join("\n")}`);
+      await p.screenshot({ path: `${OUT}/FAIL-${lang}-${id}.png` }).catch(() => {});
     }
   }
   // progress persisted?
@@ -96,7 +98,7 @@ async function playAll(lang) {
   const stars = await p.locator(".rw-total b").innerText();
   const stickers = await p.locator(".sticker-slot.has").count();
   console.log(`[${lang}] played ${ACTS.length} activities → ${stars} stars, ${stickers} stickers`);
-  if (+stars < ACTS.length) fails.push(`${lang}: expected at least ${ACTS.length} stars, got ${stars}`);
+  if (!process.env.ONLY && +stars < ACTS.length) fails.push(`${lang}: expected at least ${ACTS.length} stars, got ${stars}`);
   await p.reload({ waitUntil: "networkidle" });
   await p.waitForTimeout(400);
   if ((await p.locator(".rw-total b").innerText()) !== stars) fails.push(`${lang}: stars not persisted after reload`);
@@ -126,10 +128,14 @@ async function shots() {
 }
 
 try {
+  if (process.env.SHOTS_ONLY) {
+    await shots();
+  } else {
   await playAll("en");
   if (!process.env.QUICK) {
     await playAll("id");
     await shots();
+  }
   }
 } finally {
   await b.close();
