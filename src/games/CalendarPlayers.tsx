@@ -80,7 +80,7 @@ export function CalendarFillPlayer({ q, hints, onMiss, onSolve, solved }: Player
       />
       <div className="tray numbers">
         {tiles.filter((n) => !filled.includes(n)).map((n) => (
-          <button key={n} className={`tile num-tile card ${sel === n ? "selected" : ""} ${bounce === n ? "shake" : ""} ${drag?.id === String(n) ? "lifted" : ""}`} {...bind(String(n))}>
+          <button key={n} data-id={n} className={`tile num-tile card ${sel === n ? "selected" : ""} ${bounce === n ? "shake" : ""} ${drag?.id === String(n) ? "lifted" : ""}`} {...bind(String(n))}>
             {n}
           </button>
         ))}

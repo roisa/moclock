@@ -1,0 +1,82 @@
+/* ============================================================
+   Motion design: page transitions, character "acting", feedback
+   bursts, celebration, hint hand. All of it respects reduced motion
+   (the global rule in app.css shortens every animation).
+   ============================================================ */
+
+/* page transitions */
+.page { animation: pageIn 0.42s var(--ease-out) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(14px) scale(0.99); } }
+
+/* characters: idle breathing (squash from the feet) and a hop on every pose change */
+.char.bob > img { animation: breathe 3.4s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes breathe { 0%, 100% { transform: translateY(0) scale(1, 1); } 45% { transform: translateY(-5px) scale(0.99, 1.015); } 55% { transform: translateY(-5px) scale(0.99, 1.015); } }
+.char.pop > img { animation: hopIn 0.55s var(--ease-bounce) both; transform-origin: 50% 100%; }
+@keyframes hopIn { 0% { transform: translateY(8px) scale(1.12, 0.82); opacity: 0.4; } 45% { transform: translateY(-14px) scale(0.94, 1.08); opacity: 1; } 75% { transform: translateY(0) scale(1.04, 0.96); } 100% { transform: none; } }
+.char.cheer > img { animation: cheerJump 0.9s var(--ease-out) both, breathe 3.4s 0.9s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes cheerJump { 0% { transform: scale(1.1, 0.86); } 30% { transform: translateY(-30px) scale(0.92, 1.1) rotate(-3deg); } 55% { transform: translateY(0) scale(1.08, 0.9); } 75% { transform: translateY(-8px) scale(0.98, 1.03) rotate(2deg); } 100% { transform: none; } }
+.char.shake > img { animation: thinkTilt 0.9s ease both; transform-origin: 50% 100%; }
+@keyframes thinkTilt { 0% { transform: rotate(0); } 25% { transform: rotate(-6deg) translateX(-4px); } 55% { transform: rotate(4deg); } 80% { transform: rotate(-2deg); } 100% { transform: none; } }
+/* soft contact shadow under every standing character */
+.char:not(.upper)::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: -4px; height: 10px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(40, 40, 10, 0.22), transparent); z-index: -1; }
+.char.bob:not(.upper)::after { animation: shadowBreath 3.4s ease-in-out infinite; }
+@keyframes shadowBreath { 45%, 55% { transform: scaleX(0.86); opacity: 0.7; } }
+
+/* speech bubble pops in when the line changes */
+.bubble-text { display: inline-block; animation: lineIn 0.35s var(--ease-out) both; }
+@keyframes lineIn { from { opacity: 0; transform: translateY(6px); } }
+
+/* primary buttons: a slow shine */
+.btn:not(.ghost)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat;
+  animation: shine 4.5s ease-in-out infinite; }
+.btn { position: relative; overflow: hidden; }
+@keyframes shine { 0%, 62% { background-position: -150% 0; } 100% { background-position: 150% 0; } }
+
+/* correct-answer burst: rays + stars from a point */
+.burst { position: fixed; z-index: 75; width: 0; height: 0; pointer-events: none; }
+.burst i { position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; animation: burstOut 0.75s var(--ease-out) forwards; transform: rotate(var(--a)); }
+.burst i::before { content: ""; position: absolute; inset: 0; background: var(--c); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@keyframes burstOut { 0% { transform: rotate(var(--a)) translateY(0) scale(0.4); opacity: 1; } 100% { transform: rotate(var(--a)) translateY(calc(-1 * var(--d))) scale(1.1) rotate(90deg); opacity: 0; } }
+.burst b { position: absolute; left: -40px; top: -40px; width: 80px; height: 80px; border-radius: 50%; border: 5px solid var(--yellow); animation: ringOut 0.6s ease-out forwards; }
+@keyframes ringOut { from { transform: scale(0.2); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+/* a star flies up to the progress dots */
+.fly-star { position: fixed; z-index: 76; pointer-events: none; animation: flyStar 0.9s cubic-bezier(0.5, 0, 0.3, 1) forwards; }
+@keyframes flyStar { 0% { transform: translate(0, 0) scale(0.6); } 40% { transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.5 - 40px)) scale(1.5) rotate(120deg); } 100% { transform: translate(var(--dx), var(--dy)) scale(0.5) rotate(360deg); opacity: 0.2; } }
+.dots i.on { animation: dotFill 0.4s var(--ease-bounce); }
+@keyframes dotFill { 50% { transform: scale(1.5); } }
+
+/* hint hand: shows how to tap or drag */
+.hint-hand { position: fixed; z-index: 74; width: 64px; height: 64px; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.3)); }
+.hint-hand.tap { animation: handTap 1.3s ease-in-out infinite; }
+@keyframes handTap { 0%, 100% { transform: translate(0, 0) scale(1); } 45% { transform: translate(0, 8px) scale(0.9); } 55% { transform: translate(0, 8px) scale(0.9); } }
+.hint-hand.drag { animation: handDrag 2.2s ease-in-out infinite; offset-rotate: 0deg; }
+@keyframes handDrag { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 80% { offset-distance: 100%; opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.hint-hand .ripple { position: absolute; left: 4px; top: 0; width: 26px; height: 26px; border-radius: 50%; border: 3px solid #fff; animation: ripple 1.3s ease-out infinite; }
+@keyframes ripple { 0%, 40% { transform: scale(0.3); opacity: 0; } 50% { opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+
+/* celebration */
+.cele-stage { overflow: hidden; }
+.sunburst { position: absolute; left: 50%; top: 34%; width: 900px; height: 900px; margin: -450px 0 0 -450px; pointer-events: none; opacity: 0.55;
+  background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--yellow) 55%, transparent) 0deg 10deg, transparent 10deg 24deg);
+  mask: radial-gradient(closest-side, #000 30%, transparent 75%); -webkit-mask: radial-gradient(closest-side, #000 30%, transparent 75%);
+  animation: spin 26s linear infinite; }
+.cele-stage > *:not(.sunburst) { position: relative; }
+.cele-chars .char:nth-child(1) > img { animation: celeHop 1.3s 0.1s ease-in-out infinite; }
+.cele-chars .char:nth-child(2) > img { animation: celeHop 1.3s 0.75s ease-in-out infinite; }
+@keyframes celeHop { 0%, 60%, 100% { transform: none; } 15% { transform: scale(1.06, 0.92); } 32% { transform: translateY(-26px) scale(0.95, 1.06); } 48% { transform: scale(1.04, 0.95); } }
+.cele-stars .star { animation: starLand 0.7s var(--ease-bounce) both; }
+.cele-stars .star:nth-child(2) { animation-delay: 0.25s; }
+.cele-stars .star:nth-child(3) { animation-delay: 0.5s; }
+@keyframes starLand { 0% { transform: translateY(-80px) scale(0.2) rotate(-180deg); opacity: 0; } 70% { transform: translateY(6px) scale(1.15) rotate(10deg); opacity: 1; } 100% { transform: none; } }
+.cele-stars .star.dim { animation: popIn 0.4s 0.6s both; }
+
+/* home & world cards: lively but calm */
+.world-card .world-chars .char > img { transition: transform 0.35s var(--ease-bounce); transform-origin: 50% 100%; }
+@media (hover: hover) { .world-card:hover .world-chars .char > img { transform: translateY(-8px) scale(1.04); } .world-card:hover { transform: translateY(-4px) rotate(-0.4deg); } }
+.world-card:active .world-chars .char > img { transform: translateY(-6px) scale(1.05, 0.97); }
+.act.next .act-art .char > img { animation: breathe 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.option, .tile, .act, .mini-act, .sticker-slot, .env { transition: transform 0.18s var(--ease-bounce), box-shadow 0.2s; }
+@media (hover: hover) { .option:hover:not(:disabled), .tile:hover, .mini-act:hover, .sticker-slot:hover { transform: translateY(-3px); } }
+.char { isolation: isolate; }

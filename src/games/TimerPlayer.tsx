@@ -15,10 +15,10 @@ import { keepAwake } from "../platform/device";
 import { Icon } from "../ui/Icon";
 import { randomRng } from "../engine/rng";
 
-function Ring({ k, label, hidden }: { k: number; label: string; hidden?: boolean }) {
+function Ring({ k, label, hidden, warn }: { k: number; label: string; hidden?: boolean; warn?: boolean }) {
   const r = 54, c = 2 * Math.PI * r;
   return (
-    <div className={"ring " + (hidden ? "hidden" : "")}>
+    <div className={"ring " + (hidden ? "hidden" : "") + (warn ? " warn" : "")}>
       <svg viewBox="0 0 128 128" aria-hidden="true">
         <circle cx="64" cy="64" r={r} className="ring-bg" />
         <circle cx="64" cy="64" r={r} className="ring-fg" strokeDasharray={c} strokeDashoffset={c * (1 - k)} transform="rotate(-90 64 64)" />
@@ -62,6 +62,7 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
   const said = useRef(0);
   const sec = ms / 1000;
   const [result, setResult] = useState<number | null>(null);
+  const [far, setFar] = useState<ReturnType<typeof msg> | null>(null);
 
   // count out loud together (not in the blind round)
   useEffect(() => {
@@ -81,6 +82,7 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
   }, [sec, phase, blind, q.seconds, lang, onSolve]);
 
   const start = () => {
+    setFar(null);
     said.current = 0;
     setMs(0);
     setResult(null);
@@ -98,9 +100,9 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
       sfx("correct");
       onSolve(m);
     } else {
+      // gentle: hear how far off, then try again or carry on (no timer racing the buttons)
+      setFar(m);
       onMiss(m);
-      // still a finished round: let the child go on after hearing the feedback
-      setTimeout(() => onSolve(m), 2600);
     }
   };
   const k = Math.min(1, sec / q.seconds);
@@ -114,78 +116,112 @@ function Estimate({ q, onMiss, onSolve, solved }: PlayerProps<Of<"timer">>) {
       <div className="timer-actions">
         {phase === "ready" && <button className="btn big" onClick={start}><Icon name="play" /> {t("timer.start")}</button>}
         {phase === "run" && blind && <button className="btn big orange" onClick={stop}>{t("timer.stop")}</button>}
-        {phase === "done" && !solved && blind && <button className="btn ghost" onClick={start}>{t("timer.again")}</button>}
+        {phase === "done" && !solved && blind && far && (
+          <>
+            <button className="btn orange" onClick={start}><Icon name="replay" /> {t("timer.again")}</button>
+            <button className="btn ghost" onClick={() => onSolve(far)}>{t("timer.next")} <Icon name="next" /></button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-interface Thing { id: number; x: number; y: number; kind: number; born: number; gone?: boolean }
+interface Thing { id: number; x: number; y: number; kind: number; born: number; dur: number; gone?: number }
 const TOYS = ["ball", "block", "car", "duck", "star"];
 
-function Tapper({ q, onSolve, solved }: PlayerProps<Of<"timer">>) {
+function Tapper({ q, onSolve }: PlayerProps<Of<"timer">>) {
   const { t } = useStore();
   const [phase, setPhase] = useState<"ready" | "run" | "done">("ready");
   const [ms] = useTicker(phase === "run");
   const [things, setThings] = useState<Thing[]>([]);
   const [score, setScore] = useState(0);
+  const [pops, setPops] = useState<{ id: number; x: number; y: number }[]>([]);
   const nextId = useRef(1);
   const rng = useRef(randomRng());
   const left = Math.max(0, q.seconds - ms / 1000);
+  const lastTick = useRef(99);
   const pop = q.mode === "pop";
+  const now = performance.now();
 
   // spawn
   useEffect(() => {
     if (phase !== "run") return;
     const id = setInterval(() => {
+      const t0 = performance.now();
       setThings((th) => {
-        const alive = th.filter((x) => !x.gone && performance.now() - x.born < (pop ? 6000 : 60000));
-        if (alive.length >= (pop ? 7 : 6)) return alive;
+        const alive = th.filter((x) => (x.gone ? t0 - x.gone < 500 : t0 - x.born < x.dur));
+        if (alive.filter((x) => !x.gone).length >= (pop ? 7 : 6)) return alive;
         const r = rng.current;
-        return [...alive, { id: nextId.current++, x: 8 + r() * 76, y: pop ? 100 : 20 + r() * 52, kind: Math.floor(r() * 5), born: performance.now() }];
+        return [...alive, { id: nextId.current++, x: 6 + r() * 78, y: 20 + r() * 50, kind: Math.floor(r() * 5), born: t0, dur: pop ? 5200 + r() * 2200 : 60000 }];
       });
-    }, pop ? 520 : 700);
+    }, pop ? 480 : 700);
     return () => clearInterval(id);
   }, [phase, pop]);
-  // end
+  // last five seconds tick, then finish
   useEffect(() => {
-    if (phase === "run" && left <= 0) {
+    if (phase !== "run") return;
+    const s = Math.ceil(left);
+    if (s <= 5 && s !== lastTick.current && s > 0) sfx("tick");
+    lastTick.current = s;
+    if (left <= 0) {
       setPhase("done");
       sfx("fanfare");
-      setTimeout(() => onSolve(msg(pop ? "timer.popped" : "timer.tidied", { n: { num: score } })), 400);
+      const n = score;
+      setTimeout(() => onSolve(msg(pop ? "timer.popped" : "timer.tidied", { n: { num: n } })), 400);
     }
-    if (phase === "run" && left <= 5 && Math.ceil(left) !== Math.ceil(left + 0.05)) sfx("tick");
   }, [left, phase, pop, score, onSolve]);
 
-  const hit = (id: number) => {
-    if (phase !== "run") return;
-    setThings((th) => th.map((x) => (x.id === id ? { ...x, gone: true } : x)));
+  /** bubble height above the floor (0..1), with a gentle sideways sway */
+  const bubblePos = (th: Thing, at: number) => {
+    const k = Math.min(1, ((th.gone ?? at) - th.born) / th.dur);
+    return { y: 1.08 - k * 1.3, x: th.x + Math.sin((th.id + k * 6) * 1.3) * 3 };
+  };
+  const hit = (th: Thing) => {
+    if (phase !== "run" || th.gone) return;
+    const at = performance.now();
+    setThings((ts) => ts.map((x) => (x.id === th.id ? { ...x, gone: at } : x)));
     setScore((s) => s + 1);
+    if (pop) {
+      const p = bubblePos(th, at);
+      setPops((ps) => [...ps.slice(-6), { id: th.id, x: p.x, y: p.y }]);
+    }
     sfx(pop ? "pop" : "whoosh");
     haptic("light");
   };
   return (
     <div className={"board timer tapper " + q.mode}>
       <div className="tapper-top">
-        <Ring k={left / q.seconds} label={String(Math.ceil(left))} />
-        <div className="score pill"><Icon name="star" size={22} /> {score}</div>
+        <Ring k={left / q.seconds} label={String(Math.ceil(left))} warn={phase === "run" && left <= 5} />
+        <div className={"score pill " + (score ? "bump" : "")} key={score}><Icon name="star" size={22} /> {score}</div>
       </div>
       <div className="play-field card">
         {!pop && (
-          <div className="toybox" aria-hidden="true">
+          <div className={"toybox " + (score ? "gulp" : "")} key={"box" + score} aria-hidden="true">
             <svg viewBox="0 0 90 60"><rect x="4" y="14" width="82" height="42" rx="10" fill="#ff9a3d" /><rect x="0" y="6" width="90" height="16" rx="8" fill="#ffb366" /><path d="M30 34 h30" stroke="#fff" strokeWidth="6" strokeLinecap="round" /></svg>
           </div>
         )}
-        {things.map((th) => (
-          <button
-            key={th.id}
-            className={`thing ${pop ? "bubble-b" : "toy t-" + TOYS[th.kind]} ${th.gone ? "gone" : ""}`}
-            style={{ left: th.x + "%", top: pop ? undefined : th.y + "%", animationDuration: pop ? 5 + (th.id % 3) + "s" : undefined, ["--hue" as string]: (th.id * 47) % 360 }}
-            onPointerDown={() => hit(th.id)}
-            aria-label={pop ? "bubble" : TOYS[th.kind]}
-          >
-            {!pop && <ToyArt kind={TOYS[th.kind]} />}
-          </button>
+        {pop && <div className="field-floor" aria-hidden="true" />}
+        {things.map((th) => {
+          if (pop) {
+            const p = bubblePos(th, now);
+            return (
+              <button key={th.id} className={"thing bubble-b " + (th.gone ? "gone" : "")}
+                style={{ left: p.x + "%", top: p.y * 100 + "%", ["--hue" as string]: (th.id * 47) % 360 }}
+                onPointerDown={() => hit(th)} aria-label="bubble" />
+            );
+          }
+          return (
+            <button key={th.id} className={`thing toy t-${TOYS[th.kind]} ${th.gone ? "gone" : ""}`} style={{ left: th.x + "%", top: th.y + "%" }}
+              onPointerDown={() => hit(th)} aria-label={TOYS[th.kind]}>
+              <ToyArt kind={TOYS[th.kind]} />
+            </button>
+          );
+        })}
+        {pops.map((p) => (
+          <span key={p.id} className="pop-ring" style={{ left: p.x + "%", top: p.y * 100 + "%" }} aria-hidden="true">
+            {Array.from({ length: 8 }, (_, i) => <i key={i} style={{ ["--a" as string]: i * 45 + "deg" }} />)}
+          </span>
         ))}
         {phase === "ready" && (
           <div className="field-cta">
@@ -194,7 +230,6 @@ function Tapper({ q, onSolve, solved }: PlayerProps<Of<"timer">>) {
         )}
         {phase === "done" && <div className="field-cta pop-in"><b className="big-score">{score}</b></div>}
       </div>
-      {solved && null}
     </div>
   );
 }

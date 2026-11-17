@@ -9,6 +9,7 @@ import "./styles/app.css";
 import "./styles/clock.css";
 import "./styles/screens.css";
 import "./styles/games.css";
+import "./styles/motion.css";
 
 applyDeviceAttrs(readDevice());
 // Inside play.babymo.id: reuse the hub's recorded Baby Mo voice clips

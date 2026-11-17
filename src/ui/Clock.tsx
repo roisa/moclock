@@ -31,6 +31,8 @@ export interface ClockProps {
   smooth?: boolean;
   face?: "cream" | "sky";
   className?: string;
+  /** show a sweeping second hand starting at this second (live clocks) */
+  seconds?: number;
 }
 
 const R_NUM = 70;
@@ -41,7 +43,7 @@ function handPath(len: number, w: number) {
 
 export function Clock({
   t, size = 300, onChange, onRelease, drag = "none", step = 1, fiveRing, highlight, ghost, lit, onNumber, onPart,
-  label, digital: showDigital, smooth, face = "cream", className = "",
+  label, digital: showDigital, smooth, face = "cream", className = "", seconds,
 }: ClockProps) {
   const svg = useRef<SVGSVGElement>(null);
   const uid = useId().replace(/:/g, "");
@@ -234,6 +236,13 @@ export function Clock({
           <path d={handPath(74, 7)} filter={`url(#cf-soft${uid})`} />
           {can("minute") && <circle className="knob" cy="-64" r="7.5" />}
         </g>
+        {seconds != null && (
+          <g className="second" aria-hidden="true">
+            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" begin={-seconds + "s"} repeatCount="indefinite" />
+            <line x1="0" y1="14" x2="0" y2="-80" />
+            <circle cy="-62" r="4.5" />
+          </g>
+        )}
         <g data-part="center" className={"center" + hl("center")}>
           <circle r="16" className="center-hit" />
           <circle r="8" className="cap" />

@@ -186,12 +186,23 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; border-radius
 .play-field { position: relative; width: 100%; max-width: 900px; flex: 1; min-height: 300px; overflow: hidden; background: linear-gradient(180deg, var(--blue-l), var(--cream-2)); }
 .tapper.tidy .play-field { background: linear-gradient(180deg, #ffe9cf 0%, #ffe9cf 62%, #e9b884 62%); }
 .thing { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; touch-action: manipulation; }
-.bubble-b { width: 74px; height: 74px; border-radius: 50%; bottom: -80px; animation: riseUp linear forwards;
-  background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.95) 0 10%, transparent 11%), radial-gradient(circle, hsla(var(--hue), 90%, 80%, 0.35), hsla(var(--hue), 90%, 65%, 0.6));
-  box-shadow: inset 0 0 0 3px hsla(var(--hue), 90%, 70%, 0.8); }
-.bubble-b.gone { animation: burst 0.25s ease-out forwards; }
-@keyframes riseUp { to { transform: translateY(calc(-1 * (100% + 380px))) translateX(20px); } }
-@keyframes burst { to { transform: scale(1.6); opacity: 0; } }
+.bubble-b { width: 74px; height: 74px; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.95) 0 10%, transparent 11%), radial-gradient(circle at 70% 75%, rgba(255,255,255,.5) 0 6%, transparent 7%),
+    radial-gradient(circle, hsla(var(--hue), 90%, 85%, 0.25), hsla(var(--hue), 90%, 65%, 0.55));
+  box-shadow: inset 0 0 0 3px hsla(var(--hue), 90%, 70%, 0.8), inset -6px -8px 14px hsla(calc(var(--hue) + 60), 90%, 70%, 0.45); }
+.bubble-b.gone { animation: burst 0.28s ease-out forwards; pointer-events: none; }
+@keyframes burst { to { transform: translate(-50%, -50%) scale(1.7); opacity: 0; } }
+.pop-ring { position: absolute; width: 0; height: 0; pointer-events: none; }
+.pop-ring i { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--yellow); left: -4px; top: -4px;
+  animation: spark 0.55s ease-out forwards; transform: rotate(var(--a)) translateY(0); }
+.pop-ring i:nth-child(even) { background: var(--blue); width: 7px; height: 7px; }
+@keyframes spark { to { transform: rotate(var(--a)) translateY(-46px) scale(0.3); opacity: 0; } }
+.field-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, transparent, rgba(108, 196, 255, 0.25)); }
+.ring.warn .ring-fg { stroke: var(--orange); }
+.ring.warn b { animation: pulse 0.5s ease-in-out infinite; color: var(--orange-d); }
+.score.bump { animation: popIn 0.3s var(--ease-bounce); }
+.toybox.gulp { animation: gulp 0.4s var(--ease-bounce); }
+@keyframes gulp { 40% { transform: scale(1.12, 0.9); } }
 .toy { width: 70px; height: 70px; animation: popIn 0.35s var(--ease-bounce) both; }
 .toy svg { width: 100%; height: 100%; filter: drop-shadow(0 6px 6px rgba(0,0,0,.2)); }
 .toy.gone { transition: all 0.45s var(--ease-out); left: calc(100% - 92px) !important; top: calc(100% - 70px) !important; transform: scale(0.3); opacity: 0; }

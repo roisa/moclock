@@ -54,6 +54,7 @@ export function SequencePlayer({ q, hints, onMiss, onSolve, solved }: PlayerProp
         {tray.map((id) => (
           <button
             key={id}
+            data-id={id}
             className={`tile card ${bounce === id ? "shake" : ""} ${drag?.id === id ? "lifted" : ""} ${hintId === id ? "glow" : ""}`}
             {...bind(id)}
             onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), place(id, nextSlot))}

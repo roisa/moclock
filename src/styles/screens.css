@@ -290,3 +290,8 @@
 :root[data-size="phone-land"] .clock-stage .clock-wrap, :root[data-size="phone-land"] .tut-demo .clock-wrap { width: min(62vh, 300px) !important; }
 :root[data-size="phone-land"] .tut-demo .digital { font-size: 26px; padding: 4px 12px; }
 :root[data-size="phone-land"] .check-btn, :root[data-size="phone-land"] .next-bar .btn { min-height: 52px; }
+.hero-mo { z-index: 1; }
+.hero-ais { order: -1; margin-right: -30px; margin-bottom: -18px; }
+.hero-clock .clock-wrap { animation: float 5s ease-in-out infinite; }
+.hero-bubble { order: 2; }
+@media (max-width: 520px) { .celebrate .row-btns .btn.big { padding: 0 22px; font-size: 21px; min-height: 64px; } }

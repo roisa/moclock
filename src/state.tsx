@@ -41,15 +41,15 @@ export function StoreProvider({ children, initial }: { children: ReactNode; init
   const lang = p.settings.lang;
 
   const update = useCallback((fn: (p: Progress) => Progress) => {
-    setP((prev) => {
-      const next = fn(prev);
-      if (IN_HUB) {
-        const gained = totalStars(next) - totalStars(prev);
-        if (gained > 0) hub.addHubStars(gained);
-      }
-      return next;
-    });
+    setP(fn);
   }, []);
+  // stars earned here also go into the hub's shared star jar (once, when the total grows)
+  const lastTotal = useRef(totalStars(initial));
+  useEffect(() => {
+    const now = totalStars(p);
+    if (IN_HUB && now > lastTotal.current) hub.addHubStars(now - lastTotal.current);
+    lastTotal.current = now;
+  }, [p]);
 
   useEffect(() => {
     clearTimeout(saveT.current);

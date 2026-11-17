@@ -19,6 +19,8 @@ import { Visual } from "../ui/Visual";
 import { sfx, stopSpeech, haptic } from "../platform/audio";
 import { msg, type Msg } from "../i18n/types";
 import { int, randomRng } from "../engine/rng";
+import { burst, centerOf, flyStar, HintHand, lastTouch, type HandPlan } from "../ui/Fx";
+import { handAngles } from "../engine/time";
 import type { ActivityDef, Question, TutorialStep } from "../engine/types";
 import type { PlayerProps } from "../games/types";
 import { ChoicePlayer } from "../games/ChoicePlayer";
@@ -120,6 +122,8 @@ function PlayInner({ def }: { def: ActivityDef }) {
   const onSolve = useCallback(
     (custom?: Msg) => {
       setSolved(true);
+      burst(lastTouch.x, lastTouch.y);
+      flyStar(lastTouch.x, lastTouch.y, document.querySelector(".play-top .dots i.now"));
       setPose(CHEER_POSES[int(rng.current, 0, CHEER_POSES.length - 1)]);
       setAnim("cheer");
       const fb = msg("fb.correct." + int(rng.current, 1, 6));
@@ -162,6 +166,36 @@ function PlayInner({ def }: { def: ActivityDef }) {
     setRound((r) => r + 1);
     setPhase("play");
   };
+
+  // Hint hand: after two misses it points at the answer; on the very first
+  // question, if the child does nothing for a while, it shows how to drag.
+  const [hand, setHand] = useState<HandPlan | null>(null);
+  useEffect(() => {
+    setHand(null);
+    if (phase !== "play" || solved) return;
+    let idle = 0;
+    const show = (strong: boolean) => {
+      const plan = handPlan(q, strong);
+      if (plan) setHand(plan);
+    };
+    if (hints >= 2) {
+      const id = setTimeout(() => show(true), 700);
+      return () => clearTimeout(id);
+    }
+    if (qi === 0 && hints === 0) {
+      const arm = () => {
+        clearTimeout(idle);
+        setHand(null);
+        idle = window.setTimeout(() => show(false), 7000);
+      };
+      arm();
+      window.addEventListener("pointerdown", arm);
+      return () => {
+        clearTimeout(idle);
+        window.removeEventListener("pointerdown", arm);
+      };
+    }
+  }, [phase, solved, hints, qi, q]);
 
   // QA hook for automated play-through tests (only with ?qa in the URL)
   useEffect(() => {
@@ -229,6 +263,7 @@ function PlayInner({ def }: { def: ActivityDef }) {
         </div>
       )}
       {solved && <Confetti n={14} />}
+      {hand && !solved && <HintHand plan={hand} key={JSON.stringify(hand)} />}
       {leaving && (
         <Modal label={t("play.leave")} onClose={() => setLeaving(false)}>
           <div className="leave">
@@ -299,6 +334,7 @@ function Celebrate({ def, result, stickers, onAgain, total }: { def: ActivityDef
     <div className="celebrate">
       <Confetti n={34} />
       <div className="cele-stage card">
+        <div className="sunburst" aria-hidden="true" />
         <div className="cele-chars">
           <Character id="mo-yeyy" h={190} anim="cheer" />
           <Character id={friend} h={190} anim="cheer" className="cele-friend" />
@@ -319,4 +355,63 @@ function Celebrate({ def, result, stickers, onAgain, total }: { def: ActivityDef
       </div>
     </div>
   );
+}
+
+/** Where the hint hand should go for this question (null = no hand). */
+function handPlan(q: Question, strong: boolean): HandPlan | null {
+  const board = document.querySelector(".play-board");
+  if (!board) return null;
+  if (q.type === "set-clock") {
+    const svg = board.querySelector(".clock-stage svg");
+    if (!svg) return null;
+    const r = svg.getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const angleOf = (sel: string) => Number(board.querySelector(sel)?.getAttribute("transform")?.match(/rotate\(([-\d.]+)/)?.[1] || 0);
+    // drag the hand that still needs to move: if the minutes are already right, it's the short hand
+    const minuteRight = Math.abs(angleOf(".clock-stage .hand.minute") - handAngles(q.target).minute) < 1;
+    const useHour = q.lock === "minute" || q.check === "hour" || (strong && q.check === "full" && minuteRight);
+    const rad = (r.width / 2) * (useHour ? 40 / 110 : 62 / 110);
+    const cur = angleOf(useHour ? ".clock-stage .hand.hour" : ".clock-stage .hand.minute");
+    const target = strong ? (useHour ? handAngles(q.target).hour : handAngles(q.target).minute) : cur + 90;
+    let to = target;
+    while (to <= cur + 1) to += 360;
+    if (to - cur > 360) to -= 360;
+    const pts: [number, number][] = [];
+    for (let k = 0; k <= 12; k++) {
+      const a = ((cur + ((to - cur) * k) / 12) * Math.PI) / 180;
+      pts.push([cx + Math.sin(a) * rad, cy - Math.cos(a) * rad]);
+    }
+    return { kind: "drag", path: pts };
+  }
+  if (q.type === "day-explorer") {
+    const inp = board.querySelector(".dayline input");
+    if (!inp) return null;
+    const r = inp.getBoundingClientRect();
+    return { kind: "drag", path: [[r.left + r.width * 0.25, r.top + r.height / 2], [r.left + r.width * 0.7, r.top + r.height / 2]] };
+  }
+  if (q.type === "sequence" || q.type === "sort" || q.type === "calendar-fill") {
+    // always demonstrate a CORRECT move, so the hint never teaches a wrong order
+    let id = "", to: [number, number] | null = null;
+    if (q.type === "sequence") {
+      const next = Array.from(board.querySelectorAll(".slot")).findIndex((el) => !el.classList.contains("filled"));
+      if (next < 0) return null;
+      id = q.items[next].id;
+      to = centerOf(".slot.next", board);
+    } else if (q.type === "sort") {
+      const it = q.items.find((x) => board.querySelector(`.tray .tile[data-id="${x.id}"]`));
+      if (!it) return null;
+      id = it.id;
+      to = centerOf(`.bin[data-drop="${it.bin}"]`, board);
+    } else {
+      const n = q.missing.find((x) => board.querySelector(`.tray .tile[data-id="${x}"]`));
+      if (n == null) return null;
+      id = String(n);
+      to = centerOf(`.cal-cell[data-drop="${n}"]`, board);
+    }
+    const from = centerOf(`.tray .tile[data-id="${id}"]`, board);
+    return from && to ? { kind: "drag", path: [from, to] } : null;
+  }
+  if (!strong) return null;
+  const at = centerOf(".glow", board);
+  return at ? { kind: "tap", at } : null;
 }

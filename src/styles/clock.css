@@ -43,3 +43,5 @@
 .digital.s { font-size: 26px; padding: 6px 12px; border-radius: 14px; }
 .digital.l { font-size: 64px; padding: 12px 28px; border-radius: 26px; }
 @keyframes blinkColon { 50% { opacity: 0.25; } }
+.clock .second line { stroke: #ff6f91; stroke-width: 2.2; stroke-linecap: round; }
+.clock .second circle { fill: #ff6f91; }

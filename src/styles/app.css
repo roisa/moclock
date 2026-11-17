@@ -170,3 +170,32 @@ h1, h2, h3, .head { font-family: var(--f-head); font-weight: 600; letter-spacing
 .sky .cloud { animation: drift 18s ease-in-out infinite alternate; }
 @keyframes twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.25; } }
 @keyframes drift { from { transform: translateX(0); } to { transform: translateX(18px); } }
+.sky .sun-rays { animation: spin 40s linear infinite; transform-box: fill-box; transform-origin: center; }
+.sky .bird { animation: birdFly 16s linear infinite; }
+.sky .bird path { animation: flap 0.5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+.sky .bird.b2 { animation-duration: 21s; }
+.sky .bird.b3 { animation-duration: 26s; }
+@keyframes birdFly { from { transform: translate(-30px, 70px); } 50% { transform: translate(200px, 50px); } to { transform: translate(430px, 64px); } }
+@keyframes flap { to { transform: scaleY(-0.6); } }
+.sky .sway { animation: sway 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+.sky .flower { transform-box: fill-box; transform-origin: 50% 100%; }
+.sky .flower > circle, .sky .flower > path { animation: none; }
+.sky .shooting { animation: shoot 9s ease-in 2s infinite; }
+@keyframes shoot { 0%, 88% { opacity: 0; transform: translate(330px, 20px); } 90% { opacity: 1; transform: translate(330px, 20px); } 100% { opacity: 0; transform: translate(180px, 66px); } }
+.sky .butterfly { animation: flutterPath 9s ease-in-out infinite; }
+.sky .butterfly .wings { animation: wings 0.35s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+@keyframes wings { to { transform: scaleX(0.35); } }
+@keyframes flutterPath { 0%, 100% { transform: translate(0, 0) rotate(-8deg); } 25% { transform: translate(22px, -16px) rotate(10deg); } 50% { transform: translate(40px, 4px) rotate(-4deg); } 75% { transform: translate(14px, 14px) rotate(8deg); } }
+.sky .cal-page { animation: pageWiggle 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes pageWiggle { 0%, 100% { transform: translate(150px, 54px) rotate(-6deg); } 50% { transform: translate(150px, 54px) rotate(-3deg); } }
+.sky .tick-hand { animation: tickRot 60s steps(60) infinite; }
+.sky .tick-hand.fast { animation: spin 4s linear infinite; }
+@keyframes tickRot { to { transform: rotate(360deg); } }
+.sky .steam { animation: steam 2s ease-in-out infinite; opacity: 0; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(4px); } 40% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-8px); } }
+.sky .sand { animation: sand 0.6s linear infinite; }
+@keyframes sand { to { stroke-dashoffset: -7; } }
+a.btn { text-decoration: none; }
+.btn { white-space: nowrap; }
+.btn svg { width: 1.25em; height: 1.25em; flex-shrink: 0; }

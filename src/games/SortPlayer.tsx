@@ -66,7 +66,7 @@ export function SortPlayer({ q, hints, onMiss, onSolve, solved }: PlayerProps<Of
       </div>
       <div className="tray">
         {left.map((it) => (
-          <button key={it.id} className={`tile card ${sel === it.id ? "selected" : ""} ${bounce === it.id ? "shake" : ""} ${drag?.id === it.id ? "lifted" : ""}`} {...bind(it.id)}>
+          <button key={it.id} data-id={it.id} className={`tile card ${sel === it.id ? "selected" : ""} ${bounce === it.id ? "shake" : ""} ${drag?.id === it.id ? "lifted" : ""}`} {...bind(it.id)}>
             <Visual v={it.visual} size="s" />
           </button>
         ))}

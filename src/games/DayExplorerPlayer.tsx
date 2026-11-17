@@ -34,15 +34,20 @@ export function DayExplorerPlayer({ q, hints, onMiss, onSolve, solved }: PlayerP
   const card = act ? CARDS[act] : null;
   const pose = card ? card.pose : min >= 17 * 60 + 30 && min < 18 * 60 ? "mo-walk" : "mo-wave";
 
+  const minRef = useRef(min);
+  minRef.current = min;
   const setFromClock = (t12: number) => {
     // shortest step from the current 12-hour position keeps the day running on
-    const cur = norm(min);
-    let d = t12 - cur;
-    if (d > 360) d -= 720;
-    if (d < -360) d += 720;
-    setMin((x) => (((x + d) % 1440) + 1440) % 1440);
+    setMin((x) => {
+      let d = t12 - norm(x);
+      if (d > 360) d -= 720;
+      if (d < -360) d += 720;
+      const nx = (((x + d) % 1440) + 1440) % 1440;
+      minRef.current = nx;
+      return nx;
+    });
   };
-  const release = (m = min) => {
+  const release = (m = minRef.current) => {
     if (solved) return;
     if (inWindow(m, [q.from, q.to])) {
       sfx("correct");

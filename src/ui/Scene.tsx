@@ -44,7 +44,7 @@ function arcPos(min: number, rise: number, set: number) {
   return { x: 30 + k * 340, y: 190 - Math.sin(k * Math.PI) * 150, k };
 }
 
-export function Sky({ min, env, town, children, className = "" }: { min?: number; env?: string; town?: boolean; children?: ReactNode; className?: string }) {
+export function Sky({ min, env, town, decor, children, className = "" }: { min?: number; env?: string; town?: boolean; decor?: boolean; children?: ReactNode; className?: string }) {
   const uid = useId().replace(/:/g, "");
   const e = env ? ENVIRONMENTS.find((x) => x.id === env) : undefined;
   const c = e ? { top: e.sky[0], bottom: e.sky[1], hill: e.hill[1], back: e.hill[0] } : skyColors(min ?? 720);
@@ -70,8 +70,18 @@ export function Sky({ min, env, town, children, className = "" }: { min?: number
           [[40, 30], [90, 60], [150, 25], [210, 50], [260, 20], [340, 40], [370, 80], [120, 95], [20, 100], [300, 105]].map(([x, y], i) => (
             <circle key={i} cx={x} cy={y} r={i % 3 ? 1.4 : 2.2} fill="#fff" opacity={0.85} className="twinkle" style={{ animationDelay: i * 0.37 + "s" }} />
           ))}
+        {night && decor && (
+          <g className="shooting" opacity="0">
+            <path d="M0 0 L-46 14" stroke={`url(#shoot${uid})`} strokeWidth="2.4" strokeLinecap="round" />
+            <circle r="2.2" fill="#fff" />
+          </g>
+        )}
+        <linearGradient id={"shoot" + uid} x1="1" y1="0" x2="0" y2="0"><stop offset="0" stopColor="#fff" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
         {sun && (
           <g transform={`translate(${sun.x} ${sun.y})`}>
+            <g className="sun-rays" opacity=".55">
+              {Array.from({ length: 12 }, (_, i) => <path key={i} d="M-3 -32 L0 -46 L3 -32Z" fill="#ffe680" transform={`rotate(${i * 30})`} />)}
+            </g>
             <circle r="34" fill="#ffe680" opacity=".25" />
             <circle r="22" fill={`url(#sun-g${uid})`} />
             <circle r="6" cx="-7" cy="-7" fill="#fff" opacity=".5" />
@@ -90,13 +100,53 @@ export function Sky({ min, env, town, children, className = "" }: { min?: number
         </g>
         <path d="M0 170 C 70 130 140 140 200 160 S 330 120 400 150 V240 H0Z" fill={c.back} />
         {town && <Town night={night} />}
+        {decor && !night && (
+          <g className="birds" fill="none" stroke="#3b4a5a" strokeWidth="1.8" strokeLinecap="round">
+            <g className="bird" style={{ animationDelay: "0s" }}><path d="M0 0 q5 -5 10 0 q5 -5 10 0" /></g>
+            <g className="bird b2" style={{ animationDelay: "-6s" }}><path d="M0 0 q4 -4 8 0 q4 -4 8 0" /></g>
+            <g className="bird b3" style={{ animationDelay: "-11s" }}><path d="M0 0 q3 -3 6 0 q3 -3 6 0" /></g>
+          </g>
+        )}
+        {decor && <Trees night={night} />}
         <path d="M0 196 C 90 168 170 186 230 196 S 350 176 400 186 V240 H0Z" fill={c.hill} />
         <path d="M0 196 C 90 168 170 186 230 196 S 350 176 400 186" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth="3" />
+        {decor && <Flowers night={night} />}
       </svg>
       {children}
     </div>
   );
 }
+function Trees({ night }: { night: boolean }) {
+  const leaf = night ? "#2f6a49" : "#5cc06a", leaf2 = night ? "#285c3f" : "#47a958", trunk = night ? "#5b4632" : "#a86b3c";
+  const tree = (x: number, y: number, s: number, i: number) => (
+    <g key={i} transform={`translate(${x} ${y}) scale(${s})`}>
+      <rect x="-3" y="-4" width="6" height="18" rx="3" fill={trunk} />
+      <g className="sway" style={{ animationDelay: i * -0.7 + "s" }}>
+        <circle cx="0" cy="-14" r="14" fill={leaf} />
+        <circle cx="-9" cy="-6" r="9" fill={leaf2} />
+        <circle cx="9" cy="-7" r="9" fill={leaf2} />
+        <circle cx="-4" cy="-19" r="4" fill="rgba(255,255,255,.25)" />
+      </g>
+    </g>
+  );
+  return <g>{[[34, 168, 1, 0], [62, 172, 0.7, 1], [352, 160, 0.9, 2], [378, 166, 0.65, 3], [292, 170, 0.55, 4]].map(([x, y, s, i]) => tree(x, y, s, i))}</g>;
+}
+function Flowers({ night }: { night: boolean }) {
+  const cols = night ? ["#9a8fd1", "#c7b8e8", "#8fa7d8"] : ["#ff9fbd", "#ffd23f", "#b8a5ff", "#ff9a3d"];
+  const pts = [[120, 214], [150, 222], [205, 210], [250, 224], [300, 214], [330, 226], [92, 228], [180, 230]];
+  return (
+    <g>
+      {pts.map(([x, y], i) => (
+        <g key={i} transform={`translate(${x} ${y})`} className="flower" style={{ animationDelay: i * -0.4 + "s" }}>
+          <path d="M0 0 V8" stroke={night ? "#2c5a3f" : "#3c9a54"} strokeWidth="2" />
+          {[0, 72, 144, 216, 288].map((a) => <circle key={a} cx={Math.cos((a * Math.PI) / 180) * 3.4} cy={Math.sin((a * Math.PI) / 180) * 3.4} r="2.8" fill={cols[i % cols.length]} />)}
+          <circle r="2" fill="#fff6c4" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
 function Cloud({ x, y, s }: { x: number; y: number; s: number }) {
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
@@ -158,7 +208,20 @@ export function WorldArt({ scene }: { scene: "town" | "calendar" | "home" | "par
           <Cloud x={70} y={40} s={0.9} />
           <Cloud x={320} y={60} s={0.7} />
           <path d="M0 190 C 100 160 200 175 400 165 V240 H0Z" fill="#9fdcae" />
-          <g transform="translate(150 54) rotate(-6)">
+          {[[90, 120, "#ff9fbd", 0], [300, 100, "#b8a5ff", -3], [340, 150, "#ffd23f", -6]].map(([x, y, c, d], i) => (
+            <g key={"bf" + i} transform={`translate(${x} ${y})`}>
+              <g className="butterfly" style={{ animationDelay: d + "s" }}>
+                <g className="wings">
+                  <ellipse cx="-5" cy="-2" rx="6" ry="8" fill={c as string} />
+                  <ellipse cx="5" cy="-2" rx="6" ry="8" fill={c as string} />
+                  <ellipse cx="-4" cy="6" rx="4" ry="5" fill={c as string} opacity=".8" />
+                  <ellipse cx="4" cy="6" rx="4" ry="5" fill={c as string} opacity=".8" />
+                </g>
+                <rect x="-1.2" y="-7" width="2.4" height="15" rx="1.2" fill="#3b2f2a" />
+              </g>
+            </g>
+          ))}
+          <g transform="translate(150 54) rotate(-6)" className="cal-page">
             <rect width="120" height="128" rx="14" fill="#fff" stroke="#e6dccb" strokeWidth="2" />
             <rect width="120" height="32" rx="14" fill="#ff8a5c" />
             <rect y="18" width="120" height="14" fill="#ff8a5c" />
@@ -194,9 +257,17 @@ export function WorldArt({ scene }: { scene: "town" | "calendar" | "home" | "par
           <g transform="translate(250 40)">
             <circle r="36" cx="50" cy="40" fill="#fff" stroke="#3cb55e" strokeWidth="7" />
             <path d="M50 40 V18 M50 40 L64 48" stroke="#2b3a2e" strokeWidth="5" strokeLinecap="round" />
+            <g transform="translate(50 40)">
+              <g className="tick-hand"><path d="M0 4 V-28" stroke="#ff6f91" strokeWidth="2.5" strokeLinecap="round" /></g>
+            </g>
           </g>
           <rect x="230" y="140" width="150" height="40" rx="12" fill="#b8a5ff" />
           <rect x="240" y="126" width="56" height="22" rx="10" fill="#fff" />
+          <g transform="translate(330 128)">
+            <rect x="-12" y="-6" width="24" height="18" rx="5" fill="#ff9a3d" />
+            <path d="M12 0 q8 2 0 8" stroke="#ff9a3d" strokeWidth="3" fill="none" />
+            {[-5, 2, 8].map((x, i) => <path key={i} className="steam" style={{ animationDelay: i * 0.6 + "s" }} d={`M${x} -10 q-4 -6 0 -12 q4 -6 0 -12`} stroke="#fff" strokeWidth="2.5" fill="none" strokeLinecap="round" />)}
+          </g>
         </svg>
       </div>
     );
@@ -212,12 +283,12 @@ export function WorldArt({ scene }: { scene: "town" | "calendar" | "home" | "par
           <path d="M2 10 C 2 50 24 54 24 64 C 24 74 2 78 2 118 H46 C 46 78 24 74 24 64 C 24 54 46 50 46 10Z" fill="#fff" fillOpacity=".7" stroke="#c9b7ff" strokeWidth="3" />
           <path d="M10 30 C 14 48 22 54 24 62 C 26 54 34 48 38 30Z" fill="#ffd23f" />
           <path d="M8 116 C 14 98 34 98 40 116Z" fill="#ffd23f" />
-          <path d="M24 64 V100" stroke="#ffd23f" strokeWidth="2" strokeDasharray="3 4" />
+          <path d="M24 64 V100" stroke="#ffd23f" strokeWidth="2.4" strokeDasharray="3 4" className="sand" />
         </g>
         <g transform="translate(300 120)">
           <circle r="34" fill="#fff" stroke="#ff9a3d" strokeWidth="7" />
           <rect x="-7" y="-50" width="14" height="12" rx="4" fill="#ff9a3d" />
-          <path d="M0 0 L0 -24" stroke="#3a8ef0" strokeWidth="5" strokeLinecap="round" />
+          <g className="tick-hand fast"><path d="M0 0 L0 -24" stroke="#3a8ef0" strokeWidth="5" strokeLinecap="round" /></g>
           <path d="M0 0 A 24 24 0 0 1 20 -13 L0 0" fill="#3cb55e" opacity=".4" />
         </g>
       </svg>
