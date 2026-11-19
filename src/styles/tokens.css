@@ -1,0 +1,91 @@
+/* ============================================================
+   Baby Mo: Time Adventure — design tokens
+   Warm cream, fresh green, orange & yellow accents, pastel blue
+   and lavender; chunky rounded "clay" surfaces with soft depth.
+   ============================================================ */
+@font-face { font-family: "Fredoka"; font-weight: 300 700; font-display: swap; src: url(../assets/fonts/fredoka.woff2) format("woff2"); }
+@font-face { font-family: "Nunito"; font-weight: 400 900; font-display: swap; src: url(../assets/fonts/nunito.woff2) format("woff2"); }
+
+:root {
+  color-scheme: light;
+  --cream: #fff8ec;
+  --cream-2: #fff0d8;
+  --paper: #ffffff;
+  --ink: #23372a;
+  --ink-2: #5d6d61;
+  --ink-3: #8b988e;
+  --line: rgba(35, 55, 42, 0.1);
+
+  --green: #3cb55e;
+  --green-d: #2a9147;
+  --green-l: #d4f3da;
+  --green-xl: #ecfaef;
+  --orange: #ff9a3d;
+  --orange-d: #e2761a;
+  --orange-l: #ffe3c8;
+  --yellow: #ffd23f;
+  --yellow-d: #e2b316;
+  --yellow-l: #fff3c4;
+  --blue: #6cc4ff;
+  --blue-d: #3a9ae0;
+  --blue-l: #dcf0ff;
+  --lavender: #b8a5ff;
+  --lavender-d: #8c74ea;
+  --lavender-l: #eee8ff;
+  --pink: #ff9fbd;
+  --pink-l: #ffe4ec;
+  --red-soft: #ff8f7a;
+
+  --card: #ffffff;
+  --card-2: #fffaf2;
+  --shadow-clay: inset 0 2px 0 rgba(255, 255, 255, 0.9), inset 0 -5px 0 rgba(60, 40, 10, 0.06),
+    0 18px 34px -18px rgba(70, 60, 30, 0.38), 0 2px 6px -2px rgba(70, 60, 30, 0.12);
+  --shadow-soft: 0 10px 26px -14px rgba(70, 60, 30, 0.4);
+  --shadow-press: 0 6px 0;
+
+  --r-xl: 34px;
+  --r-lg: 26px;
+  --r-md: 18px;
+  --r-sm: 12px;
+
+  --f-head: "Fredoka", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+  --f-body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --fs: 18px;
+  --tap: 60px; /* minimum touch target for little fingers */
+
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --nav-h: 76px;
+
+  --ease-bounce: cubic-bezier(0.2, 0.9, 0.25, 1.25);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Dark mode: deep evening green, same friendly shapes */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --cream: #13201a;
+  --cream-2: #1a2b22;
+  --paper: #20352a;
+  --ink: #eef7ef;
+  --ink-2: #b4c6b8;
+  --ink-3: #85998a;
+  --line: rgba(255, 255, 255, 0.1);
+  --green: #4fcf73;
+  --green-d: #2f9c50;
+  --green-l: #23452f;
+  --green-xl: #1b3324;
+  --orange-l: #4a3420;
+  --yellow-l: #463d1d;
+  --blue-l: #1f3448;
+  --lavender-l: #2e2948;
+  --pink-l: #46283a;
+  --card: #213629;
+  --card-2: #1c2f24;
+  --shadow-clay: inset 0 2px 0 rgba(255, 255, 255, 0.06), inset 0 -5px 0 rgba(0, 0, 0, 0.18),
+    0 18px 34px -18px rgba(0, 0, 0, 0.7), 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 10px 26px -14px rgba(0, 0, 0, 0.7);
+}
+:root[data-bigtext="1"] { --fs: 21px; }

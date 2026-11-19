@@ -1,0 +1,1020 @@
+{
+ "abi-wave": {
+  "box": [
+   0,
+   0,
+   200,
+   420
+  ],
+  "from": "family/abi-wave",
+  "h": 420,
+  "ref": 1.0,
+  "rel": 1.95,
+  "series": "abi",
+  "src": "abi-wave.webp",
+  "w": 200
+ },
+ "adam-ball": {
+  "box": [
+   89,
+   122,
+   211,
+   362
+  ],
+  "from": "adam-tennis-v2/hold-ball",
+  "h": 390,
+  "ref": 0.5359,
+  "rel": 1.14,
+  "series": "adam",
+  "src": "adam-ball.webp",
+  "w": 300
+ },
+ "adam-cheer": {
+  "box": [
+   76,
+   126,
+   234,
+   352
+  ],
+  "from": "adam-tennis-v2/celebrate-3",
+  "h": 390,
+  "ref": 0.5359,
+  "rel": 1.14,
+  "series": "adam",
+  "src": "adam-cheer.webp",
+  "w": 300
+ },
+ "adam-swing": {
+  "box": [
+   86,
+   87,
+   240,
+   360
+  ],
+  "from": "adam-tennis-v2/fh-one-3",
+  "h": 390,
+  "ref": 0.5359,
+  "rel": 1.14,
+  "series": "adam",
+  "src": "adam-swing.webp",
+  "w": 300
+ },
+ "adam-wave": {
+  "box": [
+   83,
+   153,
+   230,
+   362
+  ],
+  "from": "adam-tennis-v2/wave-1",
+  "h": 390,
+  "ref": 0.5359,
+  "rel": 1.14,
+  "series": "adam",
+  "src": "adam-wave.webp",
+  "w": 300
+ },
+ "adam-win": {
+  "box": [
+   71,
+   125,
+   229,
+   362
+  ],
+  "from": "adam-tennis-v2/win-fist-r",
+  "h": 390,
+  "ref": 0.5359,
+  "rel": 1.14,
+  "series": "adam",
+  "src": "adam-win.webp",
+  "w": 300
+ },
+ "ais-arms-wide": {
+  "box": [
+   69,
+   18,
+   230,
+   248
+  ],
+  "from": "ais-garden/arms-wide-joy",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-arms-wide.webp",
+  "w": 300
+ },
+ "ais-cheer": {
+  "box": [
+   85,
+   37,
+   215,
+   272
+  ],
+  "from": "ais-garden/cheer-fist",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-cheer.webp",
+  "w": 300
+ },
+ "ais-gift": {
+  "box": [
+   75,
+   48,
+   225,
+   272
+  ],
+  "from": "ais-garden/gift-box",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-gift.webp",
+  "w": 300
+ },
+ "ais-giggle": {
+  "box": [
+   88,
+   53,
+   212,
+   272
+  ],
+  "from": "ais-garden/giggle",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-giggle.webp",
+  "w": 300
+ },
+ "ais-jump": {
+  "box": [
+   77,
+   63,
+   223,
+   272
+  ],
+  "from": "ais-garden/jump-joy",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-jump.webp",
+  "w": 300
+ },
+ "ais-pick": {
+  "box": [
+   106,
+   129,
+   334,
+   335
+  ],
+  "from": "ais-garden/garden-pick-1",
+  "h": 360,
+  "ref": 0.6944,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-pick.webp",
+  "w": 360
+ },
+ "ais-run": {
+  "box": [
+   77,
+   36,
+   224,
+   272
+  ],
+  "from": "ais-garden/run",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-run.webp",
+  "w": 300
+ },
+ "ais-seed": {
+  "box": [
+   101,
+   109,
+   264,
+   335
+  ],
+  "from": "ais-garden/garden-seed-1",
+  "h": 360,
+  "ref": 0.6944,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-seed.webp",
+  "w": 360
+ },
+ "ais-sit-wave": {
+  "box": [
+   85,
+   88,
+   215,
+   272
+  ],
+  "from": "ais-garden/sit-wave",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-sit-wave.webp",
+  "w": 300
+ },
+ "ais-sleep": {
+  "box": [
+   72,
+   132,
+   232,
+   272
+  ],
+  "from": "ais-garden/sleep-pillow",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-sleep.webp",
+  "w": 300
+ },
+ "ais-snack": {
+  "box": [
+   87,
+   77,
+   213,
+   272
+  ],
+  "from": "ais-garden/eat-watermelon",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-snack.webp",
+  "w": 300
+ },
+ "ais-sprout": {
+  "box": [
+   90,
+   131,
+   250,
+   335
+  ],
+  "from": "ais-garden/garden-look-sprout",
+  "h": 360,
+  "ref": 0.6944,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-sprout.webp",
+  "w": 360
+ },
+ "ais-surprised": {
+  "box": [
+   89,
+   31,
+   210,
+   272
+  ],
+  "from": "ais-garden/surprised",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-surprised.webp",
+  "w": 300
+ },
+ "ais-think": {
+  "box": [
+   90,
+   53,
+   209,
+   272
+  ],
+  "from": "ais-garden/think-question",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-think.webp",
+  "w": 300
+ },
+ "ais-wake": {
+  "box": [
+   72,
+   87,
+   228,
+   272
+  ],
+  "from": "ais-garden/wake-stretch",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-wake.webp",
+  "w": 300
+ },
+ "ais-water": {
+  "box": [
+   118,
+   85,
+   239,
+   335
+  ],
+  "from": "ais-garden/garden-water-2",
+  "h": 360,
+  "ref": 0.6944,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-water.webp",
+  "w": 360
+ },
+ "ais-wave": {
+  "box": [
+   74,
+   46,
+   226,
+   272
+  ],
+  "from": "ais-garden/wave-hello",
+  "h": 300,
+  "ref": 0.7533,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-wave.webp",
+  "w": 300
+ },
+ "ais-yawn": {
+  "box": [
+   128,
+   162,
+   279,
+   335
+  ],
+  "from": "ais-garden/yawn-stretch-1",
+  "h": 360,
+  "ref": 0.6944,
+  "rel": 1.0,
+  "series": "ais",
+  "src": "ais-yawn.webp",
+  "w": 360
+ },
+ "mo-alright": {
+  "box": [
+   121,
+   72,
+   315,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-alright",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-alright.webp",
+  "src2x": "mo-alright-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-brush": {
+  "box": [
+   19,
+   0,
+   400,
+   420
+  ],
+  "from": "mo-brush/brush-lr",
+  "h": 420,
+  "ref": 1.0,
+  "rel": 1.0,
+  "series": "bust",
+  "src": "mo-brush.webp",
+  "w": 420
+ },
+ "mo-cheeks": {
+  "box": [
+   137,
+   73,
+   327,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-31",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-cheeks.webp",
+  "src2x": "mo-cheeks-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-dinner": {
+  "box": [
+   11,
+   14,
+   232,
+   256
+  ],
+  "from": "word-art/mo-meal",
+  "h": 256,
+  "ref": 0.9453,
+  "rel": 1.0,
+  "series": "bust",
+  "src": "mo-dinner.webp",
+  "w": 256
+ },
+ "mo-giggle": {
+  "box": [
+   121,
+   81,
+   319,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-07",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-giggle.webp",
+  "src2x": "mo-giggle-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-hand-up": {
+  "box": [
+   138,
+   75,
+   329,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-24",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-hand-up.webp",
+  "src2x": "mo-hand-up-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-idea": {
+  "box": [
+   152,
+   75,
+   340,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-idea",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-idea.webp",
+  "src2x": "mo-idea-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-jump": {
+  "box": [
+   152,
+   85,
+   365,
+   386
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-02",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-jump.webp",
+  "src2x": "mo-jump-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-lean": {
+  "box": [
+   94,
+   98,
+   355,
+   439
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-34",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-lean.webp",
+  "src2x": "mo-lean-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-oh": {
+  "box": [
+   143,
+   120,
+   329,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-40",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-oh.webp",
+  "src2x": "mo-oh-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-ok": {
+  "box": [
+   143,
+   70,
+   331,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-ok",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-ok.webp",
+  "src2x": "mo-ok-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-pj": {
+  "box": [
+   135,
+   76,
+   324,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pj-both",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-pj.webp",
+  "w": 480
+ },
+ "mo-pj-top": {
+  "box": [
+   135,
+   76,
+   324,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pj-top",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-pj-top.webp",
+  "w": 480
+ },
+ "mo-point": {
+  "box": [
+   125,
+   85,
+   371,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-08",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-point.webp",
+  "src2x": "mo-point-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-pray": {
+  "box": [
+   36,
+   64,
+   863,
+   864
+  ],
+  "from": "mo-pray-assets/mo-qiyam",
+  "h": 900,
+  "ref": 0.8889,
+  "rel": 1.0,
+  "series": "pray",
+  "src": "mo-pray.webp",
+  "w": 900
+ },
+ "mo-present": {
+  "box": [
+   87,
+   70,
+   343,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-15",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-present.webp",
+  "src2x": "mo-present-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-run": {
+  "box": [
+   145,
+   73,
+   351,
+   429
+  ],
+  "from": "baby-mo-poses/baby-mo-run",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-run.webp",
+  "src2x": "mo-run-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-shrug": {
+  "box": [
+   128,
+   75,
+   346,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-33",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-shrug.webp",
+  "src2x": "mo-shrug-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-sit": {
+  "box": [
+   144,
+   151,
+   329,
+   439
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-12",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-sit.webp",
+  "src2x": "mo-sit-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-sit-relax": {
+  "box": [
+   108,
+   152,
+   359,
+   445
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-18",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-sit-relax.webp",
+  "src2x": "mo-sit-relax-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-sit-wave": {
+  "box": [
+   118,
+   156,
+   356,
+   455
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-13",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-sit-wave.webp",
+  "src2x": "mo-sit-wave-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-sleep": {
+  "box": [
+   71,
+   256,
+   342,
+   428
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-17",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-sleep.webp",
+  "src2x": "mo-sleep-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-sleepy": {
+  "box": [
+   115,
+   163,
+   315,
+   448
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-39",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-sleepy.webp",
+  "src2x": "mo-sleepy-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-surprised": {
+  "box": [
+   139,
+   72,
+   328,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-26",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-surprised.webp",
+  "src2x": "mo-surprised-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-thanks": {
+  "box": [
+   128,
+   72,
+   318,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-thank-you",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-thanks.webp",
+  "src2x": "mo-thanks-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-think": {
+  "box": [
+   154,
+   138,
+   343,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-36",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-think.webp",
+  "src2x": "mo-think-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-thumbs": {
+  "box": [
+   128,
+   71,
+   326,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-25",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-thumbs.webp",
+  "src2x": "mo-thumbs-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-walk": {
+  "box": [
+   131,
+   74,
+   329,
+   440
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-42",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-walk.webp",
+  "src2x": "mo-walk-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-wave": {
+  "box": [
+   151,
+   74,
+   337,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-01",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-wave.webp",
+  "src2x": "mo-wave-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-welcome": {
+  "box": [
+   101,
+   75,
+   375,
+   450
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-41",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-welcome.webp",
+  "src2x": "mo-welcome-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-wonder": {
+  "box": [
+   106,
+   78,
+   292,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-pose-03",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-wonder.webp",
+  "src2x": "mo-wonder-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-wow": {
+  "box": [
+   159,
+   72,
+   328,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-wow",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-wow.webp",
+  "src2x": "mo-wow-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-yes": {
+  "box": [
+   138,
+   67,
+   372,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-yes",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-yes.webp",
+  "src2x": "mo-yes-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo-yeyy": {
+  "box": [
+   115,
+   81,
+   356,
+   436
+  ],
+  "from": "baby-mo-poses/baby-mo-yeyy",
+  "h": 480,
+  "ref": 0.7542,
+  "rel": 1.0,
+  "series": "r1",
+  "src": "mo-yeyy.webp",
+  "src2x": "mo-yeyy-800.webp",
+  "w": 480,
+  "w2x": 800
+ },
+ "mo2-checklist": {
+  "box": [
+   117,
+   66,
+   396,
+   439
+  ],
+  "from": "baby-mo-render2/mo2-checklist",
+  "h": 480,
+  "ref": 0.7771,
+  "rel": 1.0,
+  "series": "r2",
+  "src": "mo2-checklist.webp",
+  "w": 480
+ },
+ "mo2-meal": {
+  "box": [
+   114,
+   70,
+   367,
+   439
+  ],
+  "from": "baby-mo-render2/mo2-dua-meal",
+  "h": 480,
+  "ref": 0.7771,
+  "rel": 1.0,
+  "series": "r2",
+  "src": "mo2-meal.webp",
+  "w": 480
+ },
+ "mo2-read": {
+  "box": [
+   129,
+   80,
+   352,
+   440
+  ],
+  "from": "baby-mo-render2/mo2-read-book",
+  "h": 480,
+  "ref": 0.7771,
+  "rel": 1.0,
+  "series": "r2",
+  "src": "mo2-read.webp",
+  "w": 480
+ },
+ "mo2-school": {
+  "box": [
+   121,
+   67,
+   381,
+   440
+  ],
+  "from": "baby-mo-render2/mo2-walk-backpack",
+  "h": 480,
+  "ref": 0.7771,
+  "rel": 1.0,
+  "series": "r2",
+  "src": "mo2-school.webp",
+  "w": 480
+ },
+ "mo2-tie-shoe": {
+  "box": [
+   126,
+   73,
+   383,
+   440
+  ],
+  "from": "baby-mo-render2/mo2-tie-shoe",
+  "h": 480,
+  "ref": 0.7771,
+  "rel": 1.0,
+  "series": "r2",
+  "src": "mo2-tie-shoe.webp",
+  "w": 480
+ },
+ "umi-welcome": {
+  "box": [
+   0,
+   0,
+   173,
+   420
+  ],
+  "from": "family/umi-welcome",
+  "h": 420,
+  "ref": 1.0,
+  "rel": 1.85,
+  "series": "umi",
+  "src": "umi-welcome.webp",
+  "w": 173
+ }
+}

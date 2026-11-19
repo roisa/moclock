@@ -1,0 +1,32 @@
+{
+  "name": "babymo-time-adventure",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Baby Mo: Time Adventure — learn clocks, days, routines and durations with Baby Mo. Ibra Creative Studio.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && node scripts/gen-sw.mjs dist",
+    "build:hub": "tsc -b && vite build --mode hub --outDir dist-hub && node scripts/export-hub.mjs",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b",
+    "e2e": "node scripts/e2e.mjs",
+    "assets:sync": "node scripts/sync-assets.mjs",
+    "voice:lines": "node scripts/voice-lines.mjs",
+    "test:offline": "node scripts/offline-test.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  }
+}
