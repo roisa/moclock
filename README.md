@@ -41,6 +41,15 @@ npm run preview        # serve dist/ locally
 any static host (a domain root or a sub-folder, over HTTPS for the PWA). Make
 sure the host serves `sw.js` and `index.html` with `Cache-Control: no-cache`.
 
+**GitHub Pages (standalone).** `.github/workflows/deploy-pages.yml` runs the
+tests, builds the game and publishes `dist/` every time `main` changes. It can
+also be run by hand from the Actions tab. The address is
+`https://<owner>.github.io/<repo-name>/`, so naming the repo `time` gives
+**roisa.github.io/time/**. One-time setup:
+
+1. Settings → General → Repository name: `time`
+2. Settings → Pages → Source: **GitHub Actions**
+
 **Inside play.babymo.id (the Baby Mo app)**
 
 ```bash
