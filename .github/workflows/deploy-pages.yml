@@ -1,8 +1,8 @@
 name: Deploy Time Adventure to GitHub Pages
 
 # Publishes the standalone PWA (dist/) to https://<owner>.github.io/<repo>/.
-# Every URL in the build is relative, so it works under any repo name
-# (rename the repo to "time" to get roisa.github.io/time/).
+# → https://roisa.github.io/moclock/ (every URL in the build is relative,
+# so it keeps working if the repo is ever renamed).
 on:
   push:
     branches: [main]
