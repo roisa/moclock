@@ -1,4 +1,12 @@
-# Baby Mo: Time Adventure
+# Baby Mo: Time Adventure + Time Racers
+
+This repo holds two games that share one engine, the same character art and the
+same EN/ID language layer:
+
+| Game | Live | What it is |
+|---|---|---|
+| **Time Adventure** | https://roisa.github.io/moclock/ | Calm learning worlds: clock, calendar, routine, durations (below) |
+| **Time Racers** (3D) | https://roisa.github.io/moclock/racers/ | Babylon.js kart racing: answer time questions for turbo. See **[docs/RACERS.md](docs/RACERS.md)** |
 
 An educational game that teaches children aged 3–8 how time works: reading
 analog and digital clocks, days and months, daily routines, and how long things
@@ -69,6 +77,15 @@ In hub mode the game:
 
 Because the iOS app (Capacitor, `webDir: www`) ships `www/`, the game is
 included in the next iOS build automatically.
+
+## Time Racers quick start
+
+```bash
+npm run dev        # http://localhost:5173/racers/
+npm run build && npx vite preview --port 4174 &
+npm run e2e:racers            # real menu flow + a full race + explorer steering (software WebGL)
+npm run test:offline:racers   # racer works offline after the first visit
+```
 
 ## Test
 

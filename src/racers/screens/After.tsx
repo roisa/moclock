@@ -58,7 +58,7 @@ export function Results({ levelId, s, stars, sticker }: { levelId: string; s: Ra
         </ul>
         {s.learned.length > 0 && (
           <div className="r-learned">
-            <small>{t("r.youLearned")}</small>
+            <small>{t(lv.family === "numbers" || lv.family === "hour-hand" ? "r.youFound" : "r.youLearned")}</small>
             <b>{s.learned.slice(0, 6).join(", ")}</b>
           </div>
         )}

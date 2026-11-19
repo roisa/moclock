@@ -49,3 +49,14 @@ the browser.
 | 9 | Delayed praise timers fired after leaving the game, and the hint button could throw away a solved answer | Timers are cancelled on unmount; the hint button is hidden once solved | — |
 | 10 | "You earned 1 stars" | Singular form in EN and ID | — |
 | — | Bubbles jumped back to the bottom before bursting; the 10-second "Again" button could race an auto-advance; Mo's Day could lose the time on fast drags; the hint hand could demonstrate a wrong card order, or drag the long hand when only the short hand needed to move | JS-driven bubble motion; no auto-advance; functional state updates; hints always show a correct move | Real-tap tests, hint-hand screenshots |
+
+## Time Racers (19 Nov 2026)
+
+| Command | Covers | Result |
+|---|---|---|
+| `npm test` | Racer core: track geometry (closed loop, no self-crossing, left normals), junior auto-drive never hits a wall, explorer never escapes the road, turbo is faster, full headless races (countdown, gates, laps, finish), balance (answering everything wins; no answers doesn't simply win; the field stays close), every level's questions have exactly one right and unique answer with filled EN/ID text, the clock and the right answer always agree, progression (stars from learning, unlocks, coins, trophies, stickers, fair karts) | ✅ 88/88 (both games) |
+| `npm run e2e:racers` | Real menu flow (Play → Baby Ais → garage → map → Clock Town → level 1 → tutorial → race), every question answered with one deliberate miss and its explanation, results podium, progress saved after reload, Explorer mode arrow-key steering | ✅ 1st place, level 2 unlocked, stars saved, left/right steering verified |
+| `npm run test:offline:racers` | First visit caches the racer files; with the network off, a race still starts | ✅ |
+| Manual screenshots | Home, map, racer select, garage, levels, tutorial, race (quiz panel, wrong-answer explanation, turbo), Day Week Valley lane gates, results — desktop 1280×800, iPad 820×1180, phone portrait 390×844 (rotate prompt), phone landscape 844×390, Indonesian | ✅ layout issues found and fixed (mirrored signs, arch blocking the camera, portrait answer buttons, landscape gate panel, results wrapping) |
+
+All automated runs use headless Chromium with **software** WebGL (SwiftShader), so they say nothing about frame rate. Still needed: real iPhone, iPad, Android and low-end phone checks (frame rate, touch feel, audio, the Safari WebGL context), plus voice-over of the race prompts.

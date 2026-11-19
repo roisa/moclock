@@ -16,10 +16,11 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false,
     chunkSizeWarningLimit: 2500, // Babylon.js (Time Racers only) is one big chunk
     rollupOptions: {
-      input: {
+      // the play.babymo.id export ships Time Adventure only
+      input: (mode === "hub" ? { main: "index.html" } : {
         main: "index.html", // Baby Mo: Time Adventure
         racers: "racers/index.html", // Baby Mo: Time Racers (3D)
-      },
+      }) as Record<string, string>,
     },
   },
   test: {

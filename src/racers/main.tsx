@@ -12,7 +12,8 @@ import "./styles/racers.css";
 registerRacerDicts();
 setCharacterBase("../characters/");
 // play.babymo.id-style offline: the site-wide service worker (one level up) caches the racer too
-if ("serviceWorker" in navigator && !import.meta.env.DEV) navigator.serviceWorker.register("../sw.js").catch(() => {});
+if ("serviceWorker" in navigator && !import.meta.env.DEV)
+  navigator.serviceWorker.register("../sw.js").then(() => navigator.serviceWorker.ready).then((reg) => reg.active?.postMessage({ type: "CACHE_RACERS" })).catch(() => {});
 
 loadRacers().then((p) => {
   createRoot(document.getElementById("root")!).render(

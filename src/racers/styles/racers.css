@@ -325,3 +325,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .r-results { flex-direction: column; flex-wrap: nowrap; gap: 4px; }
   .r-results-left { transform: scale(.8); margin: -20px 0 -30px; }
 }
+@media (max-width: 560px) and (orientation: portrait) {
+  .r-q-opts { width: 100%; max-width: none; }
+  .r-hud-right .r-pill:first-child { display: none; }
+  .r-pill.time { font-size: 18px; padding: 6px 12px 6px 8px; }
+  .r-hud-pos b { font-size: 38px; }
+  .r-hud-pos span { font-size: 16px; }
+}

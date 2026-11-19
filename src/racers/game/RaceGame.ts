@@ -193,6 +193,11 @@ export class RaceGame {
     const lat = (1 - i) * this.track.half * 0.62;
     this.race.player.lane = lat; // junior lane assist steers there; explorer drivers steer themselves
   }
+  /** test hook: the child's kart in track space */
+  debug() {
+    const k = this.race.player;
+    return { s: k.s, lat: k.lat, speed: k.speed, boost: k.boost, phase: this.race.phase };
+  }
   startAudio() {
     this.sound.start();
   }

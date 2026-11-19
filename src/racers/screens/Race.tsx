@@ -136,7 +136,7 @@ export function RaceScreen({ levelId, onFinish }: { levelId: string; onFinish: (
 
   // QA hook for automated tests (?qa in the URL)
   useEffect(() => {
-    if (/[?&]qa/.test(location.search)) (window as unknown as { __rqa: unknown }).__rqa = { q, mode, hud, ready };
+    if (/[?&]qa/.test(location.search)) (window as unknown as { __rqa: unknown }).__rqa = { q, mode, hud, ready, kart: () => game.current?.debug() };
   });
   const pick = (i: number, e?: React.MouseEvent) => {
     unlockAudio();
