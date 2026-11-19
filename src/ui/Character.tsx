@@ -15,7 +15,11 @@ interface Meta {
 }
 const M = meta as unknown as Record<string, Meta>;
 export const POSES = Object.keys(M);
-const BASE = "./characters/";
+let BASE = "./characters/";
+/** pages in a sub-folder (e.g. /racers/) point this at the shared art */
+export function setCharacterBase(b: string) {
+  BASE = b;
+}
 
 export function poseUrl(id: string): string {
   const m = M[id];

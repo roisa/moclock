@@ -14,6 +14,13 @@ export default defineConfig(({ mode }) => ({
     target: "es2019",
     assetsInlineLimit: 0,
     sourcemap: false,
+    chunkSizeWarningLimit: 2500, // Babylon.js (Time Racers only) is one big chunk
+    rollupOptions: {
+      input: {
+        main: "index.html", // Baby Mo: Time Adventure
+        racers: "racers/index.html", // Baby Mo: Time Racers (3D)
+      },
+    },
   },
   test: {
     environment: "node",
