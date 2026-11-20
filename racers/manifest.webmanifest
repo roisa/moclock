@@ -1,0 +1,18 @@
+{
+  "name": "Baby Mo: Time Racers",
+  "short_name": "Time Racers",
+  "description": "Race karts with Baby Mo, Baby Ais and Kak Adam — answer time questions for turbo!",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#7fcaff",
+  "theme_color": "#7fcaff",
+  "categories": ["education", "kids", "games"],
+  "icons": [
+    { "src": "../icons/racers-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/racers-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "../icons/racers-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
