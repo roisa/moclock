@@ -44,16 +44,26 @@ async function ride(lang) {
   check(!!(await p.$(".ru-panel.pause")), "pause panel opens");
   await p.click(".ru-panel.pause .ru-pill.big");
   const t0 = Date.now();
-  let i = 0;
+  let i = 0, steered = false;
   while (!(await p.$(".ru-delivered")) && Date.now() - t0 < 90000) {
     await p.waitForTimeout(450);
     // tap the on-screen buttons like a child would
     const k = i++ % 5;
     if (k === 0) await p.tap(".ru-ctl.jump").catch(() => {});
-    else if (k === 1) await p.tap(".ru-steer .ru-ctl >> nth=1").catch(() => {});
-    else if (k === 3) await p.tap(".ru-steer .ru-ctl >> nth=0").catch(() => {});
+    else if (k === 1 || k === 3) {
+      // drag the thumb stick right (k 1) or left (k 3), hold briefly, let go
+      const box = await p.locator(".ru-stick").boundingBox().catch(() => null);
+      if (box) {
+        const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+        await p.mouse.move(cx, cy); await p.mouse.down();
+        await p.mouse.move(cx + (k === 1 ? 1 : -1) * box.width * 0.4, cy, { steps: 4 });
+        await p.waitForTimeout(150); await p.mouse.up();
+      }
+    }
     if (i === 20) await p.screenshot({ path: `${OUT}/${lang}-ride.png` });
+    if (!steered && i > 3) steered = await p.evaluate(() => !!document.querySelector(".ru-stick")) && i > 6;
   }
+  check(steered, "thumb stick steers Mo");
   check(!!(await p.$(".ru-delivered")), `delivery completed in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
   await p.waitForTimeout(2000);
   const res = await p.textContent(".ru-result");

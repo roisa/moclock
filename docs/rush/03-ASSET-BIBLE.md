@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (43 images: 36 done or covered, 7 to make, 0 of them now)
+## 7. Packs (46 images: 36 done or covered, 10 to make, 3 of them now)
 
 ### References
 
@@ -136,3 +136,11 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | 41 | Kak Adam riding (6 rear frames) | ✅ done | anim | `adam-ride` (frames 1–6, 10 fps, loop) |
 | 42 | Friendly race moments | ✅ done | poses | `ais-pass`, `ais-cheer-ride`, `ais-finish`, `adam-pass`, `adam-cheer-ride`, `adam-finish` |
 | 43 | Race props | later | items | `race-finish`, `race-start-light`, `race-flag`, `race-podium`, `race-medal`, `race-cones` |
+
+### Riding (redo)
+
+| # | image | status | kind | game files |
+|---|---|---|---|---|
+| 44 | Baby Mo riding from behind — running stride (REDO) | ⭐ NOW | anim | `mo-run` (frames 1–6, 10 fps, loop) |
+| 45 | Baby Ais riding from behind — running stride (REDO) | ⭐ NOW | anim | `ais-run` (frames 1–6, 10 fps, loop) |
+| 46 | Kak Adam riding from behind — running stride (REDO) | ⭐ NOW | anim | `adam-run` (frames 1–6, 10 fps, loop) |

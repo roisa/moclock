@@ -98,3 +98,6 @@ Baby Ais (pink bike, same height as Mo) and Kak Adam (blue track suit, a little 
 
 ## 17. Tilt steering
 "Tilt to steer" on the mission card (asks for motion access on iPhone, inside the tap). The phone's roll — `gamma` in portrait, `beta` in landscape (sign by screen angle) — is calibrated to the child's holding position at the start (and again if the phone is turned). Roll beyond ±11° moves Mo into the left / right lane, with 3° hysteresis so a wobbly hand doesn't flicker; the arrow buttons keep working. A small badge shows the tilt is live; without a sensor the game quietly stays on buttons.
+
+## 18. Thumb stick
+The left / right arrow buttons are replaced by an on-screen thumb stick (outer ring + green knob), like the move stick in island / craft games. Dragging the knob sets Mo's sideways speed (more push = faster, small dead zone in the middle, full push crosses a lane in ~0.4 s); his position on the road is free while the thumb is down, and when it lifts the knob springs back and Mo settles into the nearest lane. Keyboard arrows and tilt steering still work; the left-handed setting swaps the stick and the Jump button.

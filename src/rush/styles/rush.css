@@ -501,3 +501,13 @@
 .ru-tilt.on { background: #4cbf5a; border-color: #2a9147; color: #fff; }
 .ru-tilthud { position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.85); font: 700 13px "Fredoka"; color: #2a9147; pointer-events: none; }
 .ru-tilthud .phone { width: 12px; height: 20px; border-radius: 3px; border: 2px solid #2a9147; transition: transform .2s; }
+/* thumb stick: outer ring + knob */
+.ru-stick { position: relative; pointer-events: auto; touch-action: none; width: clamp(120px, min(19vw, 30vh), 170px); height: clamp(120px, min(19vw, 30vh), 170px); border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.28) 0 55%, rgba(255,255,255,.5) 56% 100%); border: 4px solid rgba(255,255,255,.85); box-shadow: 0 6px 16px rgba(0,0,0,.22), inset 0 0 0 6px rgba(76,191,90,.25); cursor: grab; }
+.ru-stick.on { cursor: grabbing; border-color: #fff; }
+.ru-stick .knob { position: absolute; left: 50%; top: 50%; width: 46%; height: 46%; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 38% 32%, #b9f5c4, #4cbf5a 62%, #2a9147); border: 4px solid #fff; box-shadow: 0 5px 0 #2a9147, 0 8px 14px rgba(0,0,0,.25); transition: transform .18s cubic-bezier(.3,1.6,.5,1); }
+.ru-stick.on .knob { transition: none; }
+.ru-stick .arrow { position: absolute; top: 50%; width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; transform: translateY(-50%); opacity: .9; }
+.ru-stick .arrow.l { left: 9%; border-right: 12px solid #fff; }
+.ru-stick .arrow.r { right: 9%; border-left: 12px solid #fff; }

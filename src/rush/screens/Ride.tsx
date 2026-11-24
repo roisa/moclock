@@ -16,6 +16,7 @@ import { useRush, UNLOCKS, type WorldId } from "../state";
 import { audio, CLIP_TEXT, type Clip } from "../audio";
 import { usePrayer } from "../prayer/prayer";
 import { listenTilt } from "../tiltSensor";
+import { Joystick } from "../ui/Joystick";
 import { laneFromTilt } from "../core/tilt";
 
 const STREAK_CLIPS: Record<number, Clip> = { 8: "masya1", 16: "masya2", 24: "subhan", 32: "barak", 40: "akbar" };
@@ -264,7 +265,6 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     const w = (e.currentTarget as HTMLElement).clientWidth;
     sim.input.steer.push(e.clientX < w / 2 ? -1 : 1);
   };
-  const steer = (d: number) => (e: React.PointerEvent) => { e.stopPropagation(); if (!paused) sim.input.steer.push(d); };
   const jump = (e: React.PointerEvent) => { e.stopPropagation(); if (!paused) sim.input.jump = true; };
 
   const portrait = typeof innerWidth !== "undefined" && innerHeight > innerWidth * 1.15;
@@ -299,8 +299,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       {phase === "ride" && (
         <div className="ru-controls">
           <div className="ru-steer">
-            <button className="ru-ctl" aria-label={t("ru.left")} onPointerDown={steer(-1)}><img src="rush/ui/ctl-left.webp" alt="" draggable={false} /></button>
-            <button className="ru-ctl" aria-label={t("ru.right")} onPointerDown={steer(1)}><img src="rush/ui/ctl-right.webp" alt="" draggable={false} /></button>
+            <Joystick label={t("ru.steer")} onMove={(x) => { if (!paused) sim.input.stick = x; }} />
           </div>
           <button className="ru-ctl jump" aria-label={t("ru.jump")} onPointerDown={jump}><img src="rush/ui/ctl-jump.webp" alt="" draggable={false} /><span>{t("ru.jump")}</span></button>
         </div>
