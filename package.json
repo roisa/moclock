@@ -17,7 +17,9 @@
     "voice:lines": "node scripts/voice-lines.mjs",
     "test:offline": "node scripts/offline-test.mjs",
     "e2e:racers": "node scripts/e2e-racers.mjs",
-    "test:offline:racers": "node scripts/offline-racers.mjs"
+    "test:offline:racers": "node scripts/offline-racers.mjs",
+    "e2e:rush": "node scripts/e2e-rush.mjs",
+    "docs:rush": "node scripts/rush-docs.mjs"
   },
   "dependencies": {
     "@babylonjs/core": "7.54.3",

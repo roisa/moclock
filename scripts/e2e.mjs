@@ -43,7 +43,7 @@ async function playAll(lang) {
   let missesTested = 0;
   for (const id of ACTS) {
     try {
-      await p.goto(`${BASE}/?qa#/play/${id}`, { waitUntil: "networkidle" });
+      await p.goto(`${BASE}/learn/?qa#/play/${id}`, { waitUntil: "networkidle" });
       // tutorial: step through with the buttons
       for (let i = 0; i < 4; i++) {
         const btn = p.locator(".tut-actions .btn.big");
@@ -93,7 +93,7 @@ async function playAll(lang) {
   }
   // progress persisted?
   await p.waitForTimeout(600);
-  await p.goto(`${BASE}/#/rewards`, { waitUntil: "networkidle" });
+  await p.goto(`${BASE}/learn/#/rewards`, { waitUntil: "networkidle" });
   await p.waitForTimeout(400);
   const stars = await p.locator(".rw-total b").innerText();
   const stickers = await p.locator(".sticker-slot.has").count();
@@ -116,7 +116,7 @@ async function shots() {
       await ctx.addInitScript(() => localStorage.setItem("bm_lang", "en"));
       const p = await ctx.newPage();
       for (const [rn, r] of Object.entries(routes)) {
-        await p.goto(`${BASE}/${r}`, { waitUntil: "networkidle" });
+        await p.goto(`${BASE}/learn/${r}`, { waitUntil: "networkidle" });
         await p.waitForTimeout(600);
         const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
         if (overflow) fails.push(`horizontal overflow: ${name} ${rn}`);

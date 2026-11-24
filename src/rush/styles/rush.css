@@ -1,0 +1,236 @@
+/* ============================================================
+   Baby Mo: Time Rush — screens. Glossy kid-friendly buttons and
+   panels come from the app-ayah kit (public/rush/kit).
+   ============================================================ */
+.ru-app { position: fixed; inset: 0; overflow: hidden; font-family: "Fredoka", "Nunito", system-ui, sans-serif; color: var(--ink); background: #bfe7ff; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.ru-screen { position: absolute; inset: 0; display: flex; flex-direction: column; padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); background: linear-gradient(#a6dcff, #e8f7ff 60%, #c9efb8); background-size: cover; background-position: center bottom; overflow-y: auto; animation: ru-in .35s ease both; }
+:root[data-theme="dark"] .ru-screen { background-color: #1b2a3a; }
+@keyframes ru-in { from { opacity: 0; transform: scale(.98); } }
+
+/* ---------- kit buttons */
+.ru-round { border: 0; padding: 0; background: none; cursor: pointer; border-radius: 50%; transition: transform .12s; flex: none; filter: drop-shadow(0 4px 4px rgba(0,0,0,.18)); }
+.ru-round img { width: 100%; height: 100%; display: block; }
+.ru-round:active { transform: scale(.92); }
+.ru-pill { position: relative; border: 0; cursor: pointer; min-width: 150px; height: 64px; padding: 0 28px 6px; background: center / 100% 100% no-repeat; color: #fff; font: 700 22px/1 "Fredoka", sans-serif; text-shadow: 0 2px 0 rgba(0,0,0,.25); transition: transform .12s; filter: drop-shadow(0 5px 5px rgba(0,0,0,.18)); display: inline-flex; align-items: center; justify-content: center; }
+.ru-pill span { display: inline-flex; align-items: center; gap: 8px; }
+.ru-pill.yellow { color: #7a4a00; text-shadow: 0 1px 0 rgba(255,255,255,.6); }
+.ru-pill.big { height: 84px; min-width: 230px; font-size: 30px; }
+.ru-pill:active { transform: scale(.94); }
+.ru-pill:disabled { filter: grayscale(.8); opacity: .6; }
+.ru-pill:focus-visible, .ru-round:focus-visible, .ru-world:focus-visible, .ru-unlock:focus-visible { outline: 4px solid #fff; outline-offset: 3px; }
+.ru-ribbon { margin: 0 auto; min-width: 260px; max-width: 70vw; height: 76px; background: center / 100% 100% no-repeat; display: grid; place-items: center; padding: 0 56px 14px; color: #fff; font: 700 clamp(20px, 3.4vw, 30px)/1 "Fredoka", sans-serif; text-shadow: 0 2px 0 rgba(0,0,0,.25); text-align: center; }
+.ru-count { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px 6px 8px; background: rgba(255,255,255,.92); border-radius: 999px; font: 700 22px "Fredoka"; color: #7a4a00; box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+.ru-count img { width: 32px; height: 32px; }
+:root[data-theme="dark"] .ru-count { background: rgba(30,40,55,.9); color: #ffd23f; }
+.ru-top { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 10px; flex: none; }
+.ru-top-r { display: flex; justify-content: flex-end; min-width: 64px; }
+.ru-panel { background: var(--card, #fff); color: var(--ink); border-radius: 28px; padding: 20px 22px; box-shadow: 0 6px 0 rgba(0,0,0,.08), 0 10px 30px rgba(40,60,90,.15); border: 4px solid #ffd76a; }
+:root[data-theme="dark"] .ru-panel { border-color: #6a5a2a; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.ru-scrim { position: fixed; inset: 0; background: rgba(20,30,50,.45); display: grid; place-items: center; z-index: 50; animation: ru-in .2s both; padding: 16px; }
+.ru-mo { display: block; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0,0,0,.18)); pointer-events: none; }
+
+/* ---------- logo */
+.ru-logo { display: flex; flex-direction: column; align-items: center; line-height: .9; text-align: center; }
+.ru-logo .l1 { font: 700 clamp(30px, 5.5vw, 54px) "Fredoka"; color: #4aa8f0; -webkit-text-stroke: 2px #fff; paint-order: stroke; text-shadow: 0 4px 0 #2a6fb0; }
+.ru-logo .l2 { font: 700 clamp(40px, 8vw, 84px) "Fredoka"; color: #ffb42a; -webkit-text-stroke: 3px #fff; paint-order: stroke; text-shadow: 0 5px 0 #d9641a, 0 8px 14px rgba(0,0,0,.18); display: inline-flex; align-items: center; gap: 6px; }
+.ru-logo .l2 img { width: .6em; height: .6em; animation: ru-twirl 3s ease-in-out infinite; }
+.ru-logo .l3 { margin-top: 8px; background: #e5484d; color: #fff; padding: 6px 22px 8px; border-radius: 10px; font: 700 clamp(14px, 2vw, 20px) "Fredoka"; box-shadow: 0 4px 0 #b02a30; }
+.ru-logo.small .l1 { font-size: 26px; } .ru-logo.small .l2 { font-size: 36px; }
+@keyframes ru-twirl { 50% { transform: rotate(18deg) scale(1.1); } }
+
+/* ---------- splash */
+.ru-splash { border: 0; cursor: pointer; align-items: center; justify-content: space-between; background: linear-gradient(#ffd79a, #a8dcff 55%, #8fd3a0 56%, #6cc35c); }
+.ru-splash .ru-logo { margin-top: 4vh; z-index: 2; animation: ru-drop .7s cubic-bezier(.3,1.6,.5,1) both; }
+.ru-sun { position: absolute; right: 12%; top: 10%; width: 16vh; height: 16vh; border-radius: 50%; background: radial-gradient(#fffbe0, #ffd23f 60%, rgba(255,210,63,0) 72%); }
+.ru-road-art { position: absolute; left: 50%; bottom: 0; width: 120vw; height: 44%; transform: translateX(-50%); background: #c9cdd6; clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%); }
+.ru-road-art::after { content: ""; position: absolute; left: 49.4%; width: 1.2%; top: 0; bottom: 0; background: repeating-linear-gradient(#fffaf0 0 34px, transparent 34px 68px); }
+.ru-splash-l, .ru-splash-r { position: absolute; bottom: 40%; width: min(22vw, 220px); z-index: 1; }
+.ru-splash-l { left: 6%; } .ru-splash-r { right: 6%; }
+.ru-splash-mo { position: relative; z-index: 2; animation: ru-ride 1.6s ease-in-out infinite; }
+.ru-tap { position: relative; z-index: 2; margin-bottom: 3vh; background: #fff; color: #2a9147; font: 700 24px "Fredoka"; padding: 10px 28px; border-radius: 999px; box-shadow: 0 5px 0 rgba(0,0,0,.12); animation: ru-pulse 1.4s ease-in-out infinite; }
+@keyframes ru-drop { from { transform: translateY(-60px) scale(.8); opacity: 0; } }
+@keyframes ru-ride { 50% { transform: translateY(-8px) rotate(-1.5deg); } }
+@keyframes ru-pulse { 50% { transform: scale(1.06); } }
+
+/* ---------- home */
+.ru-home-top { display: flex; gap: 10px; align-items: center; }
+.ru-home-top .grow { flex: 1; }
+.ru-home-main { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4vw; flex-wrap: wrap; }
+.ru-home-hero { position: relative; display: flex; align-items: flex-end; }
+.ru-home-mo { animation: ru-ride 2.4s ease-in-out infinite; }
+.ru-home-hero .ru-bikeside { margin-left: -30px; margin-bottom: 6px; }
+.ru-bikeprev { display: block; }
+.ru-home-menu { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+/* ---------- worlds */
+.ru-world-list { flex: 1; display: flex; gap: 16px; overflow-x: auto; padding: 18px 6px 10px; scroll-snap-type: x mandatory; align-items: center; }
+.ru-world { flex: none; width: min(250px, 62vw); scroll-snap-align: center; border: 0; padding: 0; background: var(--card, #fff); border-radius: 26px; overflow: hidden; box-shadow: 0 6px 0 rgba(0,0,0,.1), 0 12px 28px rgba(40,60,90,.18); cursor: pointer; text-align: left; transition: transform .15s; border: 4px solid #fff; color: var(--ink); }
+.ru-world:active { transform: scale(.97); }
+.ru-world .art { position: relative; height: 170px; overflow: hidden; }
+.ru-world .ground { position: absolute; left: -10%; right: -10%; bottom: -40px; height: 90px; border-radius: 50%; }
+.ru-world .art img { position: absolute; left: 50%; bottom: 14px; width: 56%; transform: translateX(-50%); }
+.ru-world .clk { position: absolute; right: 10px; top: 10px; width: 54px; }
+.ru-world .moon { position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; border-radius: 50%; box-shadow: 9px -4px 0 0 #ffe9a0; }
+.ru-world .meta { padding: 10px 14px 14px; display: flex; flex-direction: column; gap: 4px; }
+.ru-world .meta b { font-size: 20px; }
+.ru-world .meta small { color: var(--ink-2); font: 600 14px "Nunito"; min-height: 2.4em; }
+.ru-world .praise img { width: 28px; }
+.ru-world .new { color: #2a9147; font-weight: 700; }
+.ru-world .soon { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); font-weight: 700; }
+.ru-world .soon img { width: 26px; }
+.ru-world.locked .art { filter: grayscale(.65) brightness(.95); }
+.ru-world.locked { cursor: default; }
+
+/* ---------- mission */
+.ru-mission-body { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3vw; }
+.ru-mission-mo { animation: ru-ride 2.4s ease-in-out infinite; }
+.ru-clip { position: relative; max-width: 440px; background: #fffaf0; border-radius: 22px; padding: 30px 24px 22px; border: 10px solid #c9925a; box-shadow: 0 8px 0 rgba(0,0,0,.12); display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; color: #3a2e20; }
+.ru-clip .clip { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); width: 110px; height: 34px; border-radius: 10px; background: linear-gradient(#7fcaff, #3a9ae0); box-shadow: 0 3px 0 rgba(0,0,0,.2); }
+.ru-clip h2 { margin: 0; font-size: 24px; color: #2a9147; }
+.ru-clip p { margin: 0; font: 600 17px/1.35 "Nunito"; }
+.ru-mission-clocks { display: flex; align-items: center; gap: 8px; }
+.ru-mission-clocks figure { margin: 0; width: 96px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ru-mission-clocks figcaption { font: 700 13px "Nunito"; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.ru-mission-books { display: flex; align-items: flex-end; gap: 6px; }
+.ru-mission-books img { width: 76px; margin-left: 8px; }
+.book { display: inline-block; width: 26px; height: 32px; border-radius: 4px 6px 6px 4px; background: rgba(0,0,0,.12); position: relative; }
+.book.on { background: linear-gradient(90deg, #3f8fd0 0 18%, #7fcaff 18%); box-shadow: inset 0 -5px 0 rgba(255,255,255,.6); }
+.book.on:nth-child(2) { background: linear-gradient(90deg, #e07a3a 0 18%, #ffb36b 18%); }
+.book.on:nth-child(3) { background: linear-gradient(90deg, #45a249 0 18%, #9be585 18%); }
+
+/* ---------- ride */
+.ru-ride { position: absolute; inset: 0; touch-action: none; }
+.ru-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.ru-hud { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: flex-start; gap: 10px; padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left)); pointer-events: none; }
+.ru-hud > * { pointer-events: auto; }
+.ru-hud-stars { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.92); border-radius: 999px; padding: 4px 16px 4px 4px; font: 700 26px "Fredoka"; color: #7a4a00; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.ru-hud-stars img { width: 40px; height: 40px; }
+.ru-hud-stars.bump0 b { animation: ru-pop .25s; } .ru-hud-stars.bump1 b { animation: ru-pop2 .25s; }
+@keyframes ru-pop { 50% { transform: scale(1.35); } } @keyframes ru-pop2 { 50% { transform: scale(1.35); } }
+.ru-hud-clock { margin: 0 auto; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.92); border-radius: 22px; padding: 4px 12px 4px 4px; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.ru-hud-clock .clock-wrap, .ru-hud-clock > div:first-child { width: 68px; }
+.ru-hud-pk { display: flex; align-items: flex-end; gap: 4px; background: rgba(255,255,255,.92); border-radius: 16px; padding: 8px 10px; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.ru-hud-pk .acorns { font: 700 16px "Fredoka"; color: #8a5a2a; margin-left: 6px; align-self: center; }
+.ru-hud-pause { width: 54px; height: 54px; background: radial-gradient(#fff8e8 56%, #ffc928 58% 70%, #e2a316 72%); display: grid; grid-auto-flow: column; place-content: center; gap: 6px; }
+.ru-hud-pause i { width: 8px; height: 22px; border-radius: 4px; background: #3a9ae0; }
+.ru-say { position: absolute; left: 50%; top: 96px; transform: translateX(-50%); max-width: min(560px, 86vw); background: #fff; color: #23372a; border-radius: 22px; padding: 8px 18px 8px 8px; font: 700 clamp(15px, 2.2vw, 20px)/1.25 "Nunito"; box-shadow: 0 5px 0 rgba(0,0,0,.1); display: flex; align-items: center; gap: 10px; animation: ru-in .25s both; pointer-events: none; }
+.ru-say img { width: 44px; height: 44px; object-fit: contain; border-radius: 50%; background: #dff3ff; }
+.ru-ready { position: absolute; left: 50%; bottom: 24%; transform: translateX(-50%); background: rgba(255,255,255,.95); border-radius: 20px; padding: 12px 22px; font: 700 18px "Nunito"; text-align: center; box-shadow: 0 5px 0 rgba(0,0,0,.1); max-width: 86vw; display: flex; flex-direction: column; gap: 4px; }
+.ru-ready small { color: #3a9ae0; }
+.ru-controls { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); pointer-events: none; }
+.ru-ride.lefty .ru-controls { flex-direction: row-reverse; }
+.ru-steer { display: flex; gap: 12px; }
+.ru-ctl { pointer-events: auto; width: clamp(68px, 11vw, 92px); height: clamp(68px, 11vw, 92px); border-radius: 50%; border: 0; cursor: pointer; background: radial-gradient(circle at 40% 35%, #fff, #e8f4ff); box-shadow: 0 6px 0 #3a9ae0, 0 10px 16px rgba(0,0,0,.2); display: grid; place-items: center; touch-action: none; transition: transform .08s; }
+.ru-ctl svg { width: 52%; height: 52%; fill: none; stroke: #3a9ae0; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ru-ctl:active { transform: translateY(4px); box-shadow: 0 2px 0 #3a9ae0; }
+.ru-ctl.jump { width: clamp(84px, 14vw, 118px); height: clamp(84px, 14vw, 118px); background: radial-gradient(circle at 40% 35%, #b9f5c4, #4cbf5a); box-shadow: 0 6px 0 #2a9147, 0 10px 16px rgba(0,0,0,.2); grid-template-rows: auto auto; align-content: center; gap: 0; }
+.ru-ctl.jump svg { stroke: #fff; width: 44%; height: 44%; }
+.ru-ctl.jump span { color: #fff; font: 700 16px "Fredoka"; text-shadow: 0 1px 0 rgba(0,0,0,.2); }
+.ru-ctl.jump:active { box-shadow: 0 2px 0 #2a9147; }
+.ru-panel.pause { display: flex; flex-direction: column; align-items: center; gap: 12px; min-width: 280px; }
+.ru-panel.pause h2 { margin: 0 0 4px; }
+
+/* ---------- delivered / rewards / unlock */
+.ru-delivered, .ru-rewards, .ru-unlockw { align-items: center; background: linear-gradient(#ffe8b8, #bfe7ff); }
+.ru-delivered-body, .ru-rewards-body { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3vw; flex-wrap: wrap; }
+.ru-door { position: relative; width: min(380px, 44vw); }
+.ru-door .lib { width: 100%; display: block; }
+.ru-delivered-mo { position: absolute; left: -10%; bottom: -6%; animation: ru-ride 1.2s ease-in-out infinite; }
+.ru-door .book { position: absolute; bottom: 4%; animation: ru-hop 1s ease-in-out infinite; }
+.ru-door .b1 { right: 30%; } .ru-door .b2 { right: 22%; animation-delay: .15s; } .ru-door .b3 { right: 14%; animation-delay: .3s; }
+@keyframes ru-hop { 50% { transform: translateY(-10px); } }
+.ru-result { display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 420px; }
+.ru-result .praise img { width: 64px; transition: transform .3s; }
+.ru-result .praise img.pop { animation: ru-pop .4s; }
+.ru-result .msg { margin: 0; font: 600 16px/1.35 "Nunito"; text-align: center; }
+.ru-arrived { display: flex; align-items: center; gap: 10px; font: 700 18px "Fredoka"; }
+.ru-arrived > div:first-child { width: 70px; }
+.ru-arrived span { display: flex; flex-direction: column; gap: 2px; }
+.ru-result ul { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; gap: 6px; }
+.ru-result li { display: flex; align-items: center; gap: 10px; font: 700 16px "Nunito"; background: var(--card-2, #fffaf2); border-radius: 14px; padding: 6px 12px; }
+.ru-result li img, .ru-result li .mini-balloon, .ru-result li .mini-tunnel { width: 28px; height: 28px; flex: none; }
+.ru-result li b { margin-left: auto; }
+.mini-balloon { border-radius: 50% 50% 46% 46%; background: radial-gradient(circle at 50% 45%, #fff 0 34%, #ff8fb0 36%); }
+.mini-tunnel { border-radius: 50% 50% 0 0; background: repeating-radial-gradient(circle at 50% 100%, #ff9ec4 0 4px, #ffe06a 4px 8px, #7fcaff 8px 12px); }
+:root[data-theme="dark"] .ru-delivered, :root[data-theme="dark"] .ru-rewards, :root[data-theme="dark"] .ru-unlockw { background: linear-gradient(#3a3050, #1b2a3a); }
+.ru-rewards .chest { width: min(260px, 34vw, 42vh); animation: ru-ride 2s ease-in-out infinite; }
+.ru-rewards-body { flex-wrap: nowrap; }
+.ru-rewards .ru-panel { max-width: min(560px, 58vw); }
+@media (orientation: portrait) { .ru-rewards-body { flex-direction: column; } .ru-rewards .ru-panel { max-width: 92vw; } }
+.ru-rewards .ru-panel { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.ru-rewards .gain { margin: 0; font: 700 48px "Fredoka"; color: #e2a316; display: flex; align-items: center; gap: 6px; }
+.ru-rewards .gain img { width: 52px; }
+.ru-fresh { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.ru-unlockw-card { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: auto; max-width: 380px; text-align: center; }
+.ru-unlockw-card img { width: 220px; }
+.ru-unlockw-card h2 { margin: 0; }
+.ru-unlockw-card p { margin: 0; font: 600 16px "Nunito"; }
+.ru-unlockw-card .soon { color: var(--ink-3); font-weight: 700; }
+
+/* ---------- garage / collection */
+.ru-garage, .ru-collection { background: linear-gradient(#f6e3c6, #e9cfa8); }
+:root[data-theme="dark"] .ru-garage, :root[data-theme="dark"] .ru-collection { background: linear-gradient(#3a2e24, #241c16); }
+.ru-garage-body, .ru-collection-body { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3vw; flex-wrap: wrap; }
+.ru-turntable { position: relative; display: grid; place-items: center; }
+.ru-turntable { padding-bottom: 20px; }
+.ru-turntable::after { content: ""; position: absolute; bottom: 0; left: 50%; width: 300px; height: 50px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(#fff6e3, #d8b98c); z-index: -1; }
+.ru-unlock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; width: min(560px, 92vw); }
+.ru-unlock { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border-radius: 20px; border: 4px solid transparent; background: var(--card, #fff); color: var(--ink); cursor: pointer; font: inherit; box-shadow: 0 4px 0 rgba(0,0,0,.1); }
+.ru-unlock.on { border-color: #4cbf5a; }
+.ru-unlock.locked { opacity: .7; cursor: default; }
+.ru-unlock.locked .sw { filter: grayscale(.7); }
+.ru-unlock .sw { width: 64px; height: 40px; border-radius: 20px 20px 10px 10px; box-shadow: inset 0 -6px 0 rgba(0,0,0,.12), 0 0 0 3px #fff; }
+.ru-unlock .sw.bike { width: 72px; height: 24px; border-radius: 12px; }
+.ru-unlock .sw.helmet { width: 60px; height: 40px; border-radius: 30px 30px 8px 8px; }
+.ru-unlock .sw.bag { width: 48px; height: 52px; border-radius: 14px; }
+.ru-unlock b { font-size: 15px; text-align: center; }
+.ru-unlock small { font: 700 13px "Nunito"; color: #2a9147; display: flex; align-items: center; gap: 4px; }
+.ru-unlock small.cost { color: #b07a00; }
+.ru-unlock small img { width: 18px; }
+.ru-tabs { display: flex; gap: 8px; justify-content: center; margin: 10px 0; }
+.ru-tabs button { border: 0; border-radius: 999px; padding: 10px 20px; font: 700 18px "Fredoka"; background: rgba(255,255,255,.7); color: var(--ink); cursor: pointer; }
+.ru-tabs button.on { background: #4cbf5a; color: #fff; }
+.ru-tokens { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.ru-token { display: flex; flex-direction: column; align-items: center; filter: grayscale(1) opacity(.45); }
+.ru-token.on { filter: none; }
+.ru-token img { width: 96px; }
+.ru-seen { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.ru-seen figure { margin: 0; width: 70px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+/* ---------- parents */
+.ru-parents { background: linear-gradient(#e8f4ff, #f6fbff); }
+:root[data-theme="dark"] .ru-parents { background: #18222e; }
+.ru-parent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; }
+.ru-parent-grid p { font: 500 15px/1.45 "Nunito"; }
+.ru-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font: 600 16px "Nunito"; }
+.ru-row input[type=checkbox] { width: 26px; height: 26px; accent-color: #4cbf5a; }
+.ru-row select { font: inherit; padding: 6px; border-radius: 10px; }
+.ru-panel.gate { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.ru-gate-val { font: 700 34px "Fredoka"; min-width: 120px; text-align: center; background: var(--card-2, #fffaf2); border-radius: 14px; padding: 4px 12px; }
+.ru-gate-val.shake { animation: ru-shake .4s; }
+@keyframes ru-shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+.ru-err { color: #d94848; }
+.ru-pad { display: grid; grid-template-columns: repeat(5, 54px); gap: 8px; }
+.ru-pad button { height: 54px; border-radius: 14px; border: 0; background: #dcf0ff; font: 700 22px "Fredoka"; cursor: pointer; color: #23372a; }
+
+@media (max-height: 480px) {
+  .ru-pill.big { height: 68px; font-size: 24px; min-width: 190px; }
+  .ru-ribbon { height: 60px; }
+  .ru-world .art { height: 120px; }
+  .ru-clip { padding: 20px 18px 14px; gap: 6px; }
+  .ru-say { top: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ru-screen, .ru-splash-mo, .ru-home-mo, .ru-mission-mo, .ru-delivered-mo, .ru-tap, .ru-logo .l2 img, .ru-rewards .chest, .ru-door .book { animation: none !important; }
+}
+@media (orientation: portrait) {
+  .ru-home-hero { flex-direction: column; align-items: center; }
+  .ru-home-hero .ru-mo { height: 30vh !important; }
+  .ru-home-hero .ru-bikeside { margin: -10px 0 0; width: min(200px, 50vw); }
+  .ru-mission-body { flex-direction: column; }
+  .ru-mission-mo { height: 22vh !important; }
+}
+.ru-more { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.ru-more a { font: 700 15px "Fredoka"; color: #2a6fb0; background: rgba(255,255,255,.85); padding: 7px 14px; border-radius: 999px; text-decoration: none; box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+:root[data-theme="dark"] .ru-more a { background: rgba(30,40,55,.9); color: #9fd6ff; }

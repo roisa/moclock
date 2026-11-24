@@ -1,3 +1,4 @@
+import { IN_HUB } from "../platform/native";
 import { useEffect, useState } from "react";
 import { useStore } from "../state";
 import { Character } from "../ui/Character";
@@ -52,7 +53,7 @@ export function Home({ onParent }: { onParent: () => void }) {
     <div className="page home">
       <header className="home-top">
         <div className="brand">
-          <img src="./icons/icon-192.png" alt="" width={44} height={44} />
+          <img src={(IN_HUB ? "./" : "../") + "icons/icon-192.png"} alt="" width={44} height={44} />
           <div>
             <b className="head">{t("app.short")}</b>
             <small>Baby Mo</small>
