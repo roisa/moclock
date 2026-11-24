@@ -7,7 +7,7 @@ import { SEG, type Item, type Track } from "../core/track";
 import type { GameSim } from "../core/sim";
 import { handAngles } from "../../engine/time";
 import { sprite, star5, type Sprite } from "./sprites";
-import { drawRider, drawRiderStrip, type Look, type Sheets } from "./rider";
+import { drawRider, drawRiderStrip, type Clips, type Look, type Sheets } from "./rider";
 import { Particles } from "./particles";
 import { daylight } from "../core/clock";
 
@@ -50,6 +50,8 @@ export class Scene {
   private flyers: { img: CanvasImageSource; w: number; h: number; x0: number; y0: number; t: number; dur: number; size: number }[] = [];
   /** Baby Mo riding sheet (6 rear frames) */
   riderStrip: HTMLImageElement | null = null;
+  /** approved action sheets: jump, boost, pickup, bump */
+  clips: Clips = {};
   private vis: { i: number; a: Proj; b: Proj; fog: number }[] = [];
   constructor(public canvas: HTMLCanvasElement) {
     this.g = canvas.getContext("2d")!;
@@ -190,7 +192,7 @@ export class Scene {
     // --- rider
     const rp = this.riderXY(sim);
     if (this.riderStrip) {
-      drawRiderStrip(g, rp.x, rp.y, this.riderH * 1.12, r, clock, this.riderStrip, this.stride, curveNow);
+      drawRiderStrip(g, rp.x, rp.y, this.riderH * 1.12, r, clock, this.riderStrip, this.stride, curveNow, this.clips);
       // a little dust puff from the foot that pushes off
       if (foot !== this.foot && !r.stopped && !r.air && r.speed > 300 && !this.reduced)
         this.fx.emit("dust", rp.x + (foot ? 1 : -1) * this.riderH * 0.2, rp.y - 6, 2, { speed: 60, size: 6, life: 0.45 });

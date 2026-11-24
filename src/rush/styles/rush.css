@@ -291,3 +291,4 @@
   .ru-hud-pause { width: 44px; height: 44px; }
   .ru-say { top: 74px; font-size: 14px; }
 }
+.ru-celebrate { position: absolute; left: -12%; bottom: -8%; height: 40vh; aspect-ratio: 334 / 480; background: 0 0 / 600% 100% no-repeat; filter: drop-shadow(0 8px 10px rgba(0,0,0,.18)); }

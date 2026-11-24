@@ -8,7 +8,7 @@ import { GameSim, type SimEvent, type Stats } from "../core/sim";
 import { morningWorld } from "../core/morning";
 import { Scene } from "../render/scene";
 import { preload, ALL_SPRITES, image, artAtlas, sprite } from "../render/sprites";
-import { BIKES } from "../render/rider";
+import { BIKES, CLIP_FRAMES, type ClipName } from "../render/rider";
 import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
 import { audio } from "../audio";
@@ -61,6 +61,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     ro.observe(c);
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
     image("mo/ride.webp").then((i) => (sc.riderStrip = i)).catch(() => {}); // the approved riding sheet
+    for (const c of Object.keys(CLIP_FRAMES) as ClipName[]) image(`mo/${c}.webp`).then((i) => (sc.clips[c] = i)).catch(() => {});
     preload(ALL_SPRITES).catch(() => {});
     // generated animation strips (rush-slice.py) replace the placeholder rider clip by clip
     artAtlas().then((at) => {
@@ -112,8 +113,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         case "carrot": { const q = at(e.item.id); sc.fx.emit("heart", q.x, q.y, 2, { size: 10, speed: 40 }); audio.sfx("pop"); break; }
         case "pickup": {
           const q = rp();
-          const bk = sprite("books");
-          sc.fly(bk.img, bk.w, bk.h, sc.W / 2, sc.H * 0.3, sc.riderH * 0.6);
+          // the approved pickup frames show Mo catching the package; without them the books fly in
+          if (!sc.clips.pickup) { const bk = sprite("books"); sc.fly(bk.img, bk.w, bk.h, sc.W / 2, sc.H * 0.3, sc.riderH * 0.6); }
           sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 9, speed: 260 }); audio.sfx("correct"); audio.haptic("success"); say(("ru.say.pickup" + Math.min(3, e.carrying)), { force: true }); break; }
         case "bump": { const r = sc.riderXY(sim); sc.fx.emit("dust", r.x, r.y - 10, 8, { speed: 120, size: 12 }); sc.bump(); audio.sfx("gentle"); audio.haptic("soft"); say("ru.say.bump", { gap: 10 }); break; }
         case "splash": { const r = sc.riderXY(sim); sc.fx.emit("drop", r.x, r.y - 10, 18, { speed: 260, up: 320, size: 9 }); audio.sfx("whoosh"); break; }

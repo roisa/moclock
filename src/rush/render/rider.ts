@@ -171,15 +171,37 @@ function shade(hex: string) {
  * push stride, plus procedural lean (steering + curves), stride bob and sway, jump
  * squash / stretch and a gentle wobble on bumps.
  */
-export function drawRiderStrip(g: CanvasRenderingContext2D, x: number, y: number, H: number, r: Rider, clock: number, strip: HTMLImageElement, stride: number, curve: number) {
-  const n = 6, fw = strip.naturalWidth / n, fh = strip.naturalHeight;
+/** approved action sheets (public/rush/mo): frame count per strip */
+export const CLIP_FRAMES = { jump: 5, boost: 6, pickup: 6, wobble: 5 } as const;
+export type ClipName = keyof typeof CLIP_FRAMES;
+export type Clips = Partial<Record<ClipName, HTMLImageElement>>;
+const RIDE_FH = 420; // frame height of the riding sheet; other sheets are drawn at the same scale
+
+/** which action frame to show (progress-driven, so it always matches the game state) */
+function actionFrame(r: Rider, clock: number, clips: Clips): [HTMLImageElement, number, number] | null {
+  const at = (c: ClipName, u: number, from: number, to: number) => (clips[c] ? [clips[c]!, CLIP_FRAMES[c], Math.min(to, from + Math.floor(Math.max(0, u) * (to - from + 1)))] as [HTMLImageElement, number, number] : null);
+  if (r.prep > 0) return at("jump", (0.1 - r.prep) / 0.1, 0, 1);
+  if (r.air) return at("jump", 0, 2, 2);
+  if (r.land > 0) return at("jump", (0.2 - r.land) / 0.2, 3, 4);
+  if (r.wobble > 0) return at("wobble", (0.6 - r.wobble) / 0.6, 0, 4);
+  if (r.pickup > 0) return at("pickup", (0.6 - r.pickup) / 0.6, 0, 5);
+  if (r.boost > 0 && clips.boost) return [clips.boost, 6, Math.floor(clock * 12) % 6];
+  return null;
+}
+
+export function drawRiderStrip(g: CanvasRenderingContext2D, x: number, y: number, H: number, r: Rider, clock: number, strip: HTMLImageElement, stride: number, curve: number, clips: Clips = {}) {
+  let img = strip, n = 6;
   const anim = animOf(r);
   const foot = Math.sin(stride) > 0 ? 0 : 1;
   let idx = foot ? 4 : 1;
   if (r.lean < -0.3) idx = foot ? 3 : 0;
   else if (r.lean > 0.3) idx = foot ? 5 : 2;
   if (r.stopped || r.air) idx = 4;
-  const lift = r.h * H * 1.5;
+  const act = r.stopped ? null : actionFrame(r, clock, clips);
+  if (act) [img, n, idx] = act;
+  const fw = img.naturalWidth / n, fh = img.naturalHeight;
+  // the jump sheet already lifts Mo in its air frame, so the physics lift is reduced
+  const lift = r.h * H * (act && img === clips.jump ? 0.8 : 1.5);
   // soft shadow (shrinks while airborne)
   g.fillStyle = "rgba(40,50,40,.22)";
   g.beginPath();
@@ -200,9 +222,10 @@ export function drawRiderStrip(g: CanvasRenderingContext2D, x: number, y: number
   if (r.prep > 0) { sx = 1.06; sy = 0.92; }
   if (r.land > 0) { const k = r.land / 0.2; sx = 1 + 0.1 * k; sy = 1 - 0.1 * k; }
   if (r.air) { sx = 0.97; sy = 1.04; }
-  if (moving) sy *= 1 - Math.abs(Math.sin(stride)) * 0.012;
+  if (moving && !act) sy *= 1 - Math.abs(Math.sin(stride)) * 0.012;
+  if (act) { sx = 1; sy = 1; } // the drawn frames already squash and stretch
   g.scale(sx, sy);
-  const dh = H, dw = (dh * fw) / fh;
-  g.drawImage(strip, idx * fw, 0, fw, fh, -dw / 2, -dh, dw, dh);
+  const dh = (H * fh) / RIDE_FH, dw = (dh * fw) / fh;
+  g.drawImage(img, idx * fw, 0, fw, fh, -dw / 2, -dh, dw, dh);
   g.restore();
 }

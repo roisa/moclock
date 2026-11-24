@@ -2,7 +2,7 @@
 
 > Generated from `src/rush/assets/packs.ts` by `npm run docs:rush`.
 
-**Only 20 images are left to make — 10 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 23 (✅ / 📚 in the checklist).
+**Only 14 images are left to make — 4 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 29 (✅ / 📚 in the checklist).
 Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 grid, on a PNG with a transparent background.
 
 ## How to use
@@ -22,15 +22,15 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 4 | Gliding loop | ✅ done | your 6 rear riding frames — the in-game rider |
 | 5 | Push-off strides loop (feet push the ground — no pedals) | 📚 already covered | the 6 rear frames alternate as push strides |
 | 6 | Turning left and right | 📚 already covered | frames 1/4 (left) and 3/6 (right) of your sheet + game lean |
-| 7 | Jump: crouch, fly, land | ⭐ NOW | `p07-jump.png` |
-| 8 | Speed boost loop | ⭐ NOW | `p08-boost.png` |
-| 9 | Catching a package | ⭐ NOW | `p09-pickup.png` |
+| 7 | Jump: crouch, fly, land | ✅ done | your jump sheet (frame 4, legs splayed, left out) |
+| 8 | Speed boost loop | ✅ done | your boost sheet |
+| 9 | Catching a package | ✅ done | your package-catch sheet |
 | 10 | Gliding with a full backpack | 📚 already covered | same frames; the game flies the books into the backpack |
-| 11 | Gentle bump and recovery (never falls) | ⭐ NOW | `p11-wobble.png` |
+| 11 | Gentle bump and recovery (never falls) | ✅ done | your bump sheet (frame 3, over-stretched leg, left out; the toy block removed) |
 | 12 | Waiting on the bike (idle loop) | 📚 already covered | frame 5 of your sheet + breathing |
 | 13 | Looking around and waving to friends | later | `p13-look-wave.png` |
 | 14 | Face portraits for the HUD and speech bubbles | 📚 already covered | face cut from your turnaround |
-| 15 | Delivery celebration | ⭐ NOW | `p15-celebrate.png` |
+| 15 | Delivery celebration | ✅ done | your celebration sheet (Delivered screen) |
 | 16 | Helping the squirrel | later | `p16-help.png` |
 | 17 | Bike colours | ✅ done | recoloured from your bike art |
 | 18 | Delivery backpacks | 📚 already covered | the backpack is part of your riding frames |
@@ -44,7 +44,7 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 26 | World cards (floating dioramas) | 📚 already covered | app-ayah NurConnect scene backgrounds |
 | 27 | Things to collect | 📚 already covered | app-ayah star, coin, gift, carrot, badge |
 | 28 | Clock balloons (blank faces) | later | `p28-balloons.png` |
-| 29 | Soft obstacles and road pieces | ⭐ NOW | `p29-obstacles.png` |
+| 29 | Soft obstacles and road pieces | ✅ done | your log, boxes, blocks, puddle, ramp and boost pad |
 | 30 | Arches, tunnel and rings | later | `p30-arches.png` |
 | 31 | Squirrel friend | 📚 already covered | replaced by the app-ayah bunny (carrot quest) |
 | 32 | The librarian | later | `p32-librarian.png` |
@@ -63,223 +63,6 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 ---
 
 ## ⭐ Make now
-
-### 7. Jump: crouch, fly, land ⭐ NOW
-
-**Attach:** art-src/rush/p04-ride-user.png (approved riding frames); art-src/rush/bike-side.png (approved bike)  
-**Save as:** `art-src/rush/p07-jump.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Jump: crouch, fly, land. Baby Mo jumping with the push balance bike. Keep the wheels' ground line in the same place in every cell; the game moves the sprite up and down.
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-3. CHARACTER — BABY MO (must match the attached reference exactly):
-- Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
-- Hair: short, slightly messy, glossy black hair with a few soft tufts on top and a soft fringe sweeping to his left; never long, never spiky, never brown.
-- Eyes: big, round, glossy dark-brown eyes with two white catch-lights each, short dark lashes, soft brown eyebrows.
-- Skin: light warm skin tone (peach-beige), small button nose, small smiling mouth.
-- Outfit: one-piece bright fresh-green jumpsuit (#4CBF5A) with a small light-grey five-point star on the centre of the chest, a thin orange-peach band across the belly, long orange-peach sleeves (#FF9E6B) with thin yellow cuffs at the wrists, green rounded shoes matching the jumpsuit.
-- Body: short chubby arms and legs, small hands with four fingers and a thumb, no visible neck.
-NEVER change his face shape, eye size, hair style, skin tone, clothing colours, star position or shoe design. No extra accessories unless this prompt asks for them.
-HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
-4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
-- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
-- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
-- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
-- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
-- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
-- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
-6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. crouch: body squashed down 5%, elbows bent
-   2. springing up, front wheel lifting
-   3. in the air, bike level, legs tucked, open-mouth laugh
-   4. in the air, legs kicked out happily to the sides
-   5. landing: tyres and body squashed 8%
-   6. rebound to neutral, giggling
-7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
-### 8. Speed boost loop ⭐ NOW
-
-**Attach:** art-src/rush/p04-ride-user.png (approved riding frames); art-src/rush/bike-side.png (approved bike)  
-**Save as:** `art-src/rush/p08-boost.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Speed boost loop. Baby Mo zooming fast, leaning forward, helmet strap and backpack straps fluttering (no fire, no smoke — the game adds rainbow trails).
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-3. CHARACTER — BABY MO (must match the attached reference exactly):
-- Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
-- Hair: short, slightly messy, glossy black hair with a few soft tufts on top and a soft fringe sweeping to his left; never long, never spiky, never brown.
-- Eyes: big, round, glossy dark-brown eyes with two white catch-lights each, short dark lashes, soft brown eyebrows.
-- Skin: light warm skin tone (peach-beige), small button nose, small smiling mouth.
-- Outfit: one-piece bright fresh-green jumpsuit (#4CBF5A) with a small light-grey five-point star on the centre of the chest, a thin orange-peach band across the belly, long orange-peach sleeves (#FF9E6B) with thin yellow cuffs at the wrists, green rounded shoes matching the jumpsuit.
-- Body: short chubby arms and legs, small hands with four fingers and a thumb, no visible neck.
-NEVER change his face shape, eye size, hair style, skin tone, clothing colours, star position or shoe design. No extra accessories unless this prompt asks for them.
-HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
-4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
-- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
-- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
-- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
-- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
-- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
-- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
-6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. tucked forward 10°
-   2. hair under the helmet flutters back
-   3. tiny shake left
-   4. tiny shake right
-   5. one hand lifts a little with excitement
-   6. hand back on the grip (flows into frame 1)
-7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; fire, flames or smoke; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
-### 9. Catching a package ⭐ NOW
-
-**Attach:** art-src/rush/p04-ride-user.png (approved riding frames); art-src/rush/bike-side.png (approved bike)  
-**Save as:** `art-src/rush/p09-pickup.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Catching a package. Baby Mo reaching up with his right hand to catch a cream package with a green ribbon floating down beside him, then putting it into his backpack.
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-3. CHARACTER — BABY MO (must match the attached reference exactly):
-- Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
-- Hair: short, slightly messy, glossy black hair with a few soft tufts on top and a soft fringe sweeping to his left; never long, never spiky, never brown.
-- Eyes: big, round, glossy dark-brown eyes with two white catch-lights each, short dark lashes, soft brown eyebrows.
-- Skin: light warm skin tone (peach-beige), small button nose, small smiling mouth.
-- Outfit: one-piece bright fresh-green jumpsuit (#4CBF5A) with a small light-grey five-point star on the centre of the chest, a thin orange-peach band across the belly, long orange-peach sleeves (#FF9E6B) with thin yellow cuffs at the wrists, green rounded shoes matching the jumpsuit.
-- Body: short chubby arms and legs, small hands with four fingers and a thumb, no visible neck.
-NEVER change his face shape, eye size, hair style, skin tone, clothing colours, star position or shoe design. No extra accessories unless this prompt asks for them.
-HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
-4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
-- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
-- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
-- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
-- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
-- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
-- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
-6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. right hand starts to lift
-   2. right arm stretched up and out, package just above
-   3. hand holds the package
-   4. package over his right shoulder
-   5. package drops into the open backpack
-   6. hand back on the grip, backpack full, happy shoulder wiggle
-7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
-### 11. Gentle bump and recovery (never falls) ⭐ NOW
-
-**Attach:** art-src/rush/p04-ride-user.png (approved riding frames); art-src/rush/bike-side.png (approved bike)  
-**Save as:** `art-src/rush/p11-wobble.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Gentle bump and recovery (never falls). Baby Mo bumping softly into a toy block: a wobble, one foot down, a giggle, then riding on.
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-3. CHARACTER — BABY MO (must match the attached reference exactly):
-- Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
-- Hair: short, slightly messy, glossy black hair with a few soft tufts on top and a soft fringe sweeping to his left; never long, never spiky, never brown.
-- Eyes: big, round, glossy dark-brown eyes with two white catch-lights each, short dark lashes, soft brown eyebrows.
-- Skin: light warm skin tone (peach-beige), small button nose, small smiling mouth.
-- Outfit: one-piece bright fresh-green jumpsuit (#4CBF5A) with a small light-grey five-point star on the centre of the chest, a thin orange-peach band across the belly, long orange-peach sleeves (#FF9E6B) with thin yellow cuffs at the wrists, green rounded shoes matching the jumpsuit.
-- Body: short chubby arms and legs, small hands with four fingers and a thumb, no visible neck.
-NEVER change his face shape, eye size, hair style, skin tone, clothing colours, star position or shoe design. No extra accessories unless this prompt asks for them.
-HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
-4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
-- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
-- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
-- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
-- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
-- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
-- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
-6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. front wheel bumps, bike tilts 8° right, surprised 'oops'
-   2. tilts 12° right, arms out for balance
-   3. right foot down on the ground
-   4. upright again, shoulders up, giggling
-   5. giggle shake
-   6. feet back on the footrests, gliding
-7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; falling to the ground; crying, pain or injury; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
-### 15. Delivery celebration ⭐ NOW
-
-**Attach:** art-src/rush/p01-mo-turnaround.png (approved Baby Mo); babymo-app/www/baby-mo-poses/baby-mo-yeyy.png (render 1, celebrating)  
-**Save as:** `art-src/rush/p15-celebrate.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Delivery celebration. Baby Mo (helmet on, standing next to nothing — no bike) cheering after a delivery.
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-3. CHARACTER — BABY MO (must match the attached reference exactly):
-- Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
-- Hair: short, slightly messy, glossy black hair with a few soft tufts on top and a soft fringe sweeping to his left; never long, never spiky, never brown.
-- Eyes: big, round, glossy dark-brown eyes with two white catch-lights each, short dark lashes, soft brown eyebrows.
-- Skin: light warm skin tone (peach-beige), small button nose, small smiling mouth.
-- Outfit: one-piece bright fresh-green jumpsuit (#4CBF5A) with a small light-grey five-point star on the centre of the chest, a thin orange-peach band across the belly, long orange-peach sleeves (#FF9E6B) with thin yellow cuffs at the wrists, green rounded shoes matching the jumpsuit.
-- Body: short chubby arms and legs, small hands with four fingers and a thumb, no visible neck.
-NEVER change his face shape, eye size, hair style, skin tone, clothing colours, star position or shoe design. No extra accessories unless this prompt asks for them.
-HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
-5. CAMERA: Front three-quarter, full body, eye level.
-6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. fists at chest, excited
-   2. crouching to jump
-   3. jumping up, both arms up
-   4. top of the jump, legs tucked, laughing
-   5. landing, one fist pump
-   6. final pose: arms wide, biggest smile
-7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
-### 29. Soft obstacles and road pieces ⭐ NOW
-
-**Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
-**Save as:** `art-src/rush/p29-obstacles.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate items for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Soft obstacles and road pieces. Friendly, soft-looking things on the road (nothing sharp or scary).
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); centred in each cell.
-6. THE 6 CELLS:
-   1. a short round log lying across the road, with a small leaf
-   2. a small stack of three cardboard boxes with star stickers
-   3. three chunky wooden toy blocks: red, yellow, blue
-   4. a shallow rounded puddle with sky reflections, flat on the road
-   5. a small wooden ramp with three white arrows
-   6. a glowing rainbow strip on the road with three bright arrows
-7. GRID RULES: exactly one item per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
-OUTPUT: PNG, transparent background.
-```
 
 ### 38. Baby Ais reference poses (with helmet over her hijab) ⭐ NOW
 

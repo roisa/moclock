@@ -97,3 +97,122 @@ for name, t in targets.items():
 views = clean(Image.open(f"{SRC}/p02-bike-views.png"))
 for i, v in enumerate(split_cols(views.crop(bbox(views)), 4, [(0.30, 0.38), (0.54, 0.62), (0.76, 0.85)])):
     v = v.crop(bbox(v)); save(fit_h(v, 420), f"{BIKE}/view-{i}.webp")
+
+# ---------------------------------------------------------------- animation packs (same framing as the riding sheet)
+from PIL import ImageDraw
+
+def drop_block(cell):
+    """the bump sheet draws a toy block at Mo's lower right: remove its blue edges and yellow star / side
+    (only right of the wheel and low in the cell, where Mo has nothing blue or yellow)"""
+    arr = np.array(cell)
+    b = bbox(cell); w = b[2] - b[0]
+    low = arr[..., 3] > 0
+    lowrows = np.arange(arr.shape[0])[:, None] > b[1] + (b[3] - b[1]) * 0.62
+    wx = wheel_x(cell)
+    right = np.arange(arr.shape[1])[None, :] > wx + 0.12 * w
+    hsv = np.array(cell.convert("RGB").convert("HSV")).astype(int)
+    h, sat = hsv[..., 0], hsv[..., 1]
+    blockish = (((h > 125) & (h < 180)) | ((h > 18) & (h < 50))) & (sat > 70)
+    arr[..., 3] = np.where(low & lowrows & right & blockish, 0, arr[..., 3])
+    # whatever is left of the block (its cream face) sits right of Mo's green shoe: clear that corner
+    green = (h > 55) & (h < 115) & (sat > 90) & (arr[..., 3] > 60) & lowrows & right
+    if green.any():
+        shoe_x = np.where(green.any(axis=0))[0].max()
+        beyond = np.arange(arr.shape[1])[None, :] > shoe_x + 3
+        arr[..., 3] = np.where(lowrows & beyond, 0, arr[..., 3])
+    return Image.fromarray(arr)
+
+def wheel_x(cell):
+    """x of the rear wheel: centre of the opaque pixels in the bottom 12% of the figure"""
+    a = np.array(cell.getchannel("A")) > 60
+    ys, xs = np.where(a)
+    y0 = ys.max() - (ys.max() - ys.min()) * 0.12
+    sel = xs[ys >= y0]
+    # the wheel is the narrow run nearest the middle of the figure
+    mid = (xs.min() + xs.max()) / 2
+    near = sel[np.abs(sel - mid) < (xs.max() - xs.min()) * 0.2]
+    return float(np.median(near if len(near) else sel))
+
+def keep_main(cell):
+    """keep only the part connected to the helmet (drops props / motion marks drawn beside Mo)"""
+    cell = drop_block(cell)
+    a = np.array(cell.getchannel("A")) > 40
+    ys, xs = np.where(a)
+    top = ys.min() + 25  # inside the helmet
+    xs_top = np.sort(xs[ys == top])
+    seed = (int(xs_top[len(xs_top) // 2]), int(top))  # a real helmet pixel
+    # grow from the seed inside the mask (geodesic reconstruction) until nothing changes
+    mask = Image.fromarray((a * 255).astype(np.uint8))
+    cur = Image.new("L", mask.size, 0); cur.putpixel(seed, 255)
+    from PIL import ImageChops
+    while True:
+        nxt = ImageChops.darker(cur.filter(ImageFilter.MaxFilter(9)), mask)
+        if ImageChops.difference(nxt, cur).getbbox() is None: break
+        cur = nxt
+    keep = np.array(cur) > 0
+    keep = np.array(Image.fromarray((keep * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5))) > 0  # keep soft edges
+    out = np.array(cell); out[..., 3] = np.where(keep, out[..., 3], 0)
+    return Image.fromarray(out)
+
+from PIL import ImageFilter
+RIDE_FW, RIDE_FH = frames[0].size  # the in-game frame size (from the riding sheet)
+ride_w = np.median([b[2] - b[0] for b in boxes])  # Mo + bike width in the riding sheet (cell px)
+ride_scale = RIDE_FH / (box[3] - box[1])
+
+PACK_FW = round(RIDE_FW * 1.45)  # animation frames get a wider canvas (arms, the package) — same scale and anchor
+
+def pack_frames(src, use, clean_props=False):
+    im = clean(Image.open(f"{SRC}/{src}"))
+    cells = [im.crop(((i % 3) * 512, (i // 3) * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512)) for i in range(6)]
+    cells = [cells[i] for i in use]
+    if clean_props: cells = [keep_main(c) for c in cells]
+    bbs = [bbox(c) for c in cells]
+    ground = max(b[3] for b in bbs)
+    k = ride_scale * ride_w / np.median([b[2] - b[0] for b in bbs])  # match Mo's on-screen size to the riding sheet
+    FH = max(RIDE_FH, int(np.ceil((ground - min(b[1] for b in bbs)) * k)) + 6)  # taller canvas for airborne frames
+    out = []
+    for c, b in zip(cells, bbs):
+        cx = wheel_x(c)
+        sc = c.resize((round(512 * k), round(512 * k)), Image.LANCZOS)
+        f = Image.new("RGBA", (PACK_FW, FH), (0, 0, 0, 0))
+        # rear wheel on the frame's centre line and the shared ground line; airborne frames keep their lift
+        f.alpha_composite(sc, (round(PACK_FW / 2 - cx * k), round(FH - 2 - ground * k)))
+        out.append(f)
+    return out
+
+def save_strip(fr, name):
+    fw = fr[0].width
+    strip = Image.new("RGBA", (fw * len(fr), fr[0].height), (0, 0, 0, 0))
+    for i, f in enumerate(fr): strip.alpha_composite(f, (i * fw, 0))
+    save(strip, f"{MO}/{name}.webp", 88)
+
+# jump: frame 4 (legs splayed) left out on purpose
+save_strip(pack_frames("p07-jump.png", [0, 1, 2, 4, 5]), "jump")      # prep 0-1, air 2, land 3-4
+save_strip(pack_frames("p08-boost.png", range(6)), "boost")
+save_strip(pack_frames("p09-pickup.png", range(6)), "pickup")
+# bump: frame 3 (over-stretched leg) left out; the toy block / motion marks drawn beside Mo are removed
+save_strip(pack_frames("p11-wobble.png", [0, 1, 3, 4, 5], clean_props=True), "wobble")
+
+# celebration (front view, for the Delivered screen)
+cel = clean(Image.open(f"{SRC}/p15-celebrate.png"))
+cc = [cel.crop(((i % 3) * 512, (i // 3) * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512)) for i in range(6)]
+cbs = [bbox(c) for c in cc]
+cb = (min(b[0] for b in cbs) - 6, min(b[1] for b in cbs) - 6, max(b[2] for b in cbs) + 6, max(b[3] for b in cbs) + 2)
+cf = [fit_h(c.crop(cb), 480) for c in cc]
+st = Image.new("RGBA", (cf[0].width * 6, cf[0].height), (0, 0, 0, 0))
+for i, f in enumerate(cf): st.alpha_composite(f, (i * cf[0].width, 0))
+save(st, f"{MO}/celebrate.webp", 88)
+
+# obstacles → game sprites (replace the drawn placeholders)
+ART = "public/rush/art"; os.makedirs(ART, exist_ok=True)
+import json
+ob = clean(Image.open(f"{SRC}/p29-obstacles.png"))
+atlas_p = os.path.join(ART, "atlas.json")
+atlas = json.load(open(atlas_p)) if os.path.exists(atlas_p) else {}
+for i, name in enumerate(["log", "boxes", "blocks", "puddle", "ramp", "boost"]):
+    c = ob.crop(((i % 3) * 512, (i // 3) * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512))
+    c = c.crop(bbox(c, 60))
+    if max(c.size) > 420: c = c.resize((round(c.width * 420 / max(c.size)), round(c.height * 420 / max(c.size))), Image.LANCZOS)
+    save(c, f"{ART}/{name}.webp")
+    atlas[name] = {"w": c.width, "h": c.height, "frames": 1}
+json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)
