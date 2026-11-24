@@ -37,7 +37,7 @@ export class Scene {
   private proj: Proj[] = Array.from({ length: DRAW + 2 }, () => ({ x: 0, y: 0, w: 0, scale: 0, clip: 0 }));
   private skyX = 0;
   private townX = 0;
-  private clouds = Array.from({ length: 6 }, (_, i) => ({ x: Math.random(), y: 0.06 + (i % 3) * 0.08, s: 0.6 + Math.random() * 0.7, v: 0.004 + Math.random() * 0.006 }));
+  private clouds = Array.from({ length: 6 }, (_, i) => ({ x: i * 0.25 + Math.random() * 0.1, y: 0.07 + (i % 3) * 0.075, s: 0.6 + Math.random() * 0.6, v: 0.006 + Math.random() * 0.006 }));
   private shake = 0;
   /** smoothed camera: lateral follow, bank (roll) into curves and steering, boost zoom */
   private camX = 0;
@@ -278,16 +278,33 @@ export class Scene {
     g.fillRect(sx - H * 0.2, sy - H * 0.2, H * 0.4, H * 0.4);
     g.fillStyle = "#fff6c8";
     g.beginPath(); g.arc(sx, sy, H * 0.045, 0, 7); g.fill();
-    // clouds
+    // clouds: drift slowly to the right and shift a little on curves; each wraps smoothly off-screen
+    // (a cloud's position is continuous — it never jumps — so nothing flickers)
+    const span = 1.5; // clouds live in x ∈ [-0.25, 1.25) of the screen width
     for (const c of this.clouds) {
-      c.x = (c.x + c.v * dt + 1) % 1.2;
-      const cx = (c.x - 0.1) * W * 1.2 - this.skyX * W * 0.5 % (W * 1.2), cy = c.y * H, s = c.s * H * 0.05;
-      g.fillStyle = "rgba(255,255,255,.9)";
-      g.beginPath(); g.arc(cx, cy, s, 0, 7); g.arc(cx + s * 1.1, cy - s * 0.4, s * 1.2, 0, 7); g.arc(cx + s * 2.2, cy, s * 0.9, 0, 7); g.fill();
+      c.x += c.v * dt;
+      const u = (((c.x - this.skyX * 0.5) % span) + span) % span - 0.25;
+      const s = c.s * H * 0.05, cx = u * W - s * 1.1, cy = c.y * H;
+      this.cloud(cx, cy, s);
     }
     // far hills + town strip (parallax, tiled)
     this.tile(sprite("hill"), this.skyX * 0.6, HOR + 6, H * 0.2);
     this.tile(sprite("town"), this.townX, HOR + 4, H * 0.11);
+  }
+  /** one puffy cloud drawn as a single path (no overlapping alpha seams) */
+  private cloud(x: number, y: number, s: number) {
+    const g = this.g;
+    g.fillStyle = "#ffffff";
+    g.globalAlpha = 0.92;
+    g.beginPath();
+    g.arc(x, y, s, 0, Math.PI * 2);
+    g.moveTo(x + s * 1.1 + s * 1.2, y - s * 0.4);
+    g.arc(x + s * 1.1, y - s * 0.4, s * 1.2, 0, Math.PI * 2);
+    g.moveTo(x + s * 2.2 + s * 0.9, y);
+    g.arc(x + s * 2.2, y, s * 0.9, 0, Math.PI * 2);
+    g.rect(x, y - s * 0.2, s * 2.2, s * 1.0);
+    g.fill("nonzero");
+    g.globalAlpha = 1;
   }
   private tile(s: Sprite, off: number, bottom: number, h: number) {
     const w = (h * s.w) / s.h;
