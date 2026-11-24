@@ -15,6 +15,8 @@ import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
 import { audio, CLIP_TEXT, type Clip } from "../audio";
 import { usePrayer } from "../prayer/prayer";
+import { listenTilt } from "../tiltSensor";
+import { laneFromTilt } from "../core/tilt";
 
 const STREAK_CLIPS: Record<number, Clip> = { 8: "masya1", 16: "masya2", 24: "subhan", 32: "barak", 40: "akbar" };
 import { kit, Pill } from "../ui/Kit";
@@ -218,6 +220,18 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     }
   }
 
+  // tilt steering (when switched on): roll → lane, with a calibrated "straight"
+  const [tiltLive, setTiltLive] = useState<null | boolean>(null);
+  const [tiltShow, setTiltShow] = useState(1);
+  useEffect(() => {
+    if (!p.settings.tilt) return;
+    // tilt only acts when the tilted lane changes, so the arrow buttons keep working in between
+    let tl = 1;
+    const L = listenTilt((deg) => { const n = laneFromTilt(deg, tl); if (n !== tl) { tl = n; sim.input.tiltLane = n; setTiltShow(n); } });
+    const chk = window.setTimeout(() => setTiltLive(L.alive()), 2500);
+    return () => { L.stop(); clearTimeout(chk); sim.input.tiltLane = null; };
+  }, [p.settings.tilt, sim]);
+
   // keyboard
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -279,7 +293,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           <button className="ru-dua-skip" onClick={() => { audio.stop(); startRef.current(); }}>{t("ru.skip")} ›</button>
         </div>
       )}
-      {phase === "ready" && count === null && !dua && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
+      {p.settings.tilt && tiltLive !== false && phase !== "arrive" && <div className="ru-tilthud" aria-hidden="true"><span className="phone" style={{ transform: `rotate(${tiltShow * 18 - 18}deg)` }} />{t("ru.tilt")}</div>}
+      {phase === "ready" && count === null && !dua && <div className="ru-ready">{p.settings.tilt ? t("ru.tiltHow") : t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
       {count !== null && <div className={"ru-count-big" + (count === 0 ? " go" : "")} key={count} aria-live="assertive">{count === 0 ? t("ru.go") : count}</div>}
       {phase === "ride" && (
         <div className="ru-controls">

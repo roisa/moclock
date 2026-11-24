@@ -58,6 +58,8 @@ export interface Input {
   /** −1 / +1 lane change requests queued since last step */
   steer: number[];
   jump: boolean;
+  /** tilt steering: the lane the phone's tilt asks for (null = not tilting) */
+  tiltLane?: number | null;
   /** held direction (keyboard / touch hold) for smooth lean */
   hold: number;
 }
@@ -76,6 +78,10 @@ export function applyInput(r: Rider, inp: Input, ev: (e: string) => void) {
       r.lane = nl;
       ev("steer");
     }
+  }
+  if (inp.tiltLane != null) {
+    if (inp.tiltLane !== r.lane) { r.lane = inp.tiltLane; ev("steer"); }
+    inp.tiltLane = null; // one change per tilt; the arrow buttons still work in between
   }
   if (inp.jump) {
     inp.jump = false;
