@@ -37,6 +37,8 @@ export interface Item {
   n?: number;
   /** spans the whole road (pickup arches, tunnel, library) */
   wide?: boolean;
+  /** rolls across the road (beach balls): x follows a slow sine around the centre */
+  move?: boolean;
 }
 export interface Segment { i: number; curve: number; hill: number; y: number }
 export interface Track {

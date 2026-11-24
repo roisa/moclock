@@ -267,3 +267,27 @@
 .ru-reward-art .trophy { position: absolute; right: -14%; bottom: 0; width: 42%; animation: ru-ride 2.4s ease-in-out infinite reverse; }
 @media (orientation: portrait) { .ru-splash-mo { height: 34vh; } .ru-home-mo { height: 26vh !important; } .ru-mission-mo { height: 22vh !important; } }
 .ru-mission-books .bk { width: 44px; }
+.ru-seen-today { width: 100%; text-align: center; }
+.ru-seen-today small { font: 700 13px "Nunito"; color: var(--ink-2); }
+.ru-seen-today > div { display: flex; gap: 4px; justify-content: center; margin-top: 2px; }
+.ru-seen-today figure { margin: 0; width: 42px; display: flex; flex-direction: column; align-items: center; }
+.ru-seen-today figcaption { font: 700 12px "Fredoka"; color: #2a6fb0; }
+.ru-result { gap: 6px; }
+.ru-result ul { gap: 4px; }
+.ru-result li { padding: 4px 12px; }
+@media (max-height: 760px) { .ru-result .praise img { width: 48px; } .ru-result .msg { font-size: 14px; } }
+/* phones: controls sized by the short side so they never cover the road; HUD fits narrow screens */
+.ru-ctl { width: clamp(54px, min(11vw, 17vh), 92px); height: clamp(54px, min(11vw, 17vh), 92px); }
+.ru-ctl.jump { width: clamp(70px, min(14vw, 23vh), 118px); height: clamp(70px, min(14vw, 23vh), 118px); }
+@media (max-width: 520px) {
+  .ru-hud { gap: 6px; padding-left: 8px; padding-right: 8px; }
+  .ru-hud-stars { font-size: 20px; padding-right: 10px; }
+  .ru-hud-stars img { width: 30px; height: 30px; }
+  .ru-hud-clock { padding: 3px 8px 3px 3px; border-radius: 16px; }
+  .ru-hud-clock > div:first-child, .ru-hud-clock .clock-wrap { width: 48px !important; }
+  .ru-hud-clock .digital { transform: scale(.8); transform-origin: left center; margin-right: -12px; }
+  .ru-hud-pk { padding: 5px 6px; }
+  .ru-hud-pk .bk { width: 22px; height: 20px; }
+  .ru-hud-pause { width: 44px; height: 44px; }
+  .ru-say { top: 74px; font-size: 14px; }
+}

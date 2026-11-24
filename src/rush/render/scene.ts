@@ -62,7 +62,7 @@ export class Scene {
     this.canvas.height = Math.round(h * this.dpr);
   }
   /** layout constants for the current size */
-  get HOR() { return this.H * 0.42; }
+  get HOR() { return this.H * (this.H > this.W * 1.2 ? 0.34 : 0.42); }
   get KY() { return this.H * 0.5; }
   get KX() { return Math.min(this.W, this.H * 1.7) * 0.56; }
   get riderH() { return Math.max(this.KX * 0.4, this.H * 0.17); }
@@ -312,7 +312,24 @@ export class Scene {
     // clip below the hill crest that hides it
     const visH = Math.min(h, clip - by);
     if (visH <= 0) return;
-    g.drawImage(s.img, 0, 0, s.w, (s.h * visH) / h, bx, by, w * sx, visH);
+    if (it.kind === "ball") {
+      // beach balls roll: spin with their sideways movement
+      g.save(); g.translate(x, by + h / 2); g.rotate(it.x * 5); g.drawImage(s.img, -w / 2, -h / 2, w, h); g.restore();
+    } else g.drawImage(s.img, 0, 0, s.w, (s.h * visH) / h, bx, by, w * sx, visH);
+    if (it.kind === "bunny" && !it.hit && w > 10) {
+      // thought bubble: she is thinking about her lost carrots
+      const bw = w * 0.6, cx2 = x + w * 0.35, cy2 = by - bw * 0.45 + Math.sin(clock * 3) * 3;
+      g.fillStyle = "rgba(255,255,255,.95)";
+      g.beginPath(); g.arc(cx2, cy2, bw / 2, 0, 7); g.arc(x + w * 0.12, by + h * 0.02, bw * 0.1, 0, 7); g.fill();
+      const cr = sprite("carrot");
+      g.drawImage(cr.img, cx2 - bw * 0.32, cy2 - bw * 0.32, bw * 0.64, bw * 0.64);
+    }
+    if (it.kind === "signpost" && w > 8) {
+      // a twinkle that says "look here!" next to the secret-path sign
+      const tw = (Math.sin(clock * 6) + 1) / 2;
+      g.fillStyle = `rgba(255,230,120,${0.4 + tw * 0.5})`;
+      star5(g, x + w * 0.45, by + h * 0.1, w * (0.12 + tw * 0.06)); g.fill();
+    }
     // live overlays
     if (it.kind === "balloon") this.face(x, by + h * 0.373, w * 0.3, it.n ?? time, 1);
     else if (it.kind === "tower") this.face(x, by + h * (220 / 520), w * (46 / 220), time, 0);

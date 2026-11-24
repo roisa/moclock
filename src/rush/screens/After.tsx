@@ -1,3 +1,4 @@
+import { digital } from "../../engine/time";
 import { useEffect, useState } from "react";
 import { useRush, WORLDS, type Unlock, type WorldId } from "../state";
 import { Pill, Mo, kit, Ribbon, StarCount } from "../ui/Kit";
@@ -32,6 +33,7 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>
           <p className="msg">{t("ru.deliveredMsg")}</p>
           <div className="ru-arrived"><Clock t={s.time} size={70} /><span>{t({ k: "ru.arrivedAt", p: { t: { time: s.time } } })}<Digital t={s.time} size="s" /></span></div>
+          {s.balloons.length > 0 && <div className="ru-seen-today"><small>{t("ru.timesSeen2")}</small><div>{[...s.balloons].sort((a, b) => a - b).map((b) => <figure key={b}><Clock t={b} size={40} /><figcaption>{digital(b)}</figcaption></figure>)}</div></div>}
           <ul>
             <li><img src={kit("star.webp")} alt="" />{t("ru.stars")}<b>{s.stars}</b></li>
             <li><span className="mini-balloon" />{t("ru.balloons")}<b>{s.balloons.length}</b></li>
