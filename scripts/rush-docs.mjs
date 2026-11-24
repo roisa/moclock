@@ -30,10 +30,11 @@ function promptFor(p) {
   }
   L.push(`1. WHAT: ${p.title}. ${p.subject}`);
   L.push(`2. ${B.STYLE}`);
-  if (p.mo) L.push(`3. ${B.MO_BIBLE}${p.helmet ? "\n" + B.HELMET : ""}`);
+  const who = [p.mo && `${B.MO_BIBLE}${p.helmet ? "\n" + B.HELMET : ""}`, p.ais && B.AIS_BIBLE, p.adam && B.ADAM_BIBLE].filter(Boolean);
+  if (who.length) L.push(`3. ${who.join("\n")}`);
   else if (p.helmet) L.push(`3. ${B.HELMET}`);
-  if (p.bike) L.push(`4. ${B.BIKE_BIBLE}`);
-  L.push(`5. CAMERA: ${p.camera}${p.kind === "anim" && p.camera.startsWith("Gameplay chase") ? " Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell." : ""}`);
+  if (p.bike) L.push(`4. ${B.BIKE_BIBLE}${p.ais || p.adam ? "\n" + B.OPP_BIKES : ""}`);
+  L.push(`5. CAMERA: ${p.camera}${p.kind === "anim" && p.camera.startsWith("Gameplay chase") ? " Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell." : ""}`);
   if (p.single) L.push(`6. CONTENT: ${p.cells[0][1]}.`);
   else {
     L.push(`6. THE 6 CELLS${p.kind === "anim" ? " (animation frames in order; change ONLY what each frame describes)" : ""}:\n${p.cells.map(([, d], i) => `   ${i + 1}. ${d}`).join("\n")}`);

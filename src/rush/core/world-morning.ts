@@ -7,7 +7,7 @@ import { MORNING, progressAt } from "./clock";
 import { make } from "../../engine/time";
 
 const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "lamp", "house", "tree", "fence"];
-const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "tent", "signpost"];
+const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "tree", "tent"];
 const SHOPS: Deco[] = ["shop", "bakery", "lamp", "house", "flowers", "tree"];
 
 export const MORNING_BALLOONS = [make(8, 10), make(8, 15), make(8, 20), make(8, 30), make(8, 40), make(8, 45), make(8, 50)];
@@ -40,15 +40,16 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.add("puddle", LANES[0], b.z - K * 27 * SEG);
   b.add("puddle", LANES[2], b.z - K * 22 * SEG);
   b.trail("star", 1, K * -26, 5);
-  b.add("bunny", 1.5, b.z - K * 12 * SEG);
+  b.add("bunny", 1.3, b.z - K * 12 * SEG);
   // carrots for the bunny (5 placed, 3 needed)
   b.road(K * 30, -2).scenery(K * 30, PARK);
-  for (const [k, lane] of [[-26, 0], [-21, 2], [-16, 1], [-11, 0], [-6, 2]] as const) b.add("carrot", LANES[lane], b.z + K * k * SEG);
+  for (const [k, lane] of [[-26, 1], [-21, 0], [-16, 1], [-11, 2], [-6, 1]] as const) b.add("carrot", LANES[lane], b.z + K * k * SEG);
   b.trail("coin", 1, K * -24, 4);
   // shortcut: paper tunnel in the right lane skips the bridge loop
   b.road(K * 6).scenery(K * 6, TOWN);
   const from = b.z - K * 2 * SEG;
   b.add("tunnel", LANES[2], from);
+  b.add("signpost", 1.3, from - 9 * SEG); // "secret path this way" sign before the tunnel
   b.trail("star", 2, K * -5, 2, 1);
   b.road(K * 46, 3, 300).scenery(K * 46, PARK, 0.5); // the long way round (bridge)
   b.trail("star", 0, K * -40, 6, 2);
@@ -72,6 +73,9 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.trail("star", 1, K * -20, 3);
   b.trail("star", 2, K * -8, 3);
   b.add("gift", LANES[2], b.z - K * 4 * SEG);
+  // rolling beach balls: a moving thing to steer around (soft — only a wobble if it hits)
+  b.add("ball", 0, b.z + K * 10 * SEG, { move: true, n: 0 });
+  b.add("ball", 0, b.z + K * 24 * SEG, { move: true, n: 2 });
   // pickup 3 + final ramp
   b.road(K * 30, -1, 400).scenery(K * 30, TOWN);
   b.add("pickup", 0, b.z - K * 26 * SEG, { wide: true, n: 3 });
@@ -82,9 +86,10 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.road(K * 22, 0, -400).scenery(K * 22, SHOPS, 0.6);
   b.add("library", 0, b.z - K * 6 * SEG, { wide: true });
   b.add("arch-start", 0, b.z - K * 6 * SEG - 3 * SEG, { wide: true, n: 1 }); // finish arch
-  b.fill();
+  b.add("ball", 0, b.z - K * 16 * SEG, { move: true, n: 4 });
+  b.fill(7);
   // animal friends cheering at the roadside, close to the road so children see them
-  for (let z = 10 * SEG, i = 0; z < b.z - 12 * SEG; z += (7 + b.rng() * 6) * SEG, i++)
+  for (let z = 10 * SEG, i = 0; z < b.z - 12 * SEG; z += (15 + b.rng() * 10) * SEG, i++)
     b.add(PETS[i % PETS.length], (i % 2 ? 1 : -1) * (1.3 + b.rng() * 0.25), z);
   const t = b.build();
   const end = libraryZ(t);

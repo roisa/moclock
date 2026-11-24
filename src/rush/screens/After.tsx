@@ -1,6 +1,7 @@
+import { digital } from "../../engine/time";
 import { useEffect, useState } from "react";
 import { useRush, WORLDS, type Unlock, type WorldId } from "../state";
-import { Pill, Mo, kit, Ribbon, StarCount } from "../ui/Kit";
+import { Pill, kit, Ribbon, StarCount } from "../ui/Kit";
 import { Clock, Digital } from "../../ui/Clock";
 import type { Stats } from "../core/sim";
 import { go } from "../router";
@@ -8,6 +9,17 @@ import { audio } from "../audio";
 import { Confetti } from "../../ui/Common";
 
 export interface Finished { world: WorldId; s: Stats; praise: number; fresh: Unlock[]; firstClear: boolean }
+
+/** the approved celebration frames: play once, then keep cheering on the last two */
+function Celebrate() {
+  const [f, setF] = useState(0);
+  useEffect(() => {
+    let i = 0;
+    const h = setInterval(() => { i++; setF(i < 6 ? i : 4 + (i % 2)); }, 140);
+    return () => clearInterval(h);
+  }, []);
+  return <div className="ru-celebrate" role="img" aria-label="Baby Mo" style={{ backgroundImage: "url(rush/mo/celebrate.webp)", backgroundPosition: `${f * 20}% 0` }} />;
+}
 
 export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
   const { t } = useRush();
@@ -25,13 +37,14 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
       <div className="ru-delivered-body">
         <div className="ru-door">
           <img className="lib" src={kit("v-school.webp")} alt="" />
-          <Mo pose="mo-yeyy" h="38vh" className="ru-delivered-mo" />
+          <Celebrate />
           <img className="books" src={kit("books.webp")} alt="" />
         </div>
         <div className="ru-panel ru-result">
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>
           <p className="msg">{t("ru.deliveredMsg")}</p>
           <div className="ru-arrived"><Clock t={s.time} size={70} /><span>{t({ k: "ru.arrivedAt", p: { t: { time: s.time } } })}<Digital t={s.time} size="s" /></span></div>
+          {s.balloons.length > 0 && <div className="ru-seen-today"><small>{t("ru.timesSeen2")}</small><div>{[...s.balloons].sort((a, b) => a - b).map((b) => <figure key={b}><Clock t={b} size={40} /><figcaption>{digital(b)}</figcaption></figure>)}</div></div>}
           <ul>
             <li><img src={kit("star.webp")} alt="" />{t("ru.stars")}<b>{s.stars}</b></li>
             <li><span className="mini-balloon" />{t("ru.balloons")}<b>{s.balloons.length}</b></li>

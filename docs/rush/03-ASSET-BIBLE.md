@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (37 images: 23 done or covered, 14 to make, 6 of them now)
+## 7. Packs (43 images: 29 done or covered, 14 to make, 4 of them now)
 
 ### References
 
@@ -64,11 +64,11 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | 4 | Gliding loop | ✅ done | anim | `mo-ride-loop` (frames 1–6, 10 fps, loop) |
 | 5 | Push-off strides loop (feet push the ground — no pedals) | 📚 already covered | anim | `mo-push` (frames 1–6, 12 fps, loop) |
 | 6 | Turning left and right | 📚 already covered | anim | `mo-lean-left` (frames 1–3, 12 fps), `mo-lean-right` (frames 4–6, 12 fps) |
-| 7 | Jump: crouch, fly, land | ⭐ NOW | anim | `mo-jump-prep` (frames 1–2, 12 fps), `mo-jump-air` (frames 3–4, 6 fps, loop), `mo-land` (frames 5–6, 12 fps) |
-| 8 | Speed boost loop | ⭐ NOW | anim | `mo-boost` (frames 1–6, 12 fps, loop) |
-| 9 | Catching a package | ⭐ NOW | anim | `mo-pickup` (frames 1–6, 10 fps) |
+| 7 | Jump: crouch, fly, land | ✅ done | anim | `mo-jump-prep` (frames 1–2, 12 fps), `mo-jump-air` (frames 3–4, 6 fps, loop), `mo-land` (frames 5–6, 12 fps) |
+| 8 | Speed boost loop | ✅ done | anim | `mo-boost` (frames 1–6, 12 fps, loop) |
+| 9 | Catching a package | ✅ done | anim | `mo-pickup` (frames 1–6, 10 fps) |
 | 10 | Gliding with a full backpack | 📚 already covered | anim | `mo-ride-carry` (frames 1–6, 10 fps, loop) |
-| 11 | Gentle bump and recovery (never falls) | ⭐ NOW | anim | `mo-wobble` (frames 1–6, 10 fps) |
+| 11 | Gentle bump and recovery (never falls) | ✅ done | anim | `mo-wobble` (frames 1–6, 10 fps) |
 | 12 | Waiting on the bike (idle loop) | 📚 already covered | anim | `mo-idle-bike` (frames 1–6, 6 fps, loop) |
 | 13 | Looking around and waving to friends | later | anim | `mo-look` (frames 1–3, 8 fps), `mo-wave-ride` (frames 4–6, 8 fps) |
 
@@ -77,7 +77,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | # | image | status | kind | game files |
 |---|---|---|---|---|
 | 14 | Face portraits for the HUD and speech bubbles | 📚 already covered | poses | `mo-face-happy`, `mo-face-blink`, `mo-face-surprised`, `mo-face-excited`, `mo-face-thinking`, `mo-face-proud` |
-| 15 | Delivery celebration | ⭐ NOW | anim | `mo-celebrate` (frames 1–6, 8 fps) |
+| 15 | Delivery celebration | ✅ done | anim | `mo-celebrate` (frames 1–6, 8 fps) |
 | 16 | Helping the squirrel | later | anim | `mo-help` (frames 1–6, 6 fps) |
 
 ### Bikes & gear
@@ -106,7 +106,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 |---|---|---|---|---|
 | 27 | Things to collect | 📚 already covered | items | `star`, `coin`, `gift`, `token`, `pocketclock`, `acorn` |
 | 28 | Clock balloons (blank faces) | later | items | `balloon-0`, `balloon-1`, `balloon-2`, `balloon-3`, `balloon-4`, `balloon-5` |
-| 29 | Soft obstacles and road pieces | ⭐ NOW | items | `log`, `boxes`, `blocks`, `puddle`, `ramp`, `boost` |
+| 29 | Soft obstacles and road pieces | ✅ done | items | `log`, `boxes`, `blocks`, `puddle`, `ramp`, `boost` |
 | 30 | Arches, tunnel and rings | later | items | `pickup`, `tunnel`, `paper-arch`, `arch-start`, `ring`, `rainbow` |
 
 ### Friends
@@ -125,3 +125,14 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | 35 | Menu and HUD icons | 📚 already covered | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
 | 36 | Screen props | 📚 already covered | items | `ui-clipboard`, `ui-chest`, `ui-banner`, `ui-turntable`, `ui-wardrobe`, `ui-library-door` |
 | 37 | Effects | 📚 already covered | items | `fx-sparkle`, `fx-dust`, `fx-confetti`, `fx-hearts`, `fx-splash`, `fx-pop` |
+
+### Opponents
+
+| # | image | status | kind | game files |
+|---|---|---|---|---|
+| 38 | Baby Ais reference poses (with helmet over her hijab) | ⭐ NOW | poses | `ais-ref-front`, `ais-ref-34`, `ais-ref-side`, `ais-ref-back`, `ais-wave`, `ais-bike` |
+| 39 | Baby Ais riding (6 rear frames) | ⭐ NOW | anim | `ais-ride` (frames 1–6, 10 fps, loop) |
+| 40 | Kak Adam reference poses (with helmet) | ⭐ NOW | poses | `adam-ref-front`, `adam-ref-34`, `adam-ref-side`, `adam-ref-back`, `adam-wave`, `adam-bike` |
+| 41 | Kak Adam riding (6 rear frames) | ⭐ NOW | anim | `adam-ride` (frames 1–6, 10 fps, loop) |
+| 42 | Friendly race moments | later | poses | `ais-pass`, `ais-cheer-ride`, `ais-finish`, `adam-pass`, `adam-cheer-ride`, `adam-finish` |
+| 43 | Race props | later | items | `race-finish`, `race-start-light`, `race-flag`, `race-podium`, `race-medal`, `race-cones` |

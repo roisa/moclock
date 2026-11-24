@@ -146,4 +146,36 @@ describe("GameSim", () => {
     sim.step(DT);
     expect(sim.r.lane).toBe(2);
   });
+  it("clock balloons and carrots drift to a child who never steers, so every time is seen and the bunny is helped", () => {
+    const sim = new GameSim(morningWorld());
+    ride(sim);
+    expect(sim.stats.balloons.length).toBe(MORNING_BALLOONS.length);
+    expect(sim.stats.token).toBe(true);
+  });
+  it("a missed balloon still has its time said, and the secret tunnel is hinted before it", () => {
+    const w = morningWorld();
+    const sim = new GameSim(w);
+    const b = w.main.items.find((i) => i.kind === "balloon")!;
+    sim.start();
+    sim.r.z = b.z - 120; // too close to drift in time
+    sim.r.lane = b.x < 0 ? 2 : 0;
+    sim.r.x = LANES[sim.r.lane];
+    const evs: SimEvent[] = [];
+    for (let i = 0; i < 40; i++) { sim.step(DT); evs.push(...sim.drain()); }
+    expect(evs.some((e) => e.type === "balloon-miss" && e.time === b.n)).toBe(true);
+    const all = ride(new GameSim(morningWorld()));
+    expect(all.some((e) => e.type === "tunnel-near")).toBe(true);
+  });
+  it("beach balls roll across the road", () => {
+    const w = morningWorld();
+    const sim = new GameSim(w);
+    const ball = w.main.items.find((i) => i.kind === "ball" && i.move)!;
+    sim.start();
+    sim.r.z = ball.z - SEG * 20;
+    sim.step(DT);
+    const x0 = ball.x;
+    for (let i = 0; i < 30; i++) sim.step(DT);
+    expect(ball.x).not.toBe(x0);
+    expect(Math.abs(ball.x)).toBeLessThanOrEqual(0.62 + 1e-9);
+  });
 });

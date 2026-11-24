@@ -19,6 +19,8 @@ export type SimEvent =
   | { type: "friend-meet" }
   | { type: "friend-help"; carrots: number; token: boolean }
   | { type: "tunnel-in" }
+  | { type: "tunnel-near" }
+  | { type: "balloon-miss"; time: number }
   | { type: "tunnel-out" }
   | { type: "arrive" }
   | { type: "jump" | "ramp" | "land" | "land-big" | "steer" | "prep" | "go" };
@@ -86,6 +88,7 @@ export class GameSim {
     stepRider(r, dt, this.ev);
     if (!r.stopped) {
       this.t += dt;
+      this.helpers(dt);
       this.sweep(z0, r.z);
     }
     // shortcut entrance / tunnel exit
@@ -103,6 +106,27 @@ export class GameSim {
       this.stats.time = this.w.span.to;
       this.stats.seconds = this.t;
       this.events.push({ type: "arrive" });
+    }
+  }
+
+  private hinted = false;
+  /**
+   * Kid-friendly helpers, run before the collision sweep:
+   *  - balloons, carrots and gifts drift toward Mo when he is one lane away (so 4-year-olds still catch them)
+   *  - beach balls roll slowly across the road
+   *  - a missed clock balloon still gets its time said; a hint comes before the secret tunnel
+   */
+  private helpers(dt: number) {
+    const r = this.r, items = this.track.items;
+    for (let k = this.cursor[this.route]; k < items.length && items[k].z < r.z + SEG * 40; k++) {
+      const it = items[k];
+      if (it.hit) continue;
+      const d = it.z - r.z;
+      if (it.move) it.x = Math.sin(this.t * 1.3 + (it.n ?? 0)) * 0.62;
+      if (d > 0 && d < SEG * 4 && (it.kind === "balloon" || it.kind === "carrot" || it.kind === "gift") && Math.abs(it.x - r.x) < 0.75)
+        it.x += (r.x - it.x) * Math.min(1, dt * 3.5);
+      if (it.kind === "balloon" && d < -SEG * 0.5) { it.hit = true; this.events.push({ type: "balloon-miss", time: it.n! }); }
+      if (it.kind === "tunnel" && !this.hinted && d > 0 && d < SEG * 16) { this.hinted = true; this.events.push({ type: "tunnel-near" }); }
     }
   }
 

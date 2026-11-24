@@ -67,3 +67,6 @@ No third-party data or network calls; no external links or sharing (parental gat
 
 ## 12. Out of scope for the slice
 Worlds 2–5 gameplay, generated art (placeholders until the prompt library is produced), online anything.
+
+## 13. Opponents (art prompts ready: docs/rush/04, images 38–43)
+Baby Ais (pink bike, same height as Mo) and Kak Adam (blue bike, a little taller) ride the same road as friendly racers. They glide a little ahead or behind, overtake with a smile and wave, and cheer Mo at the finish. Nobody "loses": the delivery always succeeds and the results show who helped whom (e.g. "Kak Adam found the shortcut!"). They are added to the game once images 38–41 are generated.
