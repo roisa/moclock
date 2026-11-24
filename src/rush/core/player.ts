@@ -35,6 +35,10 @@ export interface Rider {
   boost: number;
   /** magnet power-up: stars and coins fly to Mo */
   magnet: number;
+  /** shield bubble: obstacles bounce off, no wobble */
+  shield: number;
+  /** time clock: everything goes slow-motion so collecting is easy */
+  slow: number;
   splash: number;
   pickup: number;
   lean: number; // −1..1 visual lean
@@ -43,7 +47,7 @@ export interface Rider {
 }
 
 export function newRider(): Rider {
-  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, splash: 0, pickup: 0, lean: 0, carrying: 0, stopped: true };
+  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, shield: 0, slow: 0, splash: 0, pickup: 0, lean: 0, carrying: 0, stopped: true };
 }
 
 export interface Input {
@@ -81,7 +85,7 @@ export function applyInput(r: Rider, inp: Input, ev: (e: string) => void) {
 /** BikeController: one fixed step */
 export function stepRider(r: Rider, dt: number, ev: (e: string) => void) {
   // speed
-  const target = r.stopped ? 0 : CRUISE * (r.boost > 0 ? BOOST_MUL : 1) * (r.wobble > 0 ? 0.7 : 1) * (r.splash > 0 ? 0.85 : 1);
+  const target = r.stopped ? 0 : CRUISE * (r.boost > 0 ? BOOST_MUL : 1) * (r.wobble > 0 ? 0.7 : 1) * (r.splash > 0 ? 0.85 : 1) * (r.slow > 0 ? 0.6 : 1);
   if (r.speed < target) r.speed = Math.min(target, r.speed + ACCEL * (r.boost > 0 ? 2.5 : 1) * dt);
   else r.speed = Math.max(target, r.speed - ACCEL * 1.6 * dt);
   r.z += r.speed * dt;
@@ -108,7 +112,7 @@ export function stepRider(r: Rider, dt: number, ev: (e: string) => void) {
       ev(r.bigJump ? "land-big" : "land");
     }
   }
-  for (const k of ["land", "wobble", "boost", "splash", "pickup", "magnet"] as const) if (r[k] > 0) r[k] = Math.max(0, r[k] - dt);
+  for (const k of ["land", "wobble", "boost", "splash", "pickup", "magnet", "shield", "slow"] as const) if (r[k] > 0) r[k] = Math.max(0, r[k] - dt);
 }
 
 export function launch(r: Rider, v: number, big: boolean, ev: (e: string) => void) {

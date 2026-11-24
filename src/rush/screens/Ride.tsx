@@ -160,6 +160,9 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           window.setTimeout(() => say("ru.say.kind", { force: true }), 3200); break; }
         case "tunnel-in": audio.sfx("whoosh"); say("ru.say.tunnel", { force: true }); break;
         case "magnet": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 18, { color: "#ff6b6b", size: 6, speed: 260 }); audio.sfx("correct"); say("ru.say.magnet", { force: true }); break; }
+        case "shield": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 18, { color: "#7fcaff", size: 6, speed: 260 }); audio.sfx("correct"); say("ru.say.shield", { force: true }); break; }
+        case "shield-block": { const r = sc.riderXY(sim); sc.fx.emit("star", r.x, r.y - sc.riderH * 0.5, 10, { color: "#bfe6ff", size: 8, speed: 240 }); audio.sfx("pop"); say("ru.say.shieldBlock", { gap: 4 }); break; }
+        case "timeclock": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 18, { color: "#ffd23f", size: 6, speed: 260 }); audio.sfx("tick"); say({ k: "ru.say.timeclock", p: { t: { time: sim.time } } }, { force: true }); break; }
         case "tunnel-near": say("ru.say.tunnelHint", { force: true }); break;
         // friends overtaking cheer Mo on; when Mo passes them they cheer too (sparingly)
         case "rival-pass": say(`ru.rival.${e.who}.${e.ahead ? "pass" : "passed"}`, { gap: 9 }); break;

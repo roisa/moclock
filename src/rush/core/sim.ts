@@ -20,7 +20,8 @@ export type SimEvent =
   | { type: "friend-help"; carrots: number; token: boolean }
   | { type: "tunnel-in" }
   | { type: "tunnel-near" }
-  | { type: "magnet"; item: Item }
+  | { type: "magnet" | "shield" | "timeclock"; item: Item }
+  | { type: "shield-block"; item: Item }
   | { type: "balloon-miss"; time: number }
   | { type: "tunnel-out" }
   | { type: "arrive" }
@@ -217,6 +218,8 @@ export class GameSim {
       if (k === "star" || k === "coin") { this.stats.stars++; this.events.push({ type: k, item: it }); }
       else if (k === "gift") { this.stats.stars += 5; this.events.push({ type: "gift", item: it }); }
       else if (k === "magnet") { r.magnet = 7; this.events.push({ type: "magnet", item: it }); }
+      else if (k === "shield") { r.shield = 9; this.events.push({ type: "shield", item: it }); }
+      else if (k === "timeclock") { r.slow = 5; this.stats.stars += 3; this.events.push({ type: "timeclock", item: it }); }
       else if (k === "ring") { r.boost = Math.max(r.boost, BOOST_TIME * 0.6); this.stats.stars += 2; this.events.push({ type: "ring", item: it }); }
       else if (k === "pocketclock") { this.stats.pocketclock = true; this.stats.stars += 3; this.events.push({ type: "pocketclock", item: it }); }
       else if (k === "balloon") { this.stats.balloons.push(it.n!); this.stats.stars += 2; this.events.push({ type: "balloon", item: it, time: it.n! }); }
@@ -226,6 +229,7 @@ export class GameSim {
     if (isHazard(k)) {
       if (!inLane) return;
       it.hit = true;
+      if (r.shield > 0 && !(r.air && k !== "puddle")) { this.events.push({ type: "shield-block", item: it }); return; } // bounces off the bubble
       if (k === "puddle") {
         if (r.air) return;
         r.splash = 0.5;

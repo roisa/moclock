@@ -87,3 +87,11 @@ Clips: `public/rush/voice/{en,id}/` copied from app-ayah NurConnect (Google TTS 
 
 ## 15. Friends on the road
 Baby Ais (pink bike, same height as Mo) and Kak Adam (blue track suit, a little taller) ride the Morning Town road with Mo using their approved riding sheets. They are rubber-banded around Mo (never far ahead or behind), change lanes every few seconds, move out of Mo's lane when close, hop over logs, boxes, blocks and balls, wait on the main road while Mo takes the tunnel and rejoin right behind him. Overtakes bring a cheer ("Ayo, Mo! Kejar aku!" / "Hebat, Dik!"). Nobody loses: the Delivered screen says they rode with Mo.
+
+## 16. Power-ups
+| Power-up | Effect | Time |
+|---|---|---|
+| Rainbow ring (winged shoe) | short speed boost, +2 stars | 1.2 s |
+| Star magnet | stars and coins within reach fly to Mo | 7 s |
+| Shield bubble | obstacles bounce off ("Boing!"), no wobble or splash | 9 s (blinks in the last second) |
+| Slow-motion clock | the ride slows to 60% so collecting is easy; Mo says the time; +3 stars | 5 s (golden ring sweeps around the screen) |

@@ -302,7 +302,7 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p28-balloons": ["done", "your clock balloons (blue, pink, star) — the game paints the right time on the face"],
   "p24-roadside": ["done", "your bench + lamp, bus stop, fruit cart, signpost, flower arch, fountain"],
   "p26-worlds": ["done", "your six road scenes are the adventure cards"],
-  "p35-icons": ["done", "your power-ups: coin, winged shoe (rainbow ring), magnet, gift (clock and shield kept for later)"],
+  "p35-icons": ["done", "your power-ups: coin, winged shoe (rainbow ring), magnet, shield bubble, slow-motion clock, gift"],
   "p36-screens": ["covered", "your treasure chest (rewards) + app-ayah props", "later"],
   "p38-ais-ref": ["done", "your Baby Ais poses (home, mission card)"],
   "p39-ais-ride": ["done", "your Baby Ais riding frames — she races on the road"],

@@ -224,6 +224,21 @@ export class Scene {
       g.drawImage(f.img, x - s / 2, y - (s * f.h) / f.w / 2, s, (s * f.h) / f.w);
       if (u >= 1) { this.flyers.splice(k, 1); this.fx.emit("star", tx, ty, 8, { color: "#ffd23f", size: 7, speed: 160 }); }
     }
+    if (r.shield > 0) {
+      // shield bubble around Mo (blinks in its last second)
+      if (r.shield > 1 || Math.floor(clock * 8) % 2) {
+        const R = this.riderH * 0.62, cy = rp.y - this.riderH * 0.55 - r.h * this.riderH * 1.6;
+        const gb = g.createRadialGradient(rp.x - R * 0.3, cy - R * 0.35, R * 0.1, rp.x, cy, R);
+        gb.addColorStop(0, "rgba(255,255,255,.35)"); gb.addColorStop(0.75, "rgba(127,202,255,.12)"); gb.addColorStop(1, "rgba(80,170,255,.45)");
+        g.fillStyle = gb; g.beginPath(); g.ellipse(rp.x, cy, R * 0.85, R, 0, 0, 7); g.fill();
+        g.strokeStyle = "rgba(255,255,255,.7)"; g.lineWidth = 2; g.stroke();
+      }
+    }
+    if (r.slow > 0 && !this.reduced) {
+      // slow-motion: a soft golden clock ring sweeps around the screen edge
+      g.save(); g.strokeStyle = "rgba(255,210,63,.35)"; g.lineWidth = 10;
+      g.beginPath(); g.arc(W / 2, H * 0.55, Math.min(W, H) * 0.62, -Math.PI / 2, -Math.PI / 2 + (r.slow / 5) * Math.PI * 2); g.stroke(); g.restore();
+    }
     if (r.magnet > 0 && !this.reduced && Math.random() < 0.35) this.fx.emit("spark", rp.x + (Math.random() - 0.5) * this.riderH * 0.6, rp.y - this.riderH * (0.3 + Math.random() * 0.5), 1, { color: Math.random() < 0.5 ? "#ff6b6b" : "#ffd23f", size: 4, speed: 40, life: 0.5 });
     // speed lines + particles
     if (!this.reduced && ((r.boost > 0 && Math.random() < 0.7) || (spd > 0.95 && Math.random() < 0.12))) this.fx.lines(W, H, r.boost > 0 ? 2 : 1);
