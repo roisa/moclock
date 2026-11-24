@@ -746,5 +746,123 @@
   ],
   "clips": null,
   "baseline": false
+ },
+ "p38-ais-ref": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "ais-ref-front",
+   "ais-ref-34",
+   "ais-ref-side",
+   "ais-ref-back",
+   "ais-wave",
+   "ais-bike"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p39-ais-ride": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "ais-ride",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p40-adam-ref": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "adam-ref-front",
+   "adam-ref-34",
+   "adam-ref-side",
+   "adam-ref-back",
+   "adam-wave",
+   "adam-bike"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p41-adam-ride": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "adam-ride",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p42-race-moments": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "ais-pass",
+   "ais-cheer-ride",
+   "ais-finish",
+   "adam-pass",
+   "adam-cheer-ride",
+   "adam-finish"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p43-race-props": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "race-finish",
+   "race-start-light",
+   "race-flag",
+   "race-podium",
+   "race-medal",
+   "race-cones"
+  ],
+  "clips": null,
+  "baseline": false
  }
 }

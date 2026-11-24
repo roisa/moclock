@@ -2,7 +2,7 @@
 
 > Generated from `src/rush/assets/packs.ts` by `npm run docs:rush`.
 
-**Only 14 images are left to make — 6 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 23 (✅ / 📚 in the checklist).
+**Only 20 images are left to make — 10 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 23 (✅ / 📚 in the checklist).
 Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 grid, on a PNG with a transparent background.
 
 ## How to use
@@ -53,6 +53,12 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 35 | Menu and HUD icons | 📚 already covered | app-ayah UI icons |
 | 36 | Screen props | 📚 already covered | app-ayah chest, trophy, ribbons, cards |
 | 37 | Effects | 📚 already covered | game particles + app-ayah effects |
+| 38 | Baby Ais reference poses (with helmet over her hijab) | ⭐ NOW | `p38-ais-ref.png` |
+| 39 | Baby Ais riding (6 rear frames) | ⭐ NOW | `p39-ais-ride.png` |
+| 40 | Kak Adam reference poses (with helmet) | ⭐ NOW | `p40-adam-ref.png` |
+| 41 | Kak Adam riding (6 rear frames) | ⭐ NOW | `p41-adam-ride.png` |
+| 42 | Friendly race moments | later | `p42-race-moments.png` |
+| 43 | Race props | later | `p43-race-props.png` |
 
 ---
 
@@ -83,7 +89,7 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
    1. crouch: body squashed down 5%, elbows bent
    2. springing up, front wheel lifting
@@ -123,7 +129,7 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
    1. tucked forward 10°
    2. hair under the helmet flutters back
@@ -163,7 +169,7 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
    1. right hand starts to lift
    2. right arm stretched up and out, package just above
@@ -203,7 +209,7 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
    1. front wheel bumps, bike tilts 8° right, surprised 'oops'
    2. tilts 12° right, arms out for balance
@@ -275,6 +281,158 @@ PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate ite
 OUTPUT: PNG, transparent background.
 ```
 
+### 38. Baby Ais reference poses (with helmet over her hijab) ⭐ NOW
+
+**Attach:** babymo-app/www/ais-garden/wave-hello.webp (Baby Ais, waving); babymo-app/www/ais-garden/run.webp (Baby Ais, running); art-src/rush/p01-mo-turnaround.png (approved Baby Mo); art-src/rush/bike-side.png (approved push balance bike)  
+**Save as:** `art-src/rush/p38-ais-ref.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate poses for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Baby Ais reference poses (with helmet over her hijab). Character reference sheet of Baby Ais wearing her riding helmet over her hijab, with her small lavender backpack.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. CHARACTER — BABY AIS (Baby Mo's twin sister; must match the attached references exactly):
+- Cute toddler girl, about 3 years old, the SAME height and chibi proportions as Baby Mo (about 3.2 heads tall, big round head, round rosy cheeks), same 3D style.
+- A soft pink hijab framing her face, with a small light-blue star pin on the side; big round glossy dark-brown eyes, light warm skin, small smiling mouth.
+- Outfit: one-piece pink jumpsuit with a small white crescent moon on the chest and a little pocket, lavender long sleeves with light-blue cuffs, lavender shoes with white soles.
+- Riding: a white toddler helmet worn OVER the hijab (the hijab stays neat and covers her hair and neck), with a pink star on the front and two pink vent stripes; a small lavender backpack with a white moon patch.
+NEVER change her face, hijab, outfit colours or height; never show her hair.
+4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
+- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
+- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
+- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
+- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
+- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
+OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).
+5. CAMERA: Eye level, full body, every view at the same height on the same ground line.
+6. THE 6 CELLS:
+   1. standing, front view, arms relaxed, gentle smile
+   2. standing, three-quarter front view facing left
+   3. standing, pure side view facing left
+   4. standing, back view (hijab and backpack visible, no hair)
+   5. front view, waving with her right hand, big happy smile
+   6. standing next to her pink push balance bike, one hand on the handlebar
+7. GRID RULES: exactly one pose per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
+### 39. Baby Ais riding (6 rear frames) ⭐ NOW
+
+**Attach:** art-src/rush/p04-ride-user.png (approved Baby Mo riding frames — match this framing); your approved image 38 (p38-ais-ref.png — Baby Ais reference poses (with helmet over her hijab)); art-src/rush/bike-side.png (approved push balance bike)  
+**Save as:** `art-src/rush/p39-ais-ride.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Baby Ais riding (6 rear frames). Baby Ais riding her pink push balance bike, pushing the ground with her feet like running and gliding — the same six-frame layout as the attached Baby Mo riding frames.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. CHARACTER — BABY AIS (Baby Mo's twin sister; must match the attached references exactly):
+- Cute toddler girl, about 3 years old, the SAME height and chibi proportions as Baby Mo (about 3.2 heads tall, big round head, round rosy cheeks), same 3D style.
+- A soft pink hijab framing her face, with a small light-blue star pin on the side; big round glossy dark-brown eyes, light warm skin, small smiling mouth.
+- Outfit: one-piece pink jumpsuit with a small white crescent moon on the chest and a little pocket, lavender long sleeves with light-blue cuffs, lavender shoes with white soles.
+- Riding: a white toddler helmet worn OVER the hijab (the hijab stays neat and covers her hair and neck), with a pink star on the front and two pink vent stripes; a small lavender backpack with a white moon patch.
+NEVER change her face, hijab, outfit colours or height; never show her hair.
+4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
+- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
+- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
+- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
+- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
+- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
+OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Ais and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
+   1. turning a little left, left foot pushing the ground
+   2. straight, both feet pushing wide
+   3. turning a little right, head turned right (cheek visible)
+   4. turning a little left, right foot pushing
+   5. straight, feet close together, gliding
+   6. turning a little right, feet pushing
+7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
+### 40. Kak Adam reference poses (with helmet) ⭐ NOW
+
+**Attach:** babymo-app/www/adam-tennis-v2/wave-1.webp (Kak Adam, waving); art-src/rush/p01-mo-turnaround.png (approved Baby Mo); art-src/rush/bike-side.png (approved push balance bike)  
+**Save as:** `art-src/rush/p40-adam-ref.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate poses for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Kak Adam reference poses (with helmet). Character reference sheet of Kak Adam wearing his sky-blue riding helmet and small navy backpack.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. CHARACTER — KAK ADAM (Baby Mo's big brother; must match the attached references exactly):
+- Cute boy, about 6 years old, a LITTLE taller than Baby Mo (about 1.15 × Baby Mo's height), slightly less chibi (about 3.6 heads tall), same 3D style.
+- Short curly dark-brown hair, big round glossy dark-brown eyes, light warm skin, cheerful confident smile.
+- Outfit: blue zip-up hooded track jacket with a small white star badge on the chest and white stripes down the sleeves, matching blue track pants with white side stripes, white-and-blue sneakers.
+- Riding: a sky-blue toddler helmet with a white lightning stripe; a small navy backpack with a white star patch.
+NEVER change his face, hair, outfit colours or height.
+4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
+- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
+- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
+- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
+- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
+- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
+OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).
+5. CAMERA: Eye level, full body, every view at the same height on the same ground line.
+6. THE 6 CELLS:
+   1. standing, front view, arms relaxed, confident smile
+   2. standing, three-quarter front view facing left
+   3. standing, pure side view facing left
+   4. standing, back view
+   5. front view, waving, big grin
+   6. standing next to his sky-blue push balance bike, thumbs up
+7. GRID RULES: exactly one pose per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
+### 41. Kak Adam riding (6 rear frames) ⭐ NOW
+
+**Attach:** art-src/rush/p04-ride-user.png (approved Baby Mo riding frames — match this framing); your approved image 40 (p40-adam-ref.png — Kak Adam reference poses (with helmet)); art-src/rush/bike-side.png (approved push balance bike)  
+**Save as:** `art-src/rush/p41-adam-ride.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Kak Adam riding (6 rear frames). Kak Adam riding his sky-blue push balance bike, pushing the ground with his feet like running and gliding — the same six-frame layout as the attached Baby Mo riding frames, but he is a little taller.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. CHARACTER — KAK ADAM (Baby Mo's big brother; must match the attached references exactly):
+- Cute boy, about 6 years old, a LITTLE taller than Baby Mo (about 1.15 × Baby Mo's height), slightly less chibi (about 3.6 heads tall), same 3D style.
+- Short curly dark-brown hair, big round glossy dark-brown eyes, light warm skin, cheerful confident smile.
+- Outfit: blue zip-up hooded track jacket with a small white star badge on the chest and white stripes down the sleeves, matching blue track pants with white side stripes, white-and-blue sneakers.
+- Riding: a sky-blue toddler helmet with a white lightning stripe; a small navy backpack with a white star patch.
+NEVER change his face, hair, outfit colours or height.
+4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
+- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
+- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
+- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
+- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
+- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
+OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Kak Adam and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
+   1. turning a little left, left foot pushing the ground
+   2. straight, both feet pushing wide
+   3. turning a little right, head turned right (cheek visible)
+   4. turning a little left, right foot pushing
+   5. straight, feet close together, gliding
+   6. turning a little right, feet pushing
+7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
 ---
 
 ## Later
@@ -304,7 +462,7 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
-5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
+5. CAMERA: Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding into the picture, centred in each cell. Match the attached Baby Mo riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
    1. head turns 20° right
    2. head 45° right, cheek and eye visible, curious
@@ -487,5 +645,73 @@ PNG, transparent background. Create ONE image (1536 × 1024) for the children's 
 8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
 9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
 10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; misspelled text; extra words; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
+### 42. Friendly race moments (later)
+
+**Attach:** your approved image 38 (p38-ais-ref.png — Baby Ais reference poses (with helmet over her hijab)); your approved image 40 (p40-adam-ref.png — Kak Adam reference poses (with helmet)); art-src/rush/p04-ride-user.png (approved Baby Mo riding frames — match this framing)  
+**Save as:** `art-src/rush/p42-race-moments.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate poses for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Friendly race moments. Baby Ais and Kak Adam on their push balance bikes, friendly and encouraging (nobody is sad about losing).
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. CHARACTER — BABY AIS (Baby Mo's twin sister; must match the attached references exactly):
+- Cute toddler girl, about 3 years old, the SAME height and chibi proportions as Baby Mo (about 3.2 heads tall, big round head, round rosy cheeks), same 3D style.
+- A soft pink hijab framing her face, with a small light-blue star pin on the side; big round glossy dark-brown eyes, light warm skin, small smiling mouth.
+- Outfit: one-piece pink jumpsuit with a small white crescent moon on the chest and a little pocket, lavender long sleeves with light-blue cuffs, lavender shoes with white soles.
+- Riding: a white toddler helmet worn OVER the hijab (the hijab stays neat and covers her hair and neck), with a pink star on the front and two pink vent stripes; a small lavender backpack with a white moon patch.
+NEVER change her face, hijab, outfit colours or height; never show her hair.
+CHARACTER — KAK ADAM (Baby Mo's big brother; must match the attached references exactly):
+- Cute boy, about 6 years old, a LITTLE taller than Baby Mo (about 1.15 × Baby Mo's height), slightly less chibi (about 3.6 heads tall), same 3D style.
+- Short curly dark-brown hair, big round glossy dark-brown eyes, light warm skin, cheerful confident smile.
+- Outfit: blue zip-up hooded track jacket with a small white star badge on the chest and white stripes down the sleeves, matching blue track pants with white side stripes, white-and-blue sneakers.
+- Riding: a sky-blue toddler helmet with a white lightning stripe; a small navy backpack with a white star patch.
+NEVER change his face, hair, outfit colours or height.
+4. PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
+- Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
+- Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
+- Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
+- Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
+- Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
+OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).
+5. CAMERA: Each cell states its own angle; same scale everywhere.
+6. THE 6 CELLS:
+   1. Baby Ais from behind-left, overtaking, looking back with a playful smile
+   2. Baby Ais from behind, one hand up cheering while gliding
+   3. Baby Ais standing next to her bike, clapping happily (front view)
+   4. Kak Adam from behind-right, overtaking, giving a thumbs up
+   5. Kak Adam from behind, one fist up while gliding
+   6. Kak Adam standing next to his bike, high-five pose (front view)
+7. GRID RULES: exactly one pose per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
+OUTPUT: PNG, transparent background.
+```
+
+### 43. Race props (later)
+
+**Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
+**Save as:** `art-src/rush/p43-race-props.png`
+
+```text
+PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate items for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
+1. WHAT: Race props. Friendly race-day props in the same style (no text).
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+5. CAMERA: Three-quarter front.
+6. THE 6 CELLS:
+   1. a finish arch with a checkered banner and colourful flags
+   2. a cute start light on a post with three round lights (red, yellow, green)
+   3. a small checkered flag on a stick
+   4. a three-step podium with stars instead of numbers
+   5. a golden medal with a star on a ribbon
+   6. two soft orange traffic cones with smiley stripes
+7. GRID RULES: exactly one item per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; no grid lines, borders, numbers, labels or captions.
+8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
+9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
+10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
 OUTPUT: PNG, transparent background.
 ```

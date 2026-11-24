@@ -24,6 +24,8 @@ export interface Pack {
   clips?: Clip[]; // anim packs: frame ranges → game sheets
   refs: string[]; // earlier pack ids or EXISTING_REFS keys to attach
   mo?: boolean;
+  ais?: boolean;
+  adam?: boolean;
   helmet?: boolean;
   bike?: boolean;
   mustNot?: string[];
@@ -241,6 +243,42 @@ export const PACKS: Pack[] = [
     subject: "Single-frame effect sprites (the game animates them by scaling and fading).",
     cells: [["fx-sparkle", "a four-point white-gold sparkle"], ["fx-dust", "a soft cartoon dust puff"], ["fx-confetti", "a burst of colourful confetti and tiny stars"], ["fx-hearts", "three small pink hearts"], ["fx-splash", "a water splash crown"], ["fx-pop", "a balloon pop burst with confetti"]],
     refs: [] },
+
+  /* ---------------- 38–43 · opponents: Baby Ais and Kak Adam race too (friendly, nobody loses) */
+  { id: "p38-ais-ref", n: 38, group: "Opponents", title: "Baby Ais reference poses (with helmet over her hijab)", priority: "now", kind: "poses", baseline: true,
+    camera: "Eye level, full body, every view at the same height on the same ground line.",
+    subject: "Character reference sheet of Baby Ais wearing her riding helmet over her hijab, with her small lavender backpack.",
+    cells: [["ais-ref-front", "standing, front view, arms relaxed, gentle smile"], ["ais-ref-34", "standing, three-quarter front view facing left"], ["ais-ref-side", "standing, pure side view facing left"],
+      ["ais-ref-back", "standing, back view (hijab and backpack visible, no hair)"], ["ais-wave", "front view, waving with her right hand, big happy smile"], ["ais-bike", "standing next to her pink push balance bike, one hand on the handlebar"]],
+    refs: ["ais-wave", "ais-run", "p01-mo-ref", "bike-approved"], ais: true, bike: true },
+  { id: "p39-ais-ride", n: 39, group: "Opponents", title: "Baby Ais riding (6 rear frames)", priority: "now", kind: "anim", baseline: true,
+    camera: "Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Ais and the bike face AWAY from the viewer, riding into the picture, centred in each cell.",
+    subject: "Baby Ais riding her pink push balance bike, pushing the ground with her feet like running and gliding — the same six-frame layout as the attached Baby Mo riding frames.",
+    cells: [["f1", "turning a little left, left foot pushing the ground"], ["f2", "straight, both feet pushing wide"], ["f3", "turning a little right, head turned right (cheek visible)"], ["f4", "turning a little left, right foot pushing"], ["f5", "straight, feet close together, gliding"], ["f6", "turning a little right, feet pushing"]],
+    clips: anim("ais-ride", 10, true), refs: ["mo-ride-approved", "p38-ais-ref", "bike-approved"], ais: true, bike: true },
+  { id: "p40-adam-ref", n: 40, group: "Opponents", title: "Kak Adam reference poses (with helmet)", priority: "now", kind: "poses", baseline: true,
+    camera: "Eye level, full body, every view at the same height on the same ground line.",
+    subject: "Character reference sheet of Kak Adam wearing his sky-blue riding helmet and small navy backpack.",
+    cells: [["adam-ref-front", "standing, front view, arms relaxed, confident smile"], ["adam-ref-34", "standing, three-quarter front view facing left"], ["adam-ref-side", "standing, pure side view facing left"],
+      ["adam-ref-back", "standing, back view"], ["adam-wave", "front view, waving, big grin"], ["adam-bike", "standing next to his sky-blue push balance bike, thumbs up"]],
+    refs: ["adam-wave", "p01-mo-ref", "bike-approved"], adam: true, bike: true },
+  { id: "p41-adam-ride", n: 41, group: "Opponents", title: "Kak Adam riding (6 rear frames)", priority: "now", kind: "anim", baseline: true,
+    camera: "Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Kak Adam and the bike face AWAY from the viewer, riding into the picture, centred in each cell.",
+    subject: "Kak Adam riding his sky-blue push balance bike, pushing the ground with his feet like running and gliding — the same six-frame layout as the attached Baby Mo riding frames, but he is a little taller.",
+    cells: [["f1", "turning a little left, left foot pushing the ground"], ["f2", "straight, both feet pushing wide"], ["f3", "turning a little right, head turned right (cheek visible)"], ["f4", "turning a little left, right foot pushing"], ["f5", "straight, feet close together, gliding"], ["f6", "turning a little right, feet pushing"]],
+    clips: anim("adam-ride", 10, true), refs: ["mo-ride-approved", "p40-adam-ref", "bike-approved"], adam: true, bike: true },
+  { id: "p42-race-moments", n: 42, group: "Opponents", title: "Friendly race moments", priority: "later", kind: "poses", baseline: true,
+    camera: "Each cell states its own angle; same scale everywhere.",
+    subject: "Baby Ais and Kak Adam on their push balance bikes, friendly and encouraging (nobody is sad about losing).",
+    cells: [["ais-pass", "Baby Ais from behind-left, overtaking, looking back with a playful smile"], ["ais-cheer-ride", "Baby Ais from behind, one hand up cheering while gliding"], ["ais-finish", "Baby Ais standing next to her bike, clapping happily (front view)"],
+      ["adam-pass", "Kak Adam from behind-right, overtaking, giving a thumbs up"], ["adam-cheer-ride", "Kak Adam from behind, one fist up while gliding"], ["adam-finish", "Kak Adam standing next to his bike, high-five pose (front view)"]],
+    refs: ["p38-ais-ref", "p40-adam-ref", "mo-ride-approved"], ais: true, adam: true, bike: true },
+  { id: "p43-race-props", n: 43, group: "Opponents", title: "Race props", priority: "later", kind: "items",
+    camera: "Three-quarter front.",
+    subject: "Friendly race-day props in the same style (no text).",
+    cells: [["race-finish", "a finish arch with a checkered banner and colourful flags"], ["race-start-light", "a cute start light on a post with three round lights (red, yellow, green)"], ["race-flag", "a small checkered flag on a stick"],
+      ["race-podium", "a three-step podium with stars instead of numbers"], ["race-medal", "a golden medal with a star on a ribbon"], ["race-cones", "two soft orange traffic cones with smiley stripes"]],
+    refs: ["concept"] },
 ];
 
 /** what is already in the game (owner-approved art, app-ayah library, or drawn by the game) */
@@ -270,7 +308,7 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p37-effects": ["covered", "game particles + app-ayah effects", "later"],
 };
 /** the few images still worth making for Morning Town; everything else waits */
-const NOW = new Set(["p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles"]);
+const NOW = new Set(["p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles", "p38-ais-ref", "p39-ais-ride", "p40-adam-ref", "p41-adam-ride"]);
 for (const p of PACKS) if (!STATUS[p.id]) p.priority = NOW.has(p.id) ? "now" : "later";
 for (const p of PACKS) { const s = STATUS[p.id]; if (s) { p.status = s[0]; p.note = s[1]; if (s[2]) p.priority = s[2]; } }
 

@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (37 images: 23 done or covered, 14 to make, 6 of them now)
+## 7. Packs (43 images: 23 done or covered, 20 to make, 10 of them now)
 
 ### References
 
@@ -125,3 +125,14 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | 35 | Menu and HUD icons | 📚 already covered | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
 | 36 | Screen props | 📚 already covered | items | `ui-clipboard`, `ui-chest`, `ui-banner`, `ui-turntable`, `ui-wardrobe`, `ui-library-door` |
 | 37 | Effects | 📚 already covered | items | `fx-sparkle`, `fx-dust`, `fx-confetti`, `fx-hearts`, `fx-splash`, `fx-pop` |
+
+### Opponents
+
+| # | image | status | kind | game files |
+|---|---|---|---|---|
+| 38 | Baby Ais reference poses (with helmet over her hijab) | ⭐ NOW | poses | `ais-ref-front`, `ais-ref-34`, `ais-ref-side`, `ais-ref-back`, `ais-wave`, `ais-bike` |
+| 39 | Baby Ais riding (6 rear frames) | ⭐ NOW | anim | `ais-ride` (frames 1–6, 10 fps, loop) |
+| 40 | Kak Adam reference poses (with helmet) | ⭐ NOW | poses | `adam-ref-front`, `adam-ref-34`, `adam-ref-side`, `adam-ref-back`, `adam-wave`, `adam-bike` |
+| 41 | Kak Adam riding (6 rear frames) | ⭐ NOW | anim | `adam-ride` (frames 1–6, 10 fps, loop) |
+| 42 | Friendly race moments | later | poses | `ais-pass`, `ais-cheer-ride`, `ais-finish`, `adam-pass`, `adam-cheer-ride`, `adam-finish` |
+| 43 | Race props | later | items | `race-finish`, `race-start-light`, `race-flag`, `race-podium`, `race-medal`, `race-cones` |

@@ -46,10 +46,31 @@ export const NEGATIVE_BASE = [
 ];
 
 /** References to attach, by id (generated in the order of the batches). */
+export const AIS_BIBLE = `CHARACTER — BABY AIS (Baby Mo's twin sister; must match the attached references exactly):
+- Cute toddler girl, about 3 years old, the SAME height and chibi proportions as Baby Mo (about 3.2 heads tall, big round head, round rosy cheeks), same 3D style.
+- A soft pink hijab framing her face, with a small light-blue star pin on the side; big round glossy dark-brown eyes, light warm skin, small smiling mouth.
+- Outfit: one-piece pink jumpsuit with a small white crescent moon on the chest and a little pocket, lavender long sleeves with light-blue cuffs, lavender shoes with white soles.
+- Riding: a white toddler helmet worn OVER the hijab (the hijab stays neat and covers her hair and neck), with a pink star on the front and two pink vent stripes; a small lavender backpack with a white moon patch.
+NEVER change her face, hijab, outfit colours or height; never show her hair.`;
+
+export const ADAM_BIBLE = `CHARACTER — KAK ADAM (Baby Mo's big brother; must match the attached references exactly):
+- Cute boy, about 6 years old, a LITTLE taller than Baby Mo (about 1.15 × Baby Mo's height), slightly less chibi (about 3.6 heads tall), same 3D style.
+- Short curly dark-brown hair, big round glossy dark-brown eyes, light warm skin, cheerful confident smile.
+- Outfit: blue zip-up hooded track jacket with a small white star badge on the chest and white stripes down the sleeves, matching blue track pants with white side stripes, white-and-blue sneakers.
+- Riding: a sky-blue toddler helmet with a white lightning stripe; a small navy backpack with a white star patch.
+NEVER change his face, hair, outfit colours or height.`;
+
+export const OPP_BIKES = `OPPONENT BIKES: exactly the same push balance bike model as Baby Mo's (same shape, wheels, saddle, grips, bell, NO pedals) — the frame colour is the ONLY difference and replaces the green: Baby Ais rides a soft-pink frame, Kak Adam a sky-blue frame (a slightly bigger size of the same bike, matching his height).`;
+
 export const EXISTING_REFS: Record<string, string> = {
   "render1-front": "babymo-app/www/baby-mo-poses/baby-mo-pose-01.png (render 1, front, waving)",
   "render1-back": "babymo-app/www/baby-mo-poses/baby-mo-pose-38.png (render 1, from behind)",
   "render1-side": "babymo-app/www/baby-mo-poses/baby-mo-pose-42.png (render 1, walking, 3/4 side)",
   "render1-happy": "babymo-app/www/baby-mo-poses/baby-mo-yeyy.png (render 1, celebrating)",
   "concept": "docs/rush/concept-board.png (the Time Rush concept board)",
+  "ais-wave": "babymo-app/www/ais-garden/wave-hello.webp (Baby Ais, waving)",
+  "ais-run": "babymo-app/www/ais-garden/run.webp (Baby Ais, running)",
+  "adam-wave": "babymo-app/www/adam-tennis-v2/wave-1.webp (Kak Adam, waving)",
+  "mo-ride-approved": "art-src/rush/p04-ride-user.png (approved Baby Mo riding frames — match this framing)",
+  "bike-approved": "art-src/rush/bike-side.png (approved push balance bike)",
 };
