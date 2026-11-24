@@ -12,15 +12,19 @@ import { wkey } from "../i18n";
 
 export interface Finished { world: WorldId; s: Stats; praise: number; fresh: Unlock[]; firstClear: boolean }
 
-/** the approved celebration frames: play once, then keep cheering on the last two */
+/**
+ * The approved celebration frames played once at a calm pace, then Mo holds the final
+ * arms-wide pose and just breathes; every 5 s he cheers once more. (Flipping between two
+ * different poses every frame looked like twitching.)
+ */
 function Celebrate() {
   const [f, setF] = useState(0);
   useEffect(() => {
     let i = 0;
-    const h = setInterval(() => { i++; setF(i < 6 ? i : 4 + (i % 2)); }, 140);
+    const h = setInterval(() => { i++; const k = i % 25; setF(k < 6 ? k : 5); }, 210);
     return () => clearInterval(h);
   }, []);
-  return <div className="ru-celebrate" role="img" aria-label="Baby Mo" style={{ backgroundImage: "url(rush/mo/celebrate.webp)", backgroundPosition: `${f * 20}% 0` }} />;
+  return <div className={"ru-celebrate" + (f === 5 ? " hold" : "")} role="img" aria-label="Baby Mo" style={{ backgroundImage: "url(rush/mo/celebrate.webp)", backgroundPosition: `${f * 20}% 0` }} />;
 }
 
 export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
