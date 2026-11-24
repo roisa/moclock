@@ -132,7 +132,11 @@ export class GameSim {
     const r = this.r, items = this.w.main.items;
     for (const v of this.rivals) {
       const gap = v.z - r.z;
-      const want = r.stopped ? 0 : 2300 * v.pace * (gap > SEG * 14 ? 0.82 : gap < -SEG * 3 ? 1.25 : gap < SEG * 2 ? 1.08 : 1);
+      // each friend swings between just behind Mo and a little ahead, at its own rhythm, so there is
+      // real racing side by side (and overtaking both ways) instead of two dots far up the road
+      const target = SEG * ((v.id === "ais" ? 2.2 : 3.2) * Math.sin(this.t * (v.id === "ais" ? 0.21 : 0.16) + (v.id === "ais" ? 0.5 : 2.4)) + 1);
+      const err = target - gap;
+      const want = r.stopped ? 0 : Math.max(r.speed * 0.6, Math.min(r.speed * 1.5 + 400, r.speed + err * 0.9));
       v.speed += (want - v.speed) * Math.min(1, dt * 1.5);
       v.z = Math.min(v.z + v.speed * dt, this.w.end - SEG * (v.id === "ais" ? 1.2 : 2.6));
       v.stride += dt * (v.speed / 2300) * 2.2 * Math.PI * 2;
@@ -143,6 +147,13 @@ export class GameSim {
         let lane = (v.lane + (Math.floor(v.z / SEG) % 2 ? 1 : 2)) % 3;
         if (Math.abs(gap) < SEG * 1.5 && lane === r.lane) lane = (lane + 1) % 3;
         v.lane = lane;
+      }
+      // riding alongside Mo: always give him his lane, and don't share a lane with the other friend
+      if (Math.abs(gap) < SEG * 2.2 && v.lane === r.lane) {
+        const other = this.rivals.find((o) => o !== v);
+        const free = [0, 1, 2].filter((l) => l !== r.lane && !(other && Math.abs(other.z - v.z) < SEG * 1.5 && other.lane === l));
+        v.lane = free.sort((a, b) => Math.abs(a - v.lane) - Math.abs(b - v.lane))[0] ?? (r.lane + 1) % 3;
+        v.nextLane = 2.5;
       }
       const tx = LANES[v.lane];
       v.x += Math.sign(tx - v.x) * Math.min(Math.abs(tx - v.x), dt * 2.2);

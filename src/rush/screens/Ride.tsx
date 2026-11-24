@@ -21,6 +21,7 @@ import { kit, Pill } from "../ui/Kit";
 import type { Msg } from "../../i18n/types";
 
 const STEP = 1 / 60;
+let duaDone = false;
 /** test hook: ?simspeed=4 runs the simulation faster (automated playthroughs) */
 const SIM_SPEED = Math.min(8, Math.max(1, Number(new URLSearchParams(location.search).get("simspeed")) || 1));
 
@@ -43,12 +44,39 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
   const pausedRef = useRef(false);
   const lastStar = useRef(0);
   const streak = useRef(0);
+  const lastPraise = useRef(-1e9);
   /** recorded Baby Mo clips with a speech bubble showing the words */
-  const sayClips = (names: Clip[], opts: { gap?: number; force?: boolean } = {}) => {
-    if (!audio.clips(names, lang, opts)) return;
-    setLine(names.map((n) => CLIP_TEXT[n][lang]).join(" "));
+  /**
+   * Voice director: one line at a time. A line that matters (force) waits for the current one to
+   * finish instead of cutting it off; small remarks are dropped while Mo is talking.
+   */
+  const busyUntil = useRef(0);
+  const queue = useRef<(() => void)[]>([]);
+  const talk = (text: string, play: () => boolean, force?: boolean) => {
+    const now = performance.now();
+    if (now < busyUntil.current) {
+      if (force && queue.current.length < 2) {
+        queue.current.push(() => talk(text, play, force));
+        window.setTimeout(() => queue.current.shift()?.(), busyUntil.current - now + 120);
+      }
+      return;
+    }
+    if (!play()) return;
+    const dur = Math.max(1500, 700 + text.length * 62); // about how long Mo needs to say it
+    busyUntil.current = now + dur;
+    setLine(text);
     window.clearTimeout((say as unknown as { h: number }).h);
-    (say as unknown as { h: number }).h = window.setTimeout(() => setLine(null), 2600);
+    (say as unknown as { h: number }).h = window.setTimeout(() => setLine(null), dur + 700);
+  };
+  const sayClips = (names: Clip[], opts: { gap?: number; force?: boolean } = {}) =>
+    talk(names.map((n) => CLIP_TEXT[n][lang]).join(" "), () => audio.clips(names, lang, { ...opts, force: true }), opts.force);
+  /** the last time (minutes) Mo said out loud, so the same time is not repeated right away */
+  const lastTimeSaid = useRef({ t: -1, at: 0 });
+  const sayTime = (key: string, time: number) => {
+    const now = performance.now();
+    if (lastTimeSaid.current.t === time && now - lastTimeSaid.current.at < 15000) return;
+    lastTimeSaid.current = { t: time, at: now };
+    say({ k: key, p: { t: { time } } }, { gap: 4 });
   };
   const lastQuarter = useRef(-1);
   const prayer = usePrayer();
@@ -58,10 +86,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
 
   const say = (m0: Msg | string, opts: { gap?: number; force?: boolean } = {}) => {
     const m = typeof m0 === "string" ? wkey(m0, world) : m0; // the world's own line when it has one
-    audio.say(m, lang, opts);
-    setLine(t(m));
-    window.clearTimeout((say as unknown as { h: number }).h);
-    (say as unknown as { h: number }).h = window.setTimeout(() => setLine(null), 2600);
+    talk(t(m), () => audio.say(m, lang, { ...opts, force: true }), opts.force);
   };
 
   // scene + loop
@@ -106,7 +131,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       const time = sim.time;
       if (time % 15 === 0 && time !== lastQuarter.current && !sim.r.stopped && sim.t > 3) {
         lastQuarter.current = time;
-        if (time % 60 !== 0) say({ k: "ru.say.quarter", p: { t: { time } } }, { gap: 6 });
+        if (time % 60 !== 0) sayTime("ru.say.quarter", time);
       }
       setHud((h) => (h.stars !== sim.stats.stars || h.pk !== sim.stats.packages || h.time !== time || h.carrots !== sim.stats.carrots ? { stars: sim.stats.stars, pk: sim.stats.packages, time, carrots: sim.stats.carrots } : h));
     };
@@ -124,7 +149,10 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       }, ms));
     };
     startRef.current = countdown;
-    const skipDua = /[?&]nodua\b/.test(location.search);
+    // the du'a for riding is read on the first ride of a visit; later rides go straight to 3-2-1
+    const skipDua = /[?&]nodua\b/.test(location.search) || duaDone;
+    duaDone = true;
+    if (skipDua) setDua(false);
     // the card stays at least 6.5 s so it can be read even with the voice off
     const shownAt = performance.now();
     const t0 = window.setTimeout(() => (skipDua ? countdown() : audio.clips(["d-vehicle"], lang, { force: true, done: () => window.setTimeout(countdown, Math.max(500, 6500 - (performance.now() - shownAt))) })), 700);
@@ -144,13 +172,13 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           // star streaks earn a little praise in Baby Mo's recorded voice: Masya Allah → Subhanallah → Barakallah → Allahu Akbar
           streak.current = now - lastStar.current < 2500 ? streak.current + 1 : 1;
           const praise = STREAK_CLIPS[streak.current];
-          if (praise) sayClips([praise], { gap: 6 });
+          if (praise && now - lastPraise.current > 20000) { lastPraise.current = now; sayClips([praise]); }
           if (now - lastStar.current > 90) audio.sfx("star");
           lastStar.current = now; setPulse((n) => n + 1); break; }
         case "gift": { const q = at(e.item.id); sc.fx.emit("confetti", q.x, q.y, 24, { up: 300, life: 1.2 }); sc.fx.emit("star", q.x, q.y, 10, { color: "#ffd23f", size: 9 }); audio.sfx("correct"); setPulse((n) => n + 1); break; }
         case "ring": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 20, { size: 6, speed: 300 }); audio.sfx("whoosh"); break; }
         case "pocketclock": { const q = at(e.item.id); sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 10 }); audio.sfx("fanfare"); say({ k: "ru.say.balloon", p: { t: { time: sim.time } } }, { force: true }); break; }
-        case "balloon": { const q = at(e.item.id); sc.fx.emit("confetti", q.x, q.y, 22, { up: 200, life: 1 }); audio.sfx("pop"); say({ k: "ru.say.balloon", p: { t: { time: e.time } } }, { gap: 3 }); break; }
+        case "balloon": { const q = at(e.item.id); sc.fx.emit("confetti", q.x, q.y, 22, { up: 200, life: 1 }); audio.sfx("pop"); sayTime("ru.say.balloon", e.time); break; }
         case "carrot": { const q = at(e.item.id); sc.fx.emit("heart", q.x, q.y, 2, { size: 10, speed: 40 }); audio.sfx("pop"); break; }
         case "pickup": {
           const q = rp();
@@ -174,7 +202,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         case "tunnel-near": say("ru.say.tunnelHint", { force: true }); break;
         // friends overtaking cheer Mo on; when Mo passes them they cheer too (sparingly)
         case "rival-pass": say(`ru.rival.${e.who}.${e.ahead ? "pass" : "passed"}`, { gap: 9 }); break;
-        case "balloon-miss": say({ k: "ru.say.balloonMiss", p: { t: { time: e.time } } }, { gap: 5 }); break;
+        case "balloon-miss": sayTime("ru.say.balloonMiss", e.time); break;
         case "arrive": {
           const sc2 = scene.current!;
           sc2.fx.emit("confetti", sc2.W / 2, sc2.H * 0.3, 70, { up: 500, speed: 400, life: 2 });

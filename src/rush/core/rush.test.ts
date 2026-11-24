@@ -197,7 +197,7 @@ describe("GameSim", () => {
     expect(sim.done).toBe(true);
     expect(maxAhead).toBeLessThan(SEG * 20); // never disappear far ahead
     expect(maxBehind).toBeGreaterThan(-SEG * 12); // never left far behind
-    expect(sameLaneClose).toBeLessThan(30); // they move out of Mo's way
+    expect(sameLaneClose).toBeLessThan(60); // < 1 s in a whole ride: they move out of Mo's way (only when Mo steers into them)
     expect(passes).toBeGreaterThan(0); // they overtake and get overtaken — a race!
     for (const v of sim.rivals) expect(v.z).toBeGreaterThan(sim.w.end - SEG * 30);
   });
