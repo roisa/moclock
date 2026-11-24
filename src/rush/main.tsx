@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { RushProvider, loadRush } from "./state";
 import { registerRushDicts } from "./i18n";
+import { PrayerProvider } from "./prayer/prayer";
 import { setCharacterBase } from "../ui/Character";
 import "../styles/tokens.css";
 import "../styles/app.css";
@@ -22,7 +23,9 @@ if ("serviceWorker" in navigator && !import.meta.env.DEV) navigator.serviceWorke
 loadRush().then((p) => {
   createRoot(document.getElementById("root")!).render(
     <RushProvider initial={p}>
-      <App />
+      <PrayerProvider>
+        <App />
+      </PrayerProvider>
     </RushProvider>,
   );
   document.getElementById("boot")?.remove();

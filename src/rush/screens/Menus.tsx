@@ -7,6 +7,7 @@ import { audio } from "../audio";
 import { go } from "../router";
 import { randomRng, int } from "../../engine/rng";
 import { LANGS } from "../../i18n";
+import { NextPrayerChip, usePrayer, CITIES, PRAYERS, PRAYER_NAMES, defaultCity } from "../prayer/prayer";
 
 export function Splash({ onStart }: { onStart: () => void }) {
   const { t } = useRush();
@@ -17,7 +18,7 @@ export function Splash({ onStart }: { onStart: () => void }) {
       <img className="ru-splash-l" src={kit("v-house.webp")} alt="" />
       <img className="ru-splash-r" src={kit("v-school.webp")} alt="" />
       <Logo />
-      <div className="ru-splash-hero"><img className="ru-splash-mo" src="rush/mo/wave.webp" alt="Baby Mo" /><BikeSide bike="green" width={260} className="ru-splash-bike" /></div>
+      <div className="ru-splash-hero"><PairRide /></div>
       <span className="ru-tap">{t("ru.tapToStart")}</span>
     </button>
   );
@@ -29,14 +30,19 @@ export function Home({ onGate }: { onGate: () => void }) {
     <div className="ru-screen ru-home" style={{ backgroundImage: `url(${kit("bg-home.webp")})` }}>
       <div className="ru-home-top">
         <StarCount n={p.stars} />
+        <NextPrayerChip />
         <span className="grow" />
         <RoundBtn icon={p.settings.sound ? "sound" : "sound-off"} label={t("ru.sound")} size={56} onClick={() => update((x) => ({ ...x, settings: { ...x.settings, sound: !x.settings.sound } }))} />
         <RoundBtn icon="settings" label={t("ru.parents")} size={56} onClick={onGate} />
       </div>
       <div className="ru-home-main">
         <div className="ru-home-hero">
-          <img className="ru-mo ru-home-mo" src="rush/mo/wave.webp" alt="Baby Mo" draggable={false} />
-          <BikeSide bike={p.equip.bike} width={280} />
+          <div className="ru-trio">
+            <img className="ru-mo ais" src="rush/mo/ais-wave.webp" alt="Baby Ais" draggable={false} />
+            <img className="ru-mo ru-home-mo mo" src="rush/mo/wave.webp" alt="Baby Mo" draggable={false} />
+            <img className="ru-mo adam" src="rush/mo/adam-cool.webp" alt="Kak Adam" draggable={false} />
+          </div>
+          <BikeSide bike={p.equip.bike} width={230} />
         </div>
         <div className="ru-home-menu">
           <Logo />
@@ -110,18 +116,21 @@ export function Mission({ world }: { world: WorldId }) {
           <h2>{t("ru.mission")}</h2>
           <p>{t({ k: "ru.m.morning", p: { t: { time: make(9, 0) } } })}</p>
           <div className="ru-mission-clocks">
-            <figure><Clock t={make(8, 0)} size={64} /><figcaption>{t("ru.m.from")}<Digital t={make(8, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={make(8, 0)} size={54} /><figcaption>{t("ru.m.from")}<Digital t={make(8, 0)} size="s" /></figcaption></figure>
             <svg viewBox="0 0 60 20" width="56" aria-hidden="true"><path d="M2 10h50m-10-8 10 8-10 8" stroke="#4cbf5a" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <figure><Clock t={make(9, 0)} size={64} /><figcaption>{t("ru.m.to")}<Digital t={make(9, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={make(9, 0)} size={54} /><figcaption>{t("ru.m.to")}<Digital t={make(9, 0)} size="s" /></figcaption></figure>
           </div>
           <div className="ru-dua" lang="ar">
             <small>{t("ru.dua.title")}</small>
-            <p className="ar" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ</p>
+            <p className="ar" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>
             <p className="latin" lang={lang}>{t("ru.dua.latin")}</p>
             <p className="mean" lang={lang}>{t("ru.dua.meaning")}</p>
-            <button className="ru-dua-play" onClick={() => audio.clips(["bism", "shuffle"], lang, { force: true })}>🔊 {t("ru.dua.listen")}</button>
+            <button className="ru-dua-play" onClick={() => audio.clips(["d-leave_home"], lang, { force: true })}>🔊 {t("ru.dua.listen")}</button>
           </div>
-          <div className="ru-mission-books">{[0, 1, 2].map((i) => <img key={i} className="bk" src={kit("books.webp")} alt="" />)}<img src={kit("v-school.webp")} alt="" /></div>
+          <div className="ru-mission-row">
+            <div className="ru-mission-books">{[0, 1, 2].map((i) => <img key={i} className="bk" src="rush/art/books.webp" alt="" />)}<img src={kit("v-school.webp")} alt="" /></div>
+            <div className="ru-friends" title={t("ru.friends")}><img src="rush/mo/ais-front.webp" alt="Baby Ais" /><img src="rush/mo/adam-front.webp" alt="Kak Adam" /></div>
+          </div>
           <Pill big onClick={() => go("ride/" + world)}>{t("ru.letsGo")}</Pill>
         </div>
       </div>
@@ -253,6 +262,7 @@ export function Parents() {
           <Toggle k="reduced" label="ru.reduced" />
           <Toggle k="lefty" label="ru.lefty" />
           <Toggle k="unlockAll" label="ru.unlockAll" />
+          <PrayerSettings />
         </section>
         <section className="ru-panel">
           <p>{t("ru.parentInfo")}</p>
@@ -272,3 +282,38 @@ export function Parents() {
   );
 }
 export { Ribbon };
+
+/** parent settings for the prayer-time pause (same times and cities as the Baby Mo app) */
+function PrayerSettings() {
+  const { p, t, update, lang } = useRush();
+  const pr = usePrayer();
+  const set = (patch: Partial<typeof p.settings>) => update((x) => ({ ...x, settings: { ...x.settings, ...patch } }));
+  const useLoc = () => navigator.geolocation?.getCurrentPosition(
+    (pos) => set({ loc: { lat: +pos.coords.latitude.toFixed(4), lng: +pos.coords.longitude.toFixed(4) }, city: null }),
+    () => {}, { timeout: 10000, maximumAge: 3600e3 });
+  return (
+    <>
+      <label className="ru-row"><span>{t("ru.pray.setting")}</span><input type="checkbox" checked={p.settings.prayer} onChange={(e) => set({ prayer: e.target.checked })} /></label>
+      <label className="ru-row"><span>{t("ru.pray.city")}</span>
+        <select value={p.settings.loc ? "__loc" : p.settings.city ?? ""} onChange={(e) => e.target.value === "__loc" ? useLoc() : set({ city: e.target.value || null, loc: null })}>
+          <option value="">{t("ru.pray.auto")}{defaultCity() ? ` (${defaultCity()})` : ""}</option>
+          {CITIES.map((c) => <option key={c.n} value={c.n}>{c.n}</option>)}
+          <option value="__loc">📍 {p.settings.loc ? t("ru.pray.myLocation") : t("ru.pray.useLoc")}</option>
+        </select>
+      </label>
+      {pr.today && (
+        <div className="ru-praytimes" aria-label={t("ru.pray.today")}>
+          {pr.today.map((x) => <span key={x.key} className={pr.next?.key === x.key ? "next" : ""}><b>{PRAYER_NAMES[lang][PRAYERS.indexOf(x.key)]}</b>{x.time}</span>)}
+        </div>
+      )}
+      <small className="ru-note">{t("ru.pray.note")}</small>
+    </>
+  );
+}
+
+/** Baby Mo and Baby Ais riding toward the viewer (approved sheet, 6 frames) */
+function PairRide() {
+  const [f, setF] = useState(0);
+  useEffect(() => { const h = setInterval(() => setF((x) => (x + 1) % 6), 260); return () => clearInterval(h); }, []);
+  return <div className="ru-pairride" role="img" aria-label="Baby Mo and Baby Ais" style={{ backgroundImage: "url(rush/mo/pair-ride.webp)", backgroundPosition: `${f * 20}% 0` }} />;
+}

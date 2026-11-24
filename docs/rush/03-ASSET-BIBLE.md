@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (43 images: 29 done or covered, 14 to make, 4 of them now)
+## 7. Packs (43 images: 34 done or covered, 9 to make, 0 of them now)
 
 ### References
 
@@ -86,7 +86,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 |---|---|---|---|---|
 | 17 | Bike colours | ✅ done | items | `bike-green`, `bike-blue`, `bike-yellow`, `bike-pink`, `bike-lavender`, `bike-rainbow` |
 | 18 | Delivery backpacks | 📚 already covered | items | `bag-yellow`, `bag-blue`, `bag-pink`, `bag-books`, `bag-picnic`, `bag-moon` |
-| 19 | Packages to deliver | 📚 already covered | items | `pkg-storybooks`, `pkg-gift`, `pkg-picnic`, `pkg-toy`, `pkg-food`, `pkg-teddy` |
+| 19 | Packages to deliver | ✅ done | items | `pkg-storybooks`, `pkg-gift`, `pkg-picnic`, `pkg-toy`, `pkg-food`, `pkg-teddy` |
 | 20 | Helmet colours | later | items | `helmet-white`, `helmet-blue`, `helmet-yellow`, `helmet-mint`, `helmet-lavender`, `helmet-orange` |
 | 21 | Bike accessories | 📚 already covered | items | `acc-bell`, `acc-basket`, `acc-streamers`, `acc-flag`, `acc-light`, `acc-beads` |
 
@@ -130,9 +130,9 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 
 | # | image | status | kind | game files |
 |---|---|---|---|---|
-| 38 | Baby Ais reference poses (with helmet over her hijab) | ⭐ NOW | poses | `ais-ref-front`, `ais-ref-34`, `ais-ref-side`, `ais-ref-back`, `ais-wave`, `ais-bike` |
-| 39 | Baby Ais riding (6 rear frames) | ⭐ NOW | anim | `ais-ride` (frames 1–6, 10 fps, loop) |
-| 40 | Kak Adam reference poses (with helmet) | ⭐ NOW | poses | `adam-ref-front`, `adam-ref-34`, `adam-ref-side`, `adam-ref-back`, `adam-wave`, `adam-bike` |
-| 41 | Kak Adam riding (6 rear frames) | ⭐ NOW | anim | `adam-ride` (frames 1–6, 10 fps, loop) |
-| 42 | Friendly race moments | later | poses | `ais-pass`, `ais-cheer-ride`, `ais-finish`, `adam-pass`, `adam-cheer-ride`, `adam-finish` |
+| 38 | Baby Ais reference poses (with helmet over her hijab) | ✅ done | poses | `ais-ref-front`, `ais-ref-34`, `ais-ref-side`, `ais-ref-back`, `ais-wave`, `ais-bike` |
+| 39 | Baby Ais riding (6 rear frames) | ✅ done | anim | `ais-ride` (frames 1–6, 10 fps, loop) |
+| 40 | Kak Adam reference poses (with helmet) | ✅ done | poses | `adam-ref-front`, `adam-ref-34`, `adam-ref-side`, `adam-ref-back`, `adam-wave`, `adam-bike` |
+| 41 | Kak Adam riding (6 rear frames) | ✅ done | anim | `adam-ride` (frames 1–6, 10 fps, loop) |
+| 42 | Friendly race moments | ✅ done | poses | `ais-pass`, `ais-cheer-ride`, `ais-finish`, `adam-pass`, `adam-cheer-ride`, `adam-finish` |
 | 43 | Race props | later | items | `race-finish`, `race-start-light`, `race-flag`, `race-podium`, `race-medal`, `race-cones` |

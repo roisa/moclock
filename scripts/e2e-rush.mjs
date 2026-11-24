@@ -27,7 +27,7 @@ async function ride(lang) {
   const errs = [];
   p.on("pageerror", (e) => errs.push(e.message));
   ctx.setDefaultTimeout(20000);
-  await p.goto(BASE + "?simspeed=4#/", { waitUntil: "networkidle" });
+  await p.goto(BASE + "?simspeed=4&nodua&noprayer#/", { waitUntil: "networkidle" });
   await p.click(".ru-splash");
   await p.click(".ru-home .ru-pill.big");
   await p.click(".ru-world >> nth=0");
@@ -66,7 +66,7 @@ async function ride(lang) {
   await p.waitForSelector(".ru-unlockw");
   check(true, "world unlock screen after first delivery");
   await p.reload({ waitUntil: "networkidle" });
-  await p.goto(BASE + "#/worlds");
+  await p.goto(BASE + "?noprayer#/worlds");
   await p.waitForSelector(".ru-world");
   check(!!(await p.$(".ru-world .praise")), "result saved across reload");
   check(errs.length === 0, "no page errors " + errs.join(" | "));
@@ -81,7 +81,7 @@ async function layouts() {
       const ctx = await b.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
       const p = await ctx.newPage();
       for (const r of ["", "worlds", "mission/morning", "garage", "collection"]) {
-        await p.goto(BASE + "#/" + r, { waitUntil: "networkidle" });
+        await p.goto(BASE + "?noprayer#/" + r, { waitUntil: "networkidle" });
         if (!r) await p.click(".ru-splash");
         await p.waitForTimeout(400);
         const over = await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
@@ -93,7 +93,7 @@ async function layouts() {
   check(true, "layouts screenshotted");
   const ctx = await b.newContext({ viewport: { width: 1024, height: 768 } });
   const p = await ctx.newPage();
-  await p.goto(BASE + "#/parents", { waitUntil: "networkidle" });
+  await p.goto(BASE + "?noprayer#/parents", { waitUntil: "networkidle" });
   await p.waitForSelector(".ru-panel.gate");
   await p.click(".ru-pad button >> text=1");
   await p.click(".ru-pad button >> text=1");

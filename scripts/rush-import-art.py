@@ -216,3 +216,51 @@ for i, name in enumerate(["log", "boxes", "blocks", "puddle", "ramp", "boost"]):
     save(c, f"{ART}/{name}.webp")
     atlas[name] = {"w": c.width, "h": c.height, "frames": 1}
 json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)
+
+# ---------------------------------------------------------------- opponents, Mo + Ais moments, packages
+def cells_of(src):
+    im = clean(Image.open(f"{SRC}/{src}"))
+    return [im.crop(((i % 3) * 512, (i // 3) * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512)) for i in range(6)]
+
+def rider_strip(src, name, height):
+    """a rear riding sheet framed exactly like Mo's: one crop box for all six frames"""
+    cs = cells_of(src)
+    bs = [bbox(c) for c in cs]
+    b = (min(x[0] for x in bs) - 4, min(x[1] for x in bs) - 4, max(x[2] for x in bs) + 4, max(x[3] for x in bs) + 2)
+    fr = [fit_h(c.crop(b), height) for c in cs]
+    st = Image.new("RGBA", (fr[0].width * 6, fr[0].height), (0, 0, 0, 0))
+    for i, f in enumerate(fr): st.alpha_composite(f, (i * f.width, 0))
+    save(st, f"{MO}/{name}.webp", 88)
+
+# twins are the same height; Kak Adam a little taller (family height rule)
+rider_strip("p39-ais-ride.png", "ais-ride", 420)
+rider_strip("p41-adam-ride.png", "adam-ride", 462)
+
+def stills(src, names, h=600, haze=16):
+    for c, n in zip(cells_of(src), names):
+        if not n: continue
+        if haze > 16:  # some sheets carry a faint backdrop haze: drop the weak alpha
+            arr = np.array(c); arr[arr[..., 3] < haze] = 0; c = Image.fromarray(arr)
+        save(fit_h(c.crop(bbox(c, max(24, haze))), h), f"{MO}/{n}.webp")
+
+stills("p38-ais-ref.png", ["ais-front", None, None, "ais-back", "ais-wave", "ais-bike"])
+stills("p40-adam-ref.png", ["adam-front", "adam-cheer", None, "adam-back", "adam-wave", "adam-cool"], 660, haze=90)
+stills("p42-mo-ais-moments.png", ["pair-gifts", "pair-cheer", "pair-jump", "pair-highfive", "pair-smile", "pair-thumbs"])
+# Mo + Ais riding toward the viewer: a short bouncy loop for the splash / home
+cs = cells_of("p42b-mo-ais-riding-front.png")
+bs = [bbox(c) for c in cs]
+b = (min(x[0] for x in bs) - 4, min(x[1] for x in bs) - 4, max(x[2] for x in bs) + 4, max(x[3] for x in bs) + 2)
+fr = [fit_h(c.crop(b), 480) for c in cs]
+st = Image.new("RGBA", (fr[0].width * 6, fr[0].height), (0, 0, 0, 0))
+for i, f in enumerate(fr): st.alpha_composite(f, (i * f.width, 0))
+save(st, f"{MO}/pair-ride.webp", 88)
+
+# packages: the storybook bundle and the gift replace the placeholders in the game
+pk = cells_of("p19-packages.png")
+atlas = json.load(open(atlas_p)) if os.path.exists(atlas_p) else {}
+for c, name in zip(pk, ["books", "gift", "pkg-box", "pkg-letter", "pkg-basket", "carrot-bag"]):
+    c = c.crop(bbox(c, 60))
+    if max(c.size) > 360: c = c.resize((round(c.width * 360 / max(c.size)), round(c.height * 360 / max(c.size))), Image.LANCZOS)
+    save(c, f"{ART}/{name}.webp")
+    atlas[name] = {"w": c.width, "h": c.height, "frames": 1}
+json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)

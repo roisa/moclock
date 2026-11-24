@@ -4,7 +4,7 @@
  * DeliveryMissionManager (pickups, friend quest, shortcut, arrival) and the
  * rider controllers. Emits events for audio, particles and the HUD.
  */
-import { LANE_HALF, SEG, isCollect, isHazard, type Item, type Track } from "./track";
+import { LANE_HALF, LANES, SEG, isCollect, isHazard, type Item, type Track } from "./track";
 import { newRider, applyInput, stepRider, launch, emptyInput, RAMP_V, BOOST_TIME, WOBBLE_TIME, type Rider, type Input } from "./player";
 import { storyTime, type TimeSpan } from "./clock";
 
@@ -23,7 +23,12 @@ export type SimEvent =
   | { type: "balloon-miss"; time: number }
   | { type: "tunnel-out" }
   | { type: "arrive" }
-  | { type: "jump" | "ramp" | "land" | "land-big" | "steer" | "prep" | "go" };
+  | { type: "jump" | "ramp" | "land" | "land-big" | "steer" | "prep" | "go" }
+  | { type: "rival-pass"; who: RivalId; ahead: boolean };
+
+export type RivalId = "ais" | "adam";
+/** Baby Ais and Kak Adam ride along: friendly racers (they never block Mo and nobody loses) */
+export interface Rival { id: RivalId; z: number; x: number; lane: number; speed: number; h: number; vy: number; air: boolean; stride: number; nextLane: number; ahead: boolean; pace: number }
 
 export interface Stats {
   stars: number;
@@ -57,6 +62,10 @@ export class GameSim {
   private cursor = { main: 0, tunnel: 0 };
   t = 0;
   done = false;
+  rivals: Rival[] = [
+    { id: "ais", z: SEG * 2.5, x: LANES[0], lane: 0, speed: 0, h: 0, vy: 0, air: false, stride: 0, nextLane: 4, ahead: true, pace: 1.02 },
+    { id: "adam", z: SEG * 5, x: LANES[2], lane: 2, speed: 0, h: 0, vy: 0, air: false, stride: 1.5, nextLane: 6, ahead: true, pace: 1.0 },
+  ];
   friendMet = false;
   constructor(public w: WorldDef) {
     const count = (t?: Track) => (t ? t.items.filter((i) => i.kind === "star" || i.kind === "coin").length : 0);
@@ -90,6 +99,7 @@ export class GameSim {
       this.t += dt;
       this.helpers(dt);
       this.sweep(z0, r.z);
+      this.stepRivals(dt);
     }
     // shortcut entrance / tunnel exit
     const sc = this.w.main.shortcut;
@@ -97,6 +107,7 @@ export class GameSim {
       this.route = "main";
       r.z = sc.to + (r.z - this.w.tunnel.length);
       this.cursor.main = firstAfter(this.w.main.items, r.z);
+      this.rejoinRivals();
       this.events.push({ type: "tunnel-out" });
     }
     // arrival
@@ -107,6 +118,48 @@ export class GameSim {
       this.stats.seconds = this.t;
       this.events.push({ type: "arrive" });
     }
+  }
+
+  /**
+   * Rival riders: rubber-banded around Mo (never far ahead, never far behind), they pick a new
+   * lane every few seconds and hop over logs, boxes and blocks in their lane. In the tunnel they
+   * wait on the main road and rejoin Mo when he comes out.
+   */
+  private stepRivals(dt: number) {
+    if (this.route === "tunnel") return;
+    const r = this.r, items = this.w.main.items;
+    for (const v of this.rivals) {
+      const gap = v.z - r.z;
+      const want = r.stopped ? 0 : 2300 * v.pace * (gap > SEG * 14 ? 0.82 : gap < -SEG * 3 ? 1.25 : gap < SEG * 2 ? 1.08 : 1);
+      v.speed += (want - v.speed) * Math.min(1, dt * 1.5);
+      v.z = Math.min(v.z + v.speed * dt, this.w.end - SEG * (v.id === "ais" ? 1.2 : 2.6));
+      v.stride += dt * (v.speed / 2300) * 2.2 * Math.PI * 2;
+      // lane changes, kept a little apart from Mo's lane when close so nobody bumps
+      v.nextLane -= dt;
+      if (v.nextLane <= 0) {
+        v.nextLane = 3 + ((v.z / SEG) % 4);
+        let lane = (v.lane + (Math.floor(v.z / SEG) % 2 ? 1 : 2)) % 3;
+        if (Math.abs(gap) < SEG * 1.5 && lane === r.lane) lane = (lane + 1) % 3;
+        v.lane = lane;
+      }
+      const tx = LANES[v.lane];
+      v.x += Math.sign(tx - v.x) * Math.min(Math.abs(tx - v.x), dt * 2.2);
+      // hop over soft obstacles ahead in the same lane
+      if (!v.air) for (let k = 0; k < items.length; k++) {
+        const it = items[k];
+        if (it.z < v.z) continue;
+        if (it.z > v.z + SEG * 1.2) break;
+        if ((it.kind === "log" || it.kind === "boxes" || it.kind === "blocks" || it.kind === "ball") && Math.abs(it.x - v.x) < 0.35) { v.air = true; v.vy = 5.2; break; }
+      }
+      if (v.air) { v.vy -= 18 * dt; v.h += v.vy * dt * 0.25; if (v.h <= 0) { v.h = 0; v.air = false; } }
+      const ahead = v.z > r.z;
+      if (ahead !== v.ahead && Math.abs(gap) < SEG) this.events.push({ type: "rival-pass", who: v.id, ahead });
+      v.ahead = ahead;
+    }
+  }
+  /** after the shortcut the friends catch up right behind Mo */
+  private rejoinRivals() {
+    this.rivals.forEach((v, i) => { v.z = this.r.z + SEG * (2 + i * 2.5); v.speed = 2300; });
   }
 
   private hinted = false;
