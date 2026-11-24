@@ -314,21 +314,6 @@ export class Scene {
     g.fill("nonzero");
     g.globalAlpha = 1;
   }
-  /** one puffy cloud drawn as a single path (no overlapping alpha seams) */
-  private cloud(x: number, y: number, s: number) {
-    const g = this.g;
-    g.fillStyle = "#ffffff";
-    g.globalAlpha = 0.92;
-    g.beginPath();
-    g.arc(x, y, s, 0, Math.PI * 2);
-    g.moveTo(x + s * 1.1 + s * 1.2, y - s * 0.4);
-    g.arc(x + s * 1.1, y - s * 0.4, s * 1.2, 0, Math.PI * 2);
-    g.moveTo(x + s * 2.2 + s * 0.9, y);
-    g.arc(x + s * 2.2, y, s * 0.9, 0, Math.PI * 2);
-    g.rect(x, y - s * 0.2, s * 2.2, s * 1.0);
-    g.fill("nonzero");
-    g.globalAlpha = 1;
-  }
   private tile(s: Sprite, off: number, bottom: number, h: number) {
     const w = (h * s.w) / s.h;
     let x0 = -(((off * this.W) % w) + w) % w - w * Math.ceil((this.W * 0.3) / w);
