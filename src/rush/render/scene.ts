@@ -442,7 +442,7 @@ export class Scene {
     const H = this.riderH * 1.12 * (unit / this.KX) * (fh / 420);
     if (H > this.H * 2) return;
     const foot = Math.sin(v.stride) > 0 ? 0 : 1;
-    const dx = LANES[v.lane] - v.x;
+    const dx = (LANES[v.lane] - v.x) * 0.6;
     let idx = foot ? 4 : 1;
     if (dx < -0.05) idx = foot ? 3 : 0; else if (dx > 0.05) idx = foot ? 5 : 2;
     if (v.air) idx = 4;

@@ -156,7 +156,7 @@ export class GameSim {
         v.nextLane = 2.5;
       }
       const tx = LANES[v.lane];
-      v.x += Math.sign(tx - v.x) * Math.min(Math.abs(tx - v.x), dt * 2.2);
+      v.x += (tx - v.x) * Math.min(1, dt * (Math.abs(gap) < SEG * 2.2 ? 9 : 5)); // ease into the lane like Mo (quicker when making room for him)
       // hop over soft obstacles ahead in the same lane
       if (!v.air) for (let k = 0; k < items.length; k++) {
         const it = items[k];
@@ -189,7 +189,7 @@ export class GameSim {
       if (it.hit) continue;
       const d = it.z - r.z;
       if (it.move) it.x = Math.sin(this.t * 1.3 + (it.n ?? 0)) * 0.62;
-      if (d > 0 && d < SEG * 4 && (it.kind === "balloon" || it.kind === "carrot" || it.kind === "gift") && Math.abs(it.x - r.x) < 0.75)
+      if (d > 0 && d < SEG * 4 && (it.kind === "balloon" || it.kind === "carrot" || it.kind === "gift" || it.kind === "pocketclock" || it.kind === "magnet" || it.kind === "shield" || it.kind === "timeclock") && Math.abs(it.x - r.x) < 0.75)
         it.x += (r.x - it.x) * Math.min(1, dt * 3.5);
       if (r.magnet > 0 && (it.kind === "star" || it.kind === "coin") && d > 0 && d < SEG * 5 && Math.abs(it.x - r.x) < 1.4) {
         it.x += (r.x - it.x) * Math.min(1, dt * 6);

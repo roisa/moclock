@@ -12,7 +12,9 @@ export const WOBBLE_TIME = 0.6;
 export const G = 18;
 export const HOP_V = 5.2;
 export const RAMP_V = 8;
-export const LANE_TIME = 0.22;
+export const LANE_TIME = 0.4;
+/** lane-change spring: stiffness and damping (critically damped: c = 2·√k) */
+const STEER_K = 90, STEER_C = 2 * Math.sqrt(90);
 /** jump height units: road widths per (vertical speed · s) */
 export const H_SCALE = 0.25;
 
@@ -42,12 +44,14 @@ export interface Rider {
   splash: number;
   pickup: number;
   lean: number; // −1..1 visual lean
+  /** sideways speed (road half-widths per second) */
+  vx: number;
   carrying: number; // packages in the bag
   stopped: boolean; // before go / after arrival
 }
 
 export function newRider(): Rider {
-  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, shield: 0, slow: 0, splash: 0, pickup: 0, lean: 0, carrying: 0, stopped: true };
+  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, shield: 0, slow: 0, splash: 0, pickup: 0, lean: 0, vx: 0, carrying: 0, stopped: true };
 }
 
 export interface Input {
@@ -90,12 +94,15 @@ export function stepRider(r: Rider, dt: number, ev: (e: string) => void) {
   else r.speed = Math.max(target, r.speed - ACCEL * 1.6 * dt);
   r.z += r.speed * dt;
   // lanes (smooth)
+  // a bike doesn't snap sideways: Mo eases into the new lane and settles (critically damped
+  // spring, ~0.4 s), leaning with his sideways speed and coming upright as he arrives
   const tx = LANES[r.lane];
-  const dx = tx - r.x;
-  const step = (LANES[2] - LANES[1]) / LANE_TIME * dt;
-  r.x = Math.abs(dx) <= step ? tx : r.x + Math.sign(dx) * step;
-  const want = Math.abs(dx) > 0.01 ? Math.sign(dx) : 0;
-  r.lean += (want - r.lean) * Math.min(1, dt * 10);
+  const ax = STEER_K * (tx - r.x) - STEER_C * r.vx;
+  r.vx += ax * dt;
+  r.x += r.vx * dt;
+  if (Math.abs(tx - r.x) < 0.015 && Math.abs(r.vx) < 0.15) { r.x = tx; r.vx = 0; }
+  const want = Math.max(-1, Math.min(1, r.vx / 2.2));
+  r.lean += (want - r.lean) * Math.min(1, dt * 7);
   // jump
   if (r.prep > 0) {
     r.prep -= dt;
