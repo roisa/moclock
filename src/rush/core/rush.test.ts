@@ -251,4 +251,19 @@ describe("Sunny Park", () => {
     expect(sim.done).toBe(true);
     expect(praiseStars(sim.stats)).toBeGreaterThanOrEqual(2);
   });
+  it("joystick: pushing right moves Mo right and he settles into the nearest lane on release", () => {
+    const sim = new GameSim(morningWorld());
+    sim.start();
+    sim.input.stick = 1;
+    for (let i = 0; i < 30; i++) sim.step(DT); // half a second at full push
+    expect(sim.r.x).toBeGreaterThan(LANES[1] + 0.3);
+    expect(sim.r.lane).toBe(2);
+    for (let i = 0; i < 60; i++) sim.step(DT);
+    expect(sim.r.x).toBeLessThanOrEqual(LANES[2] + 0.04 + 1e-9); // stays on the road
+    sim.input.stick = -0.5;
+    for (let i = 0; i < 20; i++) sim.step(DT);
+    sim.input.stick = null;
+    for (let i = 0; i < 90; i++) sim.step(DT);
+    expect(LANES as readonly number[]).toContain(sim.r.x);
+  });
 });

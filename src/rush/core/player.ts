@@ -13,6 +13,8 @@ export const G = 18;
 export const HOP_V = 5.2;
 export const RAMP_V = 8;
 export const LANE_TIME = 0.4;
+/** joystick: full deflection crosses one lane in ~0.4 s */
+export const STICK_SPEED = 1.6;
 /** lane-change spring: stiffness and damping (critically damped: c = 2·√k) */
 const STEER_K = 90, STEER_C = 2 * Math.sqrt(90);
 /** jump height units: road widths per (vertical speed · s) */
@@ -46,18 +48,22 @@ export interface Rider {
   lean: number; // −1..1 visual lean
   /** sideways speed (road half-widths per second) */
   vx: number;
+  /** joystick deflection while held (−1 … +1), null otherwise */
+  stick: number | null;
   carrying: number; // packages in the bag
   stopped: boolean; // before go / after arrival
 }
 
 export function newRider(): Rider {
-  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, shield: 0, slow: 0, splash: 0, pickup: 0, lean: 0, vx: 0, carrying: 0, stopped: true };
+  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, shield: 0, slow: 0, splash: 0, pickup: 0, lean: 0, vx: 0, stick: null, carrying: 0, stopped: true };
 }
 
 export interface Input {
   /** −1 / +1 lane change requests queued since last step */
   steer: number[];
   jump: boolean;
+  /** joystick: −1 … +1 while the thumb is on the stick, null when released */
+  stick?: number | null;
   /** tilt steering: the lane the phone's tilt asks for (null = not tilting) */
   tiltLane?: number | null;
   /** held direction (keyboard / touch hold) for smooth lean */
@@ -79,6 +85,7 @@ export function applyInput(r: Rider, inp: Input, ev: (e: string) => void) {
       ev("steer");
     }
   }
+  r.stick = inp.stick ?? null;
   if (inp.tiltLane != null) {
     if (inp.tiltLane !== r.lane) { r.lane = inp.tiltLane; ev("steer"); }
     inp.tiltLane = null; // one change per tilt; the arrow buttons still work in between
@@ -102,11 +109,21 @@ export function stepRider(r: Rider, dt: number, ev: (e: string) => void) {
   // lanes (smooth)
   // a bike doesn't snap sideways: Mo eases into the new lane and settles (critically damped
   // spring, ~0.4 s), leaning with his sideways speed and coming upright as he arrives
-  const tx = LANES[r.lane];
-  const ax = STEER_K * (tx - r.x) - STEER_C * r.vx;
-  r.vx += ax * dt;
-  r.x += r.vx * dt;
-  if (Math.abs(tx - r.x) < 0.015 && Math.abs(r.vx) < 0.15) { r.x = tx; r.vx = 0; }
+  if (r.stick != null && !r.stopped) {
+    // joystick: the thumb sets Mo's sideways speed (more push = faster), free position on the road;
+    // the lane follows wherever he is, and on release he settles into the nearest lane
+    const want = r.stick * STICK_SPEED;
+    r.vx += (want - r.vx) * Math.min(1, dt * 9);
+    r.x = Math.max(LANES[0] - 0.04, Math.min(LANES[2] + 0.04, r.x + r.vx * dt));
+    if ((r.x <= LANES[0] - 0.04 && r.vx < 0) || (r.x >= LANES[2] + 0.04 && r.vx > 0)) r.vx = 0;
+    r.lane = r.x < (LANES[0] + LANES[1]) / 2 ? 0 : r.x > (LANES[1] + LANES[2]) / 2 ? 2 : 1;
+  } else {
+    const tx = LANES[r.lane];
+    const ax = STEER_K * (tx - r.x) - STEER_C * r.vx;
+    r.vx += ax * dt;
+    r.x += r.vx * dt;
+    if (Math.abs(tx - r.x) < 0.015 && Math.abs(r.vx) < 0.15) { r.x = tx; r.vx = 0; }
+  }
   const want = Math.max(-1, Math.min(1, r.vx / 2.2));
   r.lean += (want - r.lean) * Math.min(1, dt * 7);
   // jump
