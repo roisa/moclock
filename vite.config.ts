@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => ({
       input: (mode === "hub" ? { main: "index.html" } : {
         main: "index.html", // Baby Mo: Time Adventure
         racers: "racers/index.html", // Baby Mo: Time Racers (3D)
+        rush: "rush/index.html", // Baby Mo: Time Rush (2.5D delivery adventure)
       }) as Record<string, string>,
     },
   },

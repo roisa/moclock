@@ -48,12 +48,12 @@ Riding is automatic. Speed eases up to cruise; boosts add +45% for 2 s.
 | 5 | Dreamland | 8:00 pm | Teddy bear at bedtime | Coming soon |
 Worlds unlock in order by finishing the previous delivery (the parent can unlock all).
 
-## 7. Morning Town route (≈ 2 min at cruise)
+## 7. Morning Town route (≈ 100 s at cruise, ≈ 75 s with the shortcut)
 Start (bakery, clock tower 8:00) → star trails → pickup 1 → log + first ramp → puddles → **squirrel** → acorns → **shortcut tunnel / main road with bridge** → pickup 2 → boost pad + rainbow ring → box & block slalom → pickup 3 → final ramp star arc → library (9:00).
 
 ## 8. Rewards & progression
-- Stars persist across rides. Results: 1–3 stars-of-praise (always ≥1: "delivered"; 2 for ≥50% stars; 3 for ≥80% or the friend helped).
-- Garage unlocks at star totals: Sky blue 30, Sunny yellow 60, Soft pink 90, Lavender 120, Rainbow Glider 200. Helmet colours at 40/80/150. Bags with world completion.
+- Stars persist across rides. Results: 1–3 stars-of-praise (always ≥1: "delivered"; 2 for ≥50% of the stars on the route; 3 for ≥80% or for helping the squirrel).
+- Stars are never spent; unlocks open at lifetime star totals (a good ride earns 150–250): bikes Sky blue 150, Sunny yellow 300, Soft pink 500, Lavender 750, Rainbow Glider 1000; helmets 200/400/650; bags 250/550.
 - Accessory collection screen shows locked items as silhouettes with the star count needed.
 
 ## 9. Screens

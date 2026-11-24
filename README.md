@@ -1,12 +1,13 @@
-# Baby Mo: Time Adventure + Time Racers
+# Baby Mo: Time Adventure + Time Racers + Time Rush
 
-This repo holds two games that share one engine, the same character art and the
+This repo holds three games that share one engine, the same character art and the
 same EN/ID language layer:
 
 | Game | Live | What it is |
 |---|---|---|
 | **Time Adventure** | https://roisa.github.io/moclock/ | Calm learning worlds: clock, calendar, routine, durations (below) |
 | **Time Racers** (3D) | https://roisa.github.io/moclock/racers/ | Babylon.js kart racing: answer time questions for turbo. See **[docs/RACERS.md](docs/RACERS.md)** |
+| **Time Rush** (2.5D) | `/rush/` (on this branch; goes live at https://roisa.github.io/moclock/rush/ once merged to `main`) | Balance-bike delivery adventure: ride Morning Town 8:00 → 9:00 delivering storybooks while every clock tells the time. See **[docs/rush/](docs/rush/01-GDD.md)** |
 
 An educational game that teaches children aged 3–8 how time works: reading
 analog and digital clocks, days and months, daily routines, and how long things
@@ -86,6 +87,17 @@ npm run build && npx vite preview --port 4174 &
 npm run e2e:racers            # real menu flow + a full race + explorer steering (software WebGL)
 npm run test:offline:racers   # racer works offline after the first visit
 ```
+
+## Time Rush quick start
+
+```bash
+npm run dev                   # http://localhost:5173/rush/
+npm run docs:rush             # regenerate the asset bible + image prompt library from src/rush/assets/catalog.ts
+python3 scripts/rush-slice.py art-src/rush/<id>.png <id> --grid 4x2   # drop a generated sprite sheet into the game
+npm run build && npx vite preview --port 4174 &
+npm run e2e:rush              # full delivery in EN + ID, rewards, saves, layouts light/dark
+```
+Docs: [GDD](docs/rush/01-GDD.md) · [architecture](docs/rush/02-ARCHITECTURE.md) · [asset bible](docs/rush/03-ASSET-BIBLE.md) · [image prompt library](docs/rush/04-PROMPT-LIBRARY.md) · [animation guide](docs/rush/05-ANIMATION-GUIDE.md) · [testing](docs/rush/06-TESTING.md)
 
 ## Test
 
