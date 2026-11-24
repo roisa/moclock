@@ -70,3 +70,15 @@ Worlds 2–5 gameplay, generated art (placeholders until the prompt library is p
 
 ## 13. Opponents (art prompts ready: docs/rush/04, images 38–43)
 Baby Ais (pink bike, same height as Mo) and Kak Adam (blue bike, a little taller) ride the same road as friendly racers. They glide a little ahead or behind, overtake with a smile and wave, and cheer Mo at the finish. Nobody "loses": the delivery always succeeds and the results show who helped whom (e.g. "Kak Adam found the shortcut!"). They are added to the game once images 38–41 are generated.
+
+## 14. Islamic values (as in the app-ayah Baby Mo games)
+| Moment | What happens | Voice |
+|---|---|---|
+| Mission card | Mo has an **amanah** (a trust) to deliver; the du'a before setting off: بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ (Bismillahi tawakkaltu 'alallah — "In the name of Allah, I put my trust in Allah") | recorded clips *bism* + *shuffle* |
+| Go! | "Bismillah! Let's go!" | recorded *bismillah* |
+| Star streaks (8 / 16 / 24 / 32 / 40) | Masya Allah → Masya Allah → Subhanallah → Barakallahu fiikum → Allahu Akbar | recorded *masya1, masya2, subhan, barak, akbar* |
+| Helping the bunny | "Jazakallahu khairan, Baby Mo!" then "Being kind to Allah's creatures makes Allah happy." | text-to-speech |
+| Arrival | "Alhamdulillah! Well done!" — Mo kept his amanah | recorded *win* |
+| Library door | Assalamu'alaikum! / Wa'alaikumussalam! | bubbles |
+| Road | Two masjids (app-ayah village art) in Morning Town | — |
+Clips: `public/rush/voice/{en,id}/` copied from app-ayah NurConnect (Google TTS voice Algenib, the Baby Mo voice); a real recording with the same file name replaces them. Never depict Allah, prophets or angels; Arabic text kept exact.

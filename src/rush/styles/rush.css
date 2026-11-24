@@ -292,3 +292,21 @@
   .ru-say { top: 74px; font-size: 14px; }
 }
 .ru-celebrate { position: absolute; left: -12%; bottom: -8%; height: 40vh; aspect-ratio: 334 / 480; background: 0 0 / 600% 100% no-repeat; filter: drop-shadow(0 8px 10px rgba(0,0,0,.18)); }
+/* ---------- Islamic values: du'a card, salam bubbles */
+.ru-dua { width: 100%; background: #eef9f0; border: 2px solid #bfe6c6; border-radius: 16px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.ru-dua small { font: 700 13px "Nunito"; color: #2a9147; }
+.ru-dua .ar { margin: 0; font: 600 26px/1.6 "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Geeza Pro", serif; color: #23372a; }
+.ru-dua .latin { margin: 0; font: 700 italic 15px "Nunito"; color: #2a6fb0; }
+.ru-dua .mean { margin: 0; font: 600 13px "Nunito"; color: #5d6d61; }
+.ru-dua-play { margin-top: 4px; border: 0; border-radius: 999px; padding: 6px 14px; background: #4cbf5a; color: #fff; font: 700 14px "Fredoka"; cursor: pointer; box-shadow: 0 3px 0 #2a9147; }
+.ru-dua-play:active { transform: translateY(2px); box-shadow: 0 1px 0 #2a9147; }
+.ru-bubble { position: absolute; width: max-content; max-width: 60%; background: #fff; border-radius: 16px; padding: 6px 12px; font: 700 14px "Nunito"; color: #23372a; box-shadow: 0 4px 0 rgba(0,0,0,.08); white-space: nowrap; animation: ru-in .4s both; }
+.ru-bubble.mo { left: -6%; top: 18%; animation-delay: .6s; }
+.ru-bubble.lib { right: -4%; top: 6%; animation-delay: 1.4s; background: #fff8e0; }
+@media (max-height: 520px) { .ru-dua .ar { font-size: 20px; } .ru-dua .mean { display: none; } }
+.ru-dua-play { animation: ru-pulse 1.6s ease-in-out infinite; }
+.ru-clip { padding: 26px 22px 16px; gap: 8px; }
+.ru-mission-clocks figure { width: 80px; }
+.ru-mission-books .bk { width: 36px; }
+.ru-mission-books img:last-child { width: 56px; }
+@media (max-height: 800px) { .ru-clip { padding-top: 22px; gap: 5px; } .ru-clip h2 { font-size: 20px; } .ru-clip p { font-size: 15px; } .ru-dua { padding: 5px 10px; } }

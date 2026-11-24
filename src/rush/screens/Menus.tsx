@@ -110,9 +110,16 @@ export function Mission({ world }: { world: WorldId }) {
           <h2>{t("ru.mission")}</h2>
           <p>{t({ k: "ru.m.morning", p: { t: { time: make(9, 0) } } })}</p>
           <div className="ru-mission-clocks">
-            <figure><Clock t={make(8, 0)} size={84} /><figcaption>{t("ru.m.from")}<Digital t={make(8, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={make(8, 0)} size={64} /><figcaption>{t("ru.m.from")}<Digital t={make(8, 0)} size="s" /></figcaption></figure>
             <svg viewBox="0 0 60 20" width="56" aria-hidden="true"><path d="M2 10h50m-10-8 10 8-10 8" stroke="#4cbf5a" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <figure><Clock t={make(9, 0)} size={84} /><figcaption>{t("ru.m.to")}<Digital t={make(9, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={make(9, 0)} size={64} /><figcaption>{t("ru.m.to")}<Digital t={make(9, 0)} size="s" /></figcaption></figure>
+          </div>
+          <div className="ru-dua" lang="ar">
+            <small>{t("ru.dua.title")}</small>
+            <p className="ar" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ</p>
+            <p className="latin" lang={lang}>{t("ru.dua.latin")}</p>
+            <p className="mean" lang={lang}>{t("ru.dua.meaning")}</p>
+            <button className="ru-dua-play" onClick={() => audio.clips(["bism", "shuffle"], lang, { force: true })}>🔊 {t("ru.dua.listen")}</button>
           </div>
           <div className="ru-mission-books">{[0, 1, 2].map((i) => <img key={i} className="bk" src={kit("books.webp")} alt="" />)}<img src={kit("v-school.webp")} alt="" /></div>
           <Pill big onClick={() => go("ride/" + world)}>{t("ru.letsGo")}</Pill>
@@ -249,6 +256,8 @@ export function Parents() {
         </section>
         <section className="ru-panel">
           <p>{t("ru.parentInfo")}</p>
+          <h3>{t("ru.values")}</h3>
+          <p>{t("ru.valuesText")}</p>
           <h3>{t("ru.learn")}</h3>
           <p>{t("ru.learnText")}</p>
           <p><b>{t("ru.rides")}:</b> {rides} · <b>{t("ru.stars")}:</b> {p.stars} · <b>{t("ru.balloons")}:</b> {p.seen.length}</p>

@@ -11,7 +11,9 @@ import { preload, ALL_SPRITES, image, artAtlas, sprite } from "../render/sprites
 import { BIKES, CLIP_FRAMES, type ClipName } from "../render/rider";
 import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
-import { audio } from "../audio";
+import { audio, CLIP_TEXT, type Clip } from "../audio";
+
+const STREAK_CLIPS: Record<number, Clip> = { 8: "masya1", 16: "masya2", 24: "subhan", 32: "barak", 40: "akbar" };
 import { kit, Pill } from "../ui/Kit";
 import type { Msg } from "../../i18n/types";
 
@@ -34,6 +36,14 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
   const [pulse, setPulse] = useState(0);
   const pausedRef = useRef(false);
   const lastStar = useRef(0);
+  const streak = useRef(0);
+  /** recorded Baby Mo clips with a speech bubble showing the words */
+  const sayClips = (names: Clip[], opts: { gap?: number; force?: boolean } = {}) => {
+    if (!audio.clips(names, lang, opts)) return;
+    setLine(names.map((n) => CLIP_TEXT[n][lang]).join(" "));
+    window.clearTimeout((say as unknown as { h: number }).h);
+    (say as unknown as { h: number }).h = window.setTimeout(() => setLine(null), 2600);
+  };
   const lastQuarter = useRef(-1);
   pausedRef.current = paused;
   const lefty = p.settings.lefty;
@@ -104,8 +114,14 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     const rp = () => { const r = sc.riderXY(sim); return { x: r.x, y: r.y - sc.riderH * 0.6 }; };
     for (const e of evs) {
       switch (e.type) {
-        case "go": say("ru.say.go", { force: true }); audio.sfx("go"); break;
-        case "star": case "coin": { const q = at(e.item.id); sc.fx.emit("star", q.x, q.y, 6, { color: "#ffd23f", size: 7, speed: 180 }); const now = performance.now(); if (now - lastStar.current > 90) { audio.sfx("star"); lastStar.current = now; } setPulse((n) => n + 1); break; }
+        case "go": sayClips(["bismillah"], { force: true }); audio.sfx("go"); break;
+        case "star": case "coin": { const q = at(e.item.id); sc.fx.emit("star", q.x, q.y, 6, { color: "#ffd23f", size: 7, speed: 180 }); const now = performance.now();
+          // star streaks earn a little praise in Baby Mo's recorded voice: Masya Allah → Subhanallah → Barakallah → Allahu Akbar
+          streak.current = now - lastStar.current < 2500 ? streak.current + 1 : 1;
+          const praise = STREAK_CLIPS[streak.current];
+          if (praise) sayClips([praise], { gap: 6 });
+          if (now - lastStar.current > 90) audio.sfx("star");
+          lastStar.current = now; setPulse((n) => n + 1); break; }
         case "gift": { const q = at(e.item.id); sc.fx.emit("confetti", q.x, q.y, 24, { up: 300, life: 1.2 }); sc.fx.emit("star", q.x, q.y, 10, { color: "#ffd23f", size: 9 }); audio.sfx("correct"); setPulse((n) => n + 1); break; }
         case "ring": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 20, { size: 6, speed: 300 }); audio.sfx("whoosh"); break; }
         case "pocketclock": { const q = at(e.item.id); sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 10 }); audio.sfx("fanfare"); say({ k: "ru.say.balloon", p: { t: { time: sim.time } } }, { force: true }); break; }
@@ -123,7 +139,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         case "jump": audio.sfx("snap"); break;
         case "land-big": case "land": { const r = sc.riderXY(sim); sc.fx.emit("dust", r.x, r.y - 6, e.type === "land-big" ? 10 : 5, { speed: 140, size: 10 }); break; }
         case "friend-meet": say("ru.say.friend", { force: true }); break;
-        case "friend-help": { const q = rp(); sc.fx.emit("heart", q.x, q.y - 40, 8, { size: 14, speed: 80 }); audio.sfx(e.token ? "fanfare" : "correct"); say(e.token ? "ru.say.friendThanks" : "ru.say.friendThanksSmall", { force: true }); break; }
+        case "friend-help": { const q = rp(); sc.fx.emit("heart", q.x, q.y - 40, 8, { size: 14, speed: 80 }); audio.sfx(e.token ? "fanfare" : "correct"); say(e.token ? "ru.say.friendThanks" : "ru.say.friendThanksSmall", { force: true });
+          window.setTimeout(() => say("ru.say.kind", { force: true }), 3200); break; }
         case "tunnel-in": audio.sfx("whoosh"); say("ru.say.tunnel", { force: true }); break;
         case "tunnel-near": say("ru.say.tunnelHint", { force: true }); break;
         case "balloon-miss": say({ k: "ru.say.balloonMiss", p: { t: { time: e.time } } }, { gap: 5 }); break;
@@ -132,7 +149,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           sc2.fx.emit("confetti", sc2.W / 2, sc2.H * 0.3, 70, { up: 500, speed: 400, life: 2 });
           audio.sfx("fanfare");
           audio.haptic("success");
-          say("ru.say.arrive", { force: true });
+          sayClips(["win"], { force: true }); // "Alhamdulillah! Well done!"
+          window.setTimeout(() => say("ru.say.arrive", { force: true }), 1900);
           setPhase("arrive");
           window.setTimeout(() => onDone(sim.stats), 3200);
           break;
