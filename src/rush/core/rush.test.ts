@@ -200,4 +200,22 @@ describe("GameSim", () => {
     expect(passes).toBeGreaterThan(0); // they overtake and get overtaken — a race!
     for (const v of sim.rivals) expect(v.z).toBeGreaterThan(sim.w.end - SEG * 30);
   });
+  it("shield bubble: obstacles bounce off without a wobble; time clock slows the ride", () => {
+    const w = morningWorld();
+    const sim = new GameSim(w);
+    const box = w.main.items.find((i) => i.kind === "boxes")!;
+    sim.start();
+    sim.r.z = box.z - 300; sim.r.speed = 2300; sim.r.shield = 5;
+    sim.r.lane = LANES.indexOf(box.x as (typeof LANES)[number]); sim.r.x = box.x;
+    const evs: SimEvent[] = [];
+    for (let i = 0; i < 30; i++) { sim.step(DT); evs.push(...sim.drain()); }
+    expect(evs.some((e) => e.type === "shield-block")).toBe(true);
+    expect(evs.some((e) => e.type === "bump")).toBe(false);
+    expect(sim.r.wobble).toBe(0);
+    sim.r.slow = 3;
+    for (let i = 0; i < 120; i++) sim.step(DT);
+    expect(sim.r.speed).toBeLessThan(2300 * 0.7);
+    expect(w.main.items.some((i) => i.kind === "shield")).toBe(true);
+    expect(w.main.items.some((i) => i.kind === "timeclock")).toBe(true);
+  });
 });

@@ -37,6 +37,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.arc(K * -20, 2);
   b.add("gift", LANES[0], b.z - K * 8 * SEG);
   b.add("magnet", LANES[1], b.z - K * 3 * SEG, { y: 0.2 }); // magnet power-up before the bunny stretch
+  b.add("timeclock", LANES[2], b.z - K * 16 * SEG, { y: 0.2 }); // time clock: slow-motion for the star trail after the ramp
   // puddles + the bunny
   b.road(K * 30, 2.5, -600).scenery(K * 30, PARK);
   b.add("puddle", LANES[0], b.z - K * 27 * SEG);
@@ -76,6 +77,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.trail("star", 2, K * -8, 3);
   b.add("gift", LANES[2], b.z - K * 4 * SEG);
   b.add("magnet", LANES[0], b.z - K * 12 * SEG, { y: 0.2 });
+  b.add("shield", LANES[1], b.z - K * 28 * SEG, { y: 0.2 }); // shield bubble right before the box & block slalom
   // rolling beach balls: a moving thing to steer around (soft — only a wobble if it hits)
   b.add("ball", 0, b.z + K * 10 * SEG, { move: true, n: 0 });
   b.add("ball", 0, b.z + K * 24 * SEG, { move: true, n: 2 });

@@ -50,7 +50,7 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 32 | The librarian | later | `p32-librarian.png` |
 | 33 | More town friends | 📚 already covered | app-ayah pets cheer along the road |
 | 34 | Game logo | later | `p34-logo.png` |
-| 35 | Menu and HUD icons | ✅ done | your power-ups: coin, winged shoe (rainbow ring), magnet, gift (clock and shield kept for later) |
+| 35 | Menu and HUD icons | ✅ done | your power-ups: coin, winged shoe (rainbow ring), magnet, shield bubble, slow-motion clock, gift |
 | 36 | Screen props | 📚 already covered | your treasure chest (rewards) + app-ayah props |
 | 37 | Effects | 📚 already covered | game particles + app-ayah effects |
 | 38 | Baby Ais reference poses (with helmet over her hijab) | ✅ done | your Baby Ais poses (home, mission card) |
