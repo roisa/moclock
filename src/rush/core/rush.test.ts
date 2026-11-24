@@ -28,7 +28,8 @@ function smartBot(takeShortcut: boolean) {
     const ahead = s.track.items.filter((i) => !i.hit && i.z > r.z && i.z < r.z + SEG * 6);
     const haz = ahead.find((i) => ["log", "boxes", "blocks"].includes(i.kind) && Math.abs(i.x - r.x) < 0.3 && i.z < r.z + SEG * 2.2);
     if (haz && !r.air) s.input.jump = true;
-    const tun = ahead.find((i) => i.kind === "tunnel");
+    // the tunnel is announced and signposted well ahead, so a child heads for it early
+    const tun = s.track.items.find((i) => i.kind === "tunnel" && !i.hit && i.z > r.z && i.z < r.z + SEG * 16);
     const want = tun ? (takeShortcut ? LANES.indexOf(tun.x as (typeof LANES)[number]) : (LANES.indexOf(tun.x as (typeof LANES)[number]) + 2) % 3) : (() => {
       const c = ahead.find((i) => ["star", "coin", "balloon", "carrot", "gift", "ramp", "ring", "pocketclock"].includes(i.kind));
       return c ? LANES.indexOf(c.x as (typeof LANES)[number]) : -1;
