@@ -9,7 +9,7 @@ import { createServer } from "vite";
 import { writeFileSync } from "fs";
 
 const vite = await createServer({ server: { middlewareMode: true }, appType: "custom", logLevel: "error" });
-const { PACKS, GROUPS, packById, BACKGROUNDS } = await vite.ssrLoadModule("/src/rush/assets/packs.ts");
+const { PACKS, GROUPS, packById, BACKGROUNDS, BG_DONE } = await vite.ssrLoadModule("/src/rush/assets/packs.ts");
 const B = await vite.ssrLoadModule("/src/rush/assets/bible.ts");
 await vite.close();
 
@@ -88,7 +88,7 @@ const bgPrompt = (b) => [
   `7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.`,
   b.transparentSky ? `8. TRANSPARENCY: ${b.keepClear}.\nOUTPUT: PNG, transparent sky.` : `8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).\nOUTPUT: PNG, full background.`,
 ].join("\n");
-lib += `\n---\n\n## Backgrounds — one prompt per image\n\nThe backgrounds are generated one per image (never 6 in a grid) so each keeps full quality. Screen backgrounds fill the whole picture (a background cannot be transparent); the ride horizon layers keep a transparent sky because the game paints the sky and time of day. Attach **docs/rush/concept-board.png** and **art-src/rush/p26-road-scenes.png** (your road scenes) as style references.\n\n| # | Background | Size | File name |\n|---|---|---|---|\n${BACKGROUNDS.map((b) => `| B${b.n} | ${b.title} | ${b.size.join("×")} | \`art-src/rush/${b.id}.png\` |`).join("\n")}\n`;
+lib += `\n---\n\n## Backgrounds — one prompt per image\n\nThe backgrounds are generated one per image (never 6 in a grid) so each keeps full quality. Screen backgrounds fill the whole picture (a background cannot be transparent); the ride horizon layers keep a transparent sky because the game paints the sky and time of day. Attach **docs/rush/concept-board.png** and **art-src/rush/p26-road-scenes.png** (your road scenes) as style references.\n\n| # | Background | Size | File name |\n|---|---|---|---|\n${BACKGROUNDS.map((b) => `| B${b.n} | ${b.title} | ${b.size.join("×")} | ${BG_DONE[b.id] ? "✅ " + BG_DONE[b.id] : "\`art-src/rush/" + b.id + ".png\`"} |`).join("\n")}\n`;
 for (const b of BACKGROUNDS) lib += `\n### B${b.n}. ${b.title}\n\n**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  \n**Save as:** \`art-src/rush/${b.id}.png\`\n\n\`\`\`text\n${bgPrompt(b)}\n\`\`\`\n`;
 writeFileSync("docs/rush/04-PROMPT-LIBRARY.md", lib);
 

@@ -10,11 +10,13 @@ import { useRush } from "../state";
 export const KIT = "rush/kit/";
 export const kit = (f: string) => KIT + f;
 
+/** buttons from the new Time Rush UI kit (public/rush/ui); others still come from the app-ayah kit */
+const NEW_UI: Partial<Record<string, string>> = { back: "rush/ui/btn-back.webp", home: "rush/ui/btn-home.webp", settings: "rush/ui/btn-settings.webp", sound: "rush/ui/btn-sound.webp", "sound-off": "rush/ui/btn-sound.webp" };
 type RoundIcon = "play" | "back" | "home" | "settings" | "restart" | "lock" | "sound" | "sound-off" | "close";
 export function RoundBtn({ icon, label, onClick, size = 64, className = "" }: { icon: RoundIcon; label: string; onClick: () => void; size?: number; className?: string }) {
   return (
     <button className={"ru-round " + className} style={{ width: size, height: size }} onClick={() => { sfx("tap"); onClick(); }} aria-label={label} title={label}>
-      <img src={kit("b-" + icon + ".webp")} alt="" draggable={false} />
+      <img src={NEW_UI[icon] ?? kit("b-" + icon + ".webp")} className={icon === "sound-off" ? "off" : ""} alt="" draggable={false} />
     </button>
   );
 }
