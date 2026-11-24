@@ -11,13 +11,13 @@ import { storyTime, type TimeSpan } from "./clock";
 export type SimEvent =
   | { type: "star" | "coin" | "gift" | "ring" | "pocketclock"; item: Item }
   | { type: "balloon"; item: Item; time: number }
-  | { type: "acorn"; item: Item; acorns: number }
+  | { type: "carrot"; item: Item; carrots: number }
   | { type: "pickup"; n: number; carrying: number }
   | { type: "bump"; item: Item }
   | { type: "splash"; item: Item }
   | { type: "boost" }
   | { type: "friend-meet" }
-  | { type: "friend-help"; acorns: number; token: boolean }
+  | { type: "friend-help"; carrots: number; token: boolean }
   | { type: "tunnel-in" }
   | { type: "tunnel-out" }
   | { type: "arrive" }
@@ -27,7 +27,7 @@ export interface Stats {
   stars: number;
   starsTotal: number;
   balloons: number[];
-  acorns: number;
+  carrots: number;
   token: boolean;
   packages: number;
   bumps: number;
@@ -58,7 +58,7 @@ export class GameSim {
   friendMet = false;
   constructor(public w: WorldDef) {
     const count = (t?: Track) => (t ? t.items.filter((i) => i.kind === "star" || i.kind === "coin").length : 0);
-    this.stats = { stars: 0, starsTotal: count(w.main) - countBetween(w.main, w.main.shortcut) + Math.max(count(w.tunnel), countBetween(w.main, w.main.shortcut)), balloons: [], acorns: 0, token: false, packages: 0, bumps: 0, shortcut: false, pocketclock: false, time: w.span.from, seconds: 0 };
+    this.stats = { stars: 0, starsTotal: count(w.main) - countBetween(w.main, w.main.shortcut) + Math.max(count(w.tunnel), countBetween(w.main, w.main.shortcut)), balloons: [], carrots: 0, token: false, packages: 0, bumps: 0, shortcut: false, pocketclock: false, time: w.span.from, seconds: 0 };
   }
   get track(): Track {
     return this.route === "tunnel" && this.w.tunnel ? this.w.tunnel : this.w.main;
@@ -124,7 +124,7 @@ export class GameSim {
 
   private touch(it: Item) {
     const r = this.r;
-    const inLane = Math.abs(it.x - r.x) < LANE_HALF + (it.kind === "acorn" || it.kind === "balloon" ? 0.08 : 0);
+    const inLane = Math.abs(it.x - r.x) < LANE_HALF + (it.kind === "carrot" || it.kind === "balloon" ? 0.08 : 0);
     const k = it.kind;
     if (isCollect(k)) {
       if (!inLane) return;
@@ -137,7 +137,7 @@ export class GameSim {
       else if (k === "ring") { r.boost = Math.max(r.boost, BOOST_TIME * 0.6); this.stats.stars += 2; this.events.push({ type: "ring", item: it }); }
       else if (k === "pocketclock") { this.stats.pocketclock = true; this.stats.stars += 3; this.events.push({ type: "pocketclock", item: it }); }
       else if (k === "balloon") { this.stats.balloons.push(it.n!); this.stats.stars += 2; this.events.push({ type: "balloon", item: it, time: it.n! }); }
-      else if (k === "acorn") { this.stats.acorns++; this.events.push({ type: "acorn", item: it, acorns: this.stats.acorns }); }
+      else if (k === "carrot") { this.stats.carrots++; this.events.push({ type: "carrot", item: it, carrots: this.stats.carrots }); }
       return;
     }
     if (isHazard(k)) {
@@ -175,16 +175,16 @@ export class GameSim {
         this.stats.packages = r.carrying;
         this.events.push({ type: "pickup", n: it.n ?? r.carrying, carrying: r.carrying });
         return;
-      case "squirrel":
+      case "bunny":
         it.hit = true;
         this.friendMet = true;
         this.events.push({ type: "friend-meet" });
         return;
-      case "squirrel-home": {
+      case "bunny-home": {
         it.hit = true;
-        const token = this.stats.acorns >= 3;
+        const token = this.stats.carrots >= 3;
         this.stats.token = token;
-        this.events.push({ type: "friend-help", acorns: this.stats.acorns, token });
+        this.events.push({ type: "friend-help", carrots: this.stats.carrots, token });
         return;
       }
       case "tunnel":

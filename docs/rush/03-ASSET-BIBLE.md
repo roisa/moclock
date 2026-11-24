@@ -47,81 +47,81 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (37 images, 28 needed now)
+## 7. Packs (37 images: 23 done or covered, 14 to make, 6 of them now)
 
 ### References
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 1 | Baby Mo reference poses (with helmet) | now | poses | `mo-ref-front`, `mo-ref-34`, `mo-ref-side`, `mo-ref-back`, `mo-stand-front`, `mo-stand-back` |
-| 2 | Push balance bike reference views | now | items | `bike-side`, `bike-34`, `bike-front`, `bike-rear`, `bike-wheel`, `bike-detail` |
-| 3 | Riding key poses (approve before any animation) | now | poses | `mo-ride-34`, `mo-ride-side`, `mo-ride-front`, `mo-idle-rear`, `mo-push-side`, `mo-bag-side` |
+| 1 | Baby Mo reference poses (with helmet) | ✅ done | poses | `mo-ref-front`, `mo-ref-34`, `mo-ref-side`, `mo-ref-back`, `mo-stand-front`, `mo-stand-back` |
+| 2 | Push balance bike reference views | ✅ done | items | `bike-side`, `bike-34`, `bike-front`, `bike-rear`, `bike-wheel`, `bike-detail` |
+| 3 | Riding key poses (approve before any animation) | 📚 already covered | poses | `mo-ride-34`, `mo-ride-side`, `mo-ride-front`, `mo-idle-rear`, `mo-push-side`, `mo-bag-side` |
 
 ### Riding animations
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 4 | Gliding loop | now | anim | `mo-ride-loop` (frames 1–6, 10 fps, loop) |
-| 5 | Push-off strides loop (feet push the ground — no pedals) | now | anim | `mo-push` (frames 1–6, 12 fps, loop) |
-| 6 | Turning left and right | now | anim | `mo-lean-left` (frames 1–3, 12 fps), `mo-lean-right` (frames 4–6, 12 fps) |
-| 7 | Jump: crouch, fly, land | now | anim | `mo-jump-prep` (frames 1–2, 12 fps), `mo-jump-air` (frames 3–4, 6 fps, loop), `mo-land` (frames 5–6, 12 fps) |
-| 8 | Speed boost loop | now | anim | `mo-boost` (frames 1–6, 12 fps, loop) |
-| 9 | Catching a package | now | anim | `mo-pickup` (frames 1–6, 10 fps) |
-| 10 | Gliding with a full backpack | now | anim | `mo-ride-carry` (frames 1–6, 10 fps, loop) |
-| 11 | Gentle bump and recovery (never falls) | now | anim | `mo-wobble` (frames 1–6, 10 fps) |
-| 12 | Waiting on the bike (idle loop) | now | anim | `mo-idle-bike` (frames 1–6, 6 fps, loop) |
+| 4 | Gliding loop | ✅ done | anim | `mo-ride-loop` (frames 1–6, 10 fps, loop) |
+| 5 | Push-off strides loop (feet push the ground — no pedals) | 📚 already covered | anim | `mo-push` (frames 1–6, 12 fps, loop) |
+| 6 | Turning left and right | 📚 already covered | anim | `mo-lean-left` (frames 1–3, 12 fps), `mo-lean-right` (frames 4–6, 12 fps) |
+| 7 | Jump: crouch, fly, land | ⭐ NOW | anim | `mo-jump-prep` (frames 1–2, 12 fps), `mo-jump-air` (frames 3–4, 6 fps, loop), `mo-land` (frames 5–6, 12 fps) |
+| 8 | Speed boost loop | ⭐ NOW | anim | `mo-boost` (frames 1–6, 12 fps, loop) |
+| 9 | Catching a package | ⭐ NOW | anim | `mo-pickup` (frames 1–6, 10 fps) |
+| 10 | Gliding with a full backpack | 📚 already covered | anim | `mo-ride-carry` (frames 1–6, 10 fps, loop) |
+| 11 | Gentle bump and recovery (never falls) | ⭐ NOW | anim | `mo-wobble` (frames 1–6, 10 fps) |
+| 12 | Waiting on the bike (idle loop) | 📚 already covered | anim | `mo-idle-bike` (frames 1–6, 6 fps, loop) |
 | 13 | Looking around and waving to friends | later | anim | `mo-look` (frames 1–3, 8 fps), `mo-wave-ride` (frames 4–6, 8 fps) |
 
 ### Baby Mo cut-scenes
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 14 | Face portraits for the HUD and speech bubbles | now | poses | `mo-face-happy`, `mo-face-blink`, `mo-face-surprised`, `mo-face-excited`, `mo-face-thinking`, `mo-face-proud` |
-| 15 | Delivery celebration | now | anim | `mo-celebrate` (frames 1–6, 8 fps) |
+| 14 | Face portraits for the HUD and speech bubbles | 📚 already covered | poses | `mo-face-happy`, `mo-face-blink`, `mo-face-surprised`, `mo-face-excited`, `mo-face-thinking`, `mo-face-proud` |
+| 15 | Delivery celebration | ⭐ NOW | anim | `mo-celebrate` (frames 1–6, 8 fps) |
 | 16 | Helping the squirrel | later | anim | `mo-help` (frames 1–6, 6 fps) |
 
 ### Bikes & gear
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 17 | Bike colours | now | items | `bike-green`, `bike-blue`, `bike-yellow`, `bike-pink`, `bike-lavender`, `bike-rainbow` |
-| 18 | Delivery backpacks | now | items | `bag-yellow`, `bag-blue`, `bag-pink`, `bag-books`, `bag-picnic`, `bag-moon` |
-| 19 | Packages to deliver | now | items | `pkg-storybooks`, `pkg-gift`, `pkg-picnic`, `pkg-toy`, `pkg-food`, `pkg-teddy` |
+| 17 | Bike colours | ✅ done | items | `bike-green`, `bike-blue`, `bike-yellow`, `bike-pink`, `bike-lavender`, `bike-rainbow` |
+| 18 | Delivery backpacks | 📚 already covered | items | `bag-yellow`, `bag-blue`, `bag-pink`, `bag-books`, `bag-picnic`, `bag-moon` |
+| 19 | Packages to deliver | 📚 already covered | items | `pkg-storybooks`, `pkg-gift`, `pkg-picnic`, `pkg-toy`, `pkg-food`, `pkg-teddy` |
 | 20 | Helmet colours | later | items | `helmet-white`, `helmet-blue`, `helmet-yellow`, `helmet-mint`, `helmet-lavender`, `helmet-orange` |
-| 21 | Bike accessories | later | items | `acc-bell`, `acc-basket`, `acc-streamers`, `acc-flag`, `acc-light`, `acc-beads` |
+| 21 | Bike accessories | 📚 already covered | items | `acc-bell`, `acc-basket`, `acc-streamers`, `acc-flag`, `acc-light`, `acc-beads` |
 
 ### Morning Town
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 22 | Town buildings | now | items | `library`, `tower`, `bakery`, `shop`, `house`, `house2` |
-| 23 | Trees | now | items | `tree`, `tree2`, `tree3`, `tree4`, `tree5`, `tree6` |
-| 24 | Roadside things | now | items | `bush`, `flowers`, `lamp`, `fence`, `bench`, `mailbox` |
-| 25 | Sky things | later | items | `cloud1`, `cloud2`, `cloud3`, `bird-1`, `bird-2`, `sun` |
-| 26 | World cards (floating dioramas) | now | items | `world-morning`, `world-park`, `world-play`, `world-sunset`, `world-dream`, `world-key` |
+| 22 | Town buildings | later | items | `library`, `tower`, `bakery`, `shop`, `house`, `house2` |
+| 23 | Trees | 📚 already covered | items | `tree`, `tree2`, `tree3`, `tree4`, `tree5`, `tree6` |
+| 24 | Roadside things | 📚 already covered | items | `bush`, `flowers`, `lamp`, `fence`, `bench`, `mailbox` |
+| 25 | Sky things | 📚 already covered | items | `cloud1`, `cloud2`, `cloud3`, `bird-1`, `bird-2`, `sun` |
+| 26 | World cards (floating dioramas) | 📚 already covered | items | `world-morning`, `world-park`, `world-play`, `world-sunset`, `world-dream`, `world-key` |
 
 ### On the road
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 27 | Things to collect | now | items | `star`, `coin`, `gift`, `token`, `pocketclock`, `acorn` |
-| 28 | Clock balloons (blank faces) | now | items | `balloon-0`, `balloon-1`, `balloon-2`, `balloon-3`, `balloon-4`, `balloon-5` |
-| 29 | Soft obstacles and road pieces | now | items | `log`, `boxes`, `blocks`, `puddle`, `ramp`, `boost` |
-| 30 | Arches, tunnel and rings | now | items | `pickup`, `tunnel`, `paper-arch`, `arch-start`, `ring`, `rainbow` |
+| 27 | Things to collect | 📚 already covered | items | `star`, `coin`, `gift`, `token`, `pocketclock`, `acorn` |
+| 28 | Clock balloons (blank faces) | later | items | `balloon-0`, `balloon-1`, `balloon-2`, `balloon-3`, `balloon-4`, `balloon-5` |
+| 29 | Soft obstacles and road pieces | ⭐ NOW | items | `log`, `boxes`, `blocks`, `puddle`, `ramp`, `boost` |
+| 30 | Arches, tunnel and rings | later | items | `pickup`, `tunnel`, `paper-arch`, `arch-start`, `ring`, `rainbow` |
 
 ### Friends
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 31 | Squirrel friend | now | poses | `squirrel`, `squirrel-sad`, `squirrel-happy`, `squirrel-hug`, `squirrel-wave`, `squirrel-home` |
-| 32 | The librarian | now | poses | `librarian`, `librarian-wave`, `librarian-receive`, `librarian-books`, `librarian-door`, `librarian-read` |
-| 33 | More town friends | later | poses | `rabbit`, `rabbit-happy`, `bird`, `baker`, `baker-wave`, `postman` |
+| 31 | Squirrel friend | 📚 already covered | poses | `squirrel`, `squirrel-sad`, `squirrel-happy`, `squirrel-hug`, `squirrel-wave`, `squirrel-home` |
+| 32 | The librarian | later | poses | `librarian`, `librarian-wave`, `librarian-receive`, `librarian-books`, `librarian-door`, `librarian-read` |
+| 33 | More town friends | 📚 already covered | poses | `rabbit`, `rabbit-happy`, `bird`, `baker`, `baker-wave`, `postman` |
 
 ### Screens & effects
 
-| # | image | priority | kind | game files |
+| # | image | status | kind | game files |
 |---|---|---|---|---|
-| 34 | Game logo | now | items | `logo` |
-| 35 | Menu and HUD icons | later | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
-| 36 | Screen props | later | items | `ui-clipboard`, `ui-chest`, `ui-banner`, `ui-turntable`, `ui-wardrobe`, `ui-library-door` |
-| 37 | Effects | later | items | `fx-sparkle`, `fx-dust`, `fx-confetti`, `fx-hearts`, `fx-splash`, `fx-pop` |
+| 34 | Game logo | later | items | `logo` |
+| 35 | Menu and HUD icons | 📚 already covered | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
+| 36 | Screen props | 📚 already covered | items | `ui-clipboard`, `ui-chest`, `ui-banner`, `ui-turntable`, `ui-wardrobe`, `ui-library-door` |
+| 37 | Effects | 📚 already covered | items | `fx-sparkle`, `fx-dust`, `fx-confetti`, `fx-hearts`, `fx-splash`, `fx-pop` |

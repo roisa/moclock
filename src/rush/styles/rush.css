@@ -234,3 +234,36 @@
 .ru-more { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .ru-more a { font: 700 15px "Fredoka"; color: #2a6fb0; background: rgba(255,255,255,.85); padding: 7px 14px; border-radius: 999px; text-decoration: none; box-shadow: 0 3px 0 rgba(0,0,0,.08); }
 :root[data-theme="dark"] .ru-more a { background: rgba(30,40,55,.9); color: #9fd6ff; }
+.ru-count-big { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); font: 700 clamp(90px, 18vw, 170px)/1 "Fredoka"; color: #ffd23f; -webkit-text-stroke: 5px #fff; paint-order: stroke; text-shadow: 0 8px 0 #e2761a, 0 14px 24px rgba(0,0,0,.25); pointer-events: none; animation: ru-count .6s cubic-bezier(.3,1.6,.5,1) both; }
+.ru-count-big.go { color: #4cbf5a; text-shadow: 0 8px 0 #2a9147, 0 14px 24px rgba(0,0,0,.25); }
+@keyframes ru-count { from { transform: translate(-50%, -50%) scale(.3); opacity: 0; } 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); } }
+.ru-hud-pk .carrots { display: inline-flex; align-items: center; gap: 2px; }
+.ru-hud-pk .carrots img { width: 26px; height: 26px; }
+.ru-hud-pk .bk { width: 34px; height: 30px; object-fit: contain; filter: grayscale(1) opacity(.35); transition: filter .3s, transform .3s; }
+.ru-hud-pk .bk.on { filter: none; transform: scale(1.1); }
+
+/* ---------- art refresh: approved Mo + bike, app-ayah scenes */
+.ru-splash-hero { position: relative; z-index: 2; display: flex; align-items: flex-end; }
+.ru-splash-mo { height: 44vh; animation: ru-ride 1.6s ease-in-out infinite; filter: drop-shadow(0 10px 12px rgba(0,0,0,.2)); }
+.ru-splash-bike { width: min(260px, 30vw) !important; margin-left: -30px; filter: drop-shadow(0 8px 8px rgba(0,0,0,.18)); }
+.ru-home-mo { height: 46vh; }
+.ru-bikeside { display: block; height: auto; filter: drop-shadow(0 8px 8px rgba(0,0,0,.18)); }
+.ru-home-hero .ru-bikeside { margin-left: -40px; animation: ru-roll 3s ease-in-out infinite; }
+@keyframes ru-roll { 50% { transform: translateX(10px) rotate(-1deg); } }
+.ru-mission-hero { display: flex; flex-direction: column; align-items: center; }
+.ru-mission-hero .ru-bikeside { margin-top: -30px; }
+.ru-mission-mo { height: 42vh; }
+.ru-turntable { width: min(380px, 44vw); height: min(300px, 46vh); display: grid; place-items: end center; padding-bottom: 26px; }
+.ru-turn-img { max-width: 100%; max-height: 100%; object-fit: contain; animation: ru-turn .5s ease both; filter: drop-shadow(0 10px 10px rgba(0,0,0,.2)); }
+@keyframes ru-turn { from { opacity: 0; transform: scaleX(.6); } }
+.ru-unlock .sw-img { width: 84px; height: 62px; object-fit: contain; }
+.ru-unlock.locked .sw-img { filter: grayscale(.8) brightness(1.1); opacity: .7; }
+.ru-world .art { background-size: cover; }
+.ru-world .art .scene { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 70%; transform: none; left: 0; bottom: 0; }
+.ru-world .art .landmark { position: absolute; left: 50%; bottom: 10px; width: 44%; transform: translateX(-50%); filter: drop-shadow(0 6px 6px rgba(0,0,0,.25)); }
+.ru-world.locked .art .scene { filter: grayscale(.5); }
+.ru-door .books { position: absolute; right: 12%; bottom: 2%; width: 26%; animation: ru-hop 1s ease-in-out infinite; }
+.ru-reward-art { position: relative; }
+.ru-reward-art .trophy { position: absolute; right: -14%; bottom: 0; width: 42%; animation: ru-ride 2.4s ease-in-out infinite reverse; }
+@media (orientation: portrait) { .ru-splash-mo { height: 34vh; } .ru-home-mo { height: 26vh !important; } .ru-mission-mo { height: 22vh !important; } }
+.ru-mission-books .bk { width: 44px; }

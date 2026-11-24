@@ -34,7 +34,7 @@ Riding is automatic. Speed eases up to cruise; boosts add +45% for 2 s.
 - **Clock balloons:** each shows a time close to "now" in the story (e.g. 8:15 when the story clock reads 8:15). Collecting one makes Mo say the time ("It's quarter past eight!") — sparing, max one voice line per 8 s.
 - **Packages:** 3 pickup stations (book bundles) on the route; each one rides into Mo's backpack (pickup animation). The HUD shows 0/3 → 3/3.
 - **Shortcut:** a paper-tunnel arch in the right lane at ~40% of the route skips a section; inside are bonus stars and the hidden pocket clock.
-- **Friend:** a squirrel waves from the roadside; acorns appear in the next stretch; collecting 3 acorns gives them back (help cut-in), and the squirrel gives the adventure token.
+- **Friend:** a bunny waves from the roadside; carrots appear in the next stretch; collecting 3 carrots gives them back (help cut-in), and the bunny gives the adventure token.
 - **Time of day:** story clock 8:00 → 9:00 mapped to route progress; sky warms from early morning gold to bright morning blue, sun climbs; the clock tower and HUD clock always agree.
 - **Arrival:** library door opens, Mo hands over the books, the librarian smiles, confetti. Arrival time on the tower: "We made it at nine o'clock — just when the library opens!". No "late" state — the story time is always right on time.
 
@@ -49,10 +49,10 @@ Riding is automatic. Speed eases up to cruise; boosts add +45% for 2 s.
 Worlds unlock in order by finishing the previous delivery (the parent can unlock all).
 
 ## 7. Morning Town route (≈ 100 s at cruise, ≈ 75 s with the shortcut)
-Start (bakery, clock tower 8:00) → star trails → pickup 1 → log + first ramp → puddles → **squirrel** → acorns → **shortcut tunnel / main road with bridge** → pickup 2 → boost pad + rainbow ring → box & block slalom → pickup 3 → final ramp star arc → library (9:00).
+Start (3-2-1 Go! under the flag arch, bakery, clock tower 8:00) → star trails → pickup 1 → log + first ramp → puddles → **bunny** → carrots → **shortcut tunnel / main road with bridge** → pickup 2 → boost pad + rainbow ring → box & block slalom → pickup 3 → final ramp star arc → finish arch → library (9:00). Animal friends from the app-ayah library (puppy, kitten, duckling, chick, lamb, hamster, cow, turtle) cheer along the whole road.
 
 ## 8. Rewards & progression
-- Stars persist across rides. Results: 1–3 stars-of-praise (always ≥1: "delivered"; 2 for ≥50% of the stars on the route; 3 for ≥80% or for helping the squirrel).
+- Stars persist across rides. Results: 1–3 stars-of-praise (always ≥1: "delivered"; 2 for ≥50% of the stars on the route; 3 for ≥80% or for helping the bunny).
 - Stars are never spent; unlocks open at lifetime star totals (a good ride earns 150–250): bikes Sky blue 150, Sunny yellow 300, Soft pink 500, Lavender 750, Rainbow Glider 1000; helmets 200/400/650; bags 250/550.
 - Accessory collection screen shows locked items as silhouettes with the star count needed.
 

@@ -36,7 +36,19 @@ Priority (highest first): land, wobble, pickup, air/prep, boost, lean, push, rid
 - **Wobble:** ±0.18 rad damped sine over 0.6 s.
 - **Boost:** speed lines + rainbow trail particles, FOV +8%.
 
-## 4. Placeholder rig (until sheets exist)
+## 4. In-game rider (approved art) and the fallback rig
+
+**Approved riding sheet** (\`art-src/rush/p04-ride-user.png\` → \`public/rush/mo/ride.webp\` via \`scripts/rush-import-art.py\`): six rear frames — 2 / 5 straight, 1 / 4 turning left, 3 / 6 turning right. The game alternates the pair for the current direction with every **push stride** (2.6 strides/s while speeding up or boosting, 1.4/s while gliding at cruise), and adds:
+- stride bob (1.6 % of height) and side-to-side sway, a light squash on each push, a dust puff from the pushing foot;
+- lean: steering × 0.14 rad plus a lean into road curves;
+- jump: crouch squash → stretch in the air with a small tilt → landing squash, shadow shrinks with height;
+- bump: damped wobble; arrival: happy hops.
+
+**Camera:** follows Mo sideways with a short lag, banks up to ±3° into curves and steering, zooms in 7 % during a boost, bobs 1–2 px with each stride; speed lines at full speed and on boosts. All of it switches off with the calm-motion setting.
+
+**Pickups:** the library book stack flies from the arch into the backpack, then stars burst.
+
+### Fallback rig (before the art existed)
 Render-1 `baby-mo-pose-38.png` (from behind) is cropped at the waist (owner rule) and placed on a procedurally drawn rear-view balance bike with drawn legs (scooting cycle) and arms to the grips; helmet drawn on top; backpack drawn, fills when carrying. The rig obeys the same state machine so swapping in sheets changes no logic.
 
 ## 5. Sheet integration

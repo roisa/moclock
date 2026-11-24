@@ -70,7 +70,7 @@ export function applyRide(p: RushProgress, w: WorldId, s: Stats): { next: RushPr
     ...p,
     stars,
     worlds: { ...p.worlds, [w]: { praise: Math.max(prev?.praise || 0, praise), best: Math.max(prev?.best || 0, s.stars), plays: (prev?.plays || 0) + 1 } },
-    tokens: s.token && !p.tokens.includes("squirrel") ? [...p.tokens, "squirrel"] : p.tokens,
+    tokens: s.token && !p.tokens.includes("bunny") ? [...p.tokens, "bunny"] : p.tokens,
     seen: Array.from(new Set([...p.seen, ...s.balloons])).sort((a, b) => a - b),
     seenUnlocks: [...p.seenUnlocks, ...fresh.map(ukey)],
   };

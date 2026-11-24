@@ -13,8 +13,11 @@ const { PACKS, GROUPS, packById } = await vite.ssrLoadModule("/src/rush/assets/p
 const B = await vite.ssrLoadModule("/src/rush/assets/bible.ts");
 await vite.close();
 
-const refName = (r) => (B.EXISTING_REFS[r] ? B.EXISTING_REFS[r] : packById(r) ? `your approved image ${packById(r).n} (${r}.png — ${packById(r).title})` : r);
-const now = PACKS.filter((p) => p.priority === "now");
+const APPROVED = { "p01-mo-ref": "art-src/rush/p01-mo-turnaround.png (approved Baby Mo)", "p02-bike-ref": "art-src/rush/bike-side.png (approved bike)", "p03-ride-key": "art-src/rush/p04-ride-user.png (approved riding frames)", "p04-ride": "art-src/rush/p04-ride-user.png (approved riding frames)" };
+const refName = (r) => (APPROVED[r] ?? (B.EXISTING_REFS[r] ? B.EXISTING_REFS[r] : packById(r) ? `your approved image ${packById(r).n} (${r}.png — ${packById(r).title})` : r));
+const todo = PACKS.filter((p) => !p.status);
+const now = todo.filter((p) => p.priority === "now");
+const mark = (p) => (p.status === "done" ? "✅ done" : p.status === "covered" ? "📚 already covered" : p.priority === "now" ? "⭐ NOW" : "later");
 const what = (p) => (p.kind === "anim" ? "animation frames" : p.kind === "poses" ? "poses" : "items");
 
 /* ---------------- prompt for one pack */
@@ -30,7 +33,7 @@ function promptFor(p) {
   if (p.mo) L.push(`3. ${B.MO_BIBLE}${p.helmet ? "\n" + B.HELMET : ""}`);
   else if (p.helmet) L.push(`3. ${B.HELMET}`);
   if (p.bike) L.push(`4. ${B.BIKE_BIBLE}`);
-  L.push(`5. CAMERA: ${p.camera}`);
+  L.push(`5. CAMERA: ${p.camera}${p.kind === "anim" && p.camera.startsWith("Gameplay chase") ? " Match the attached riding frames exactly: same size, same position in the cell, same helmet, backpack and bike, rear wheel at the bottom centre of the cell." : ""}`);
   if (p.single) L.push(`6. CONTENT: ${p.cells[0][1]}.`);
   else {
     L.push(`6. THE 6 CELLS${p.kind === "anim" ? " (animation frames in order; change ONLY what each frame describes)" : ""}:\n${p.cells.map(([, d], i) => `   ${i + 1}. ${d}`).join("\n")}`);
@@ -48,11 +51,11 @@ let lib = `# Baby Mo Time Rush — ChatGPT Image Prompts (6 per image)
 
 > Generated from \`src/rush/assets/packs.ts\` by \`npm run docs:rush\`.
 
-**${PACKS.length} images in total. Every image holds 6 poses, 6 items or the 6 frames of one animation** in a 3 × 2 grid, on a PNG with a transparent background.
-**Start with the ${now.length} images marked ⭐ NOW** — that is everything the Morning Town level needs. The ${PACKS.length - now.length} marked *later* are for other worlds and polish.
+**Only ${todo.length} images are left to make — ${now.length} marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other ${PACKS.length - todo.length} (✅ / 📚 in the checklist).
+Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 grid, on a PNG with a transparent background.
 
 ## How to use
-1. Go in order. Images 1–3 (Baby Mo, the push balance bike, the riding key poses) are the references for everything after them — approve them before moving on.
+1. Attach your approved art as the reference: \`art-src/rush/p01-mo-turnaround.png\` (Baby Mo), \`art-src/rush/bike-side.png\` (bike) and \`art-src/rush/p04-ride-user.png\` (riding from behind).
 2. For each image: attach the images listed under **Attach**, then paste the prompt.
 3. If Baby Mo's face or outfit drifts, regenerate instead of editing.
 4. If the background is not transparent, reply: **"Same image, PNG with a fully transparent background."**
@@ -60,13 +63,13 @@ let lib = `# Baby Mo Time Rush — ChatGPT Image Prompts (6 per image)
 6. Save the image as \`art-src/rush/<file name>.png\` and run \`python3 scripts/rush-slice.py art-src/rush/<file name>.png\` — it cuts the six cells into the game files.
 
 ## Checklist
-| # | Image | Priority | File name |
+| # | Image | Status | File name / note |
 |---|---|---|---|
-${PACKS.map((p) => `| ${p.n} | ${p.title} | ${p.priority === "now" ? "⭐ NOW" : "later"} | \`${p.id}.png\` |`).join("\n")}
+${PACKS.map((p) => `| ${p.n} | ${p.title} | ${mark(p)} | ${p.status ? p.note : "\`" + p.id + ".png\`"} |`).join("\n")}
 `;
-for (const g of GROUPS) {
-  lib += `\n---\n\n## ${g}\n`;
-  for (const p of PACKS.filter((x) => x.group === g)) {
+for (const [label, list] of [["⭐ Make now", now], ["Later", todo.filter((p) => p.priority !== "now")]]) {
+  lib += `\n---\n\n## ${label}\n`;
+  for (const p of list) {
     lib += `\n### ${p.n}. ${p.title} ${p.priority === "now" ? "⭐ NOW" : "(later)"}\n\n**Attach:** ${p.refs.length ? p.refs.map(refName).join("; ") : "nothing"}  \n**Save as:** \`art-src/rush/${p.id}.png\`\n\n\`\`\`text\n${promptFor(p)}\n\`\`\`\n`;
   }
 }
@@ -109,15 +112,15 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. \`python3 scripts/rush-slice.py art-src/rush/<pack>.png\` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes \`public/rush/art/<id>.webp\` per item (or one strip per animation clip) plus \`public/rush/art/atlas.json\`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (${PACKS.length} images, ${now.length} needed now)
+## 7. Packs (${PACKS.length} images: ${PACKS.length - todo.length} done or covered, ${todo.length} to make, ${now.length} of them now)
 `;
 for (const g of GROUPS) {
-  bible += `\n### ${g}\n\n| # | image | priority | kind | game files |\n|---|---|---|---|---|\n`;
+  bible += `\n### ${g}\n\n| # | image | status | kind | game files |\n|---|---|---|---|---|\n`;
   for (const p of PACKS.filter((x) => x.group === g))
-    bible += `| ${p.n} | ${p.title} | ${p.priority} | ${p.kind} | ${p.clips ? p.clips.map((c) => `\`${c.id}\` (frames ${c.from + 1}–${c.to + 1}, ${c.fps} fps${c.loop ? ", loop" : ""})`).join(", ") : p.cells.map(([id]) => `\`${id}\``).join(", ")} |\n`;
+    bible += `| ${p.n} | ${p.title} | ${mark(p)} | ${p.kind} | ${p.clips ? p.clips.map((c) => `\`${c.id}\` (frames ${c.from + 1}–${c.to + 1}, ${c.fps} fps${c.loop ? ", loop" : ""})`).join(", ") : p.cells.map(([id]) => `\`${id}\``).join(", ")} |\n`;
 }
 writeFileSync("docs/rush/03-ASSET-BIBLE.md", bible);
 
 /* ---------------- slicer manifest */
 writeFileSync("scripts/rush-packs.json", JSON.stringify(Object.fromEntries(PACKS.map((p) => [p.id, { grid: p.single ? [1, 1] : [3, 2], kind: p.kind, cells: p.cells.map(([id]) => id), clips: p.clips ?? null, baseline: !!p.baseline }])), null, 1));
-console.log(`docs/rush: ${PACKS.length} images (${now.length} now), ${PACKS.reduce((a, p) => a + p.cells.length, 0)} cells`);
+console.log(`docs/rush: ${PACKS.length} images, ${todo.length} to make (${now.length} now), ${PACKS.reduce((a, p) => a + p.cells.length, 0)} cells`);

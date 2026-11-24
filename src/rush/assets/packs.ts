@@ -29,6 +29,8 @@ export interface Pack {
   mustNot?: string[];
   baseline?: boolean; // characters / props standing on a common ground line
   single?: boolean; // one item on the whole canvas (logo only)
+  status?: "done" | "covered"; // done = approved art is in the game; covered = the app-ayah library / game drawing already does it
+  note?: string;
 }
 
 const R = "render1-back";
@@ -240,6 +242,37 @@ export const PACKS: Pack[] = [
     cells: [["fx-sparkle", "a four-point white-gold sparkle"], ["fx-dust", "a soft cartoon dust puff"], ["fx-confetti", "a burst of colourful confetti and tiny stars"], ["fx-hearts", "three small pink hearts"], ["fx-splash", "a water splash crown"], ["fx-pop", "a balloon pop burst with confetti"]],
     refs: [] },
 ];
+
+/** what is already in the game (owner-approved art, app-ayah library, or drawn by the game) */
+const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
+  "p01-mo-ref": ["done", "your turnaround, waving and back poses (art-src/rush/)"],
+  "p02-bike-ref": ["done", "your bike side view and 4 views; colours are recoloured from it"],
+  "p03-ride-key": ["covered", "your 6 rear riding frames + the side bike art cover the key poses", "later"],
+  "p04-ride": ["done", "your 6 rear riding frames — the in-game rider"],
+  "p05-push": ["covered", "the 6 rear frames alternate as push strides", "later"],
+  "p06-lean": ["covered", "frames 1/4 (left) and 3/6 (right) of your sheet + game lean", "later"],
+  "p10-carry": ["covered", "same frames; the game flies the books into the backpack", "later"],
+  "p12-idle": ["covered", "frame 5 of your sheet + breathing", "later"],
+  "p14-faces": ["covered", "face cut from your turnaround", "later"],
+  "p17-bike-colors": ["done", "recoloured from your bike art"],
+  "p18-bags": ["covered", "the backpack is part of your riding frames", "later"],
+  "p19-packages": ["covered", "app-ayah MoColorAndDraw book stack (storybooks)", "later"],
+  "p21-bike-extras": ["covered", "later polish", "later"],
+  "p23-trees": ["covered", "drawn by the game", "later"],
+  "p24-roadside": ["covered", "app-ayah village pieces + game drawings", "later"],
+  "p25-sky": ["covered", "the game paints sky, sun and clouds", "later"],
+  "p26-worlds": ["covered", "app-ayah NurConnect scene backgrounds", "later"],
+  "p27-collect": ["covered", "app-ayah star, coin, gift, carrot, badge", "later"],
+  "p31-squirrel": ["covered", "replaced by the app-ayah bunny (carrot quest)", "later"],
+  "p33-friends": ["covered", "app-ayah pets cheer along the road", "later"],
+  "p35-icons": ["covered", "app-ayah UI icons", "later"],
+  "p36-screens": ["covered", "app-ayah chest, trophy, ribbons, cards", "later"],
+  "p37-effects": ["covered", "game particles + app-ayah effects", "later"],
+};
+/** the few images still worth making for Morning Town; everything else waits */
+const NOW = new Set(["p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles"]);
+for (const p of PACKS) if (!STATUS[p.id]) p.priority = NOW.has(p.id) ? "now" : "later";
+for (const p of PACKS) { const s = STATUS[p.id]; if (s) { p.status = s[0]; p.note = s[1]; if (s[2]) p.priority = s[2]; } }
 
 export const GROUPS = [...new Set(PACKS.map((p) => p.group))];
 export const packById = (id: string) => PACKS.find((p) => p.id === id);

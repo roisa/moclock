@@ -2,12 +2,12 @@
  * Morning Town — "Deliver the storybooks to the library before it opens at nine".
  * About two minutes at cruise speed; the story clock runs 8:00 → 9:00.
  */
-import { TrackBuilder, LANES, SEG, type Track, type Deco } from "./track";
+import { TrackBuilder, LANES, SEG, PETS, type Track, type Deco } from "./track";
 import { MORNING, progressAt } from "./clock";
 import { make } from "../../engine/time";
 
 const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "lamp", "house", "tree", "fence"];
-const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill"];
+const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "tent", "signpost"];
 const SHOPS: Deco[] = ["shop", "bakery", "lamp", "house", "flowers", "tree"];
 
 export const MORNING_BALLOONS = [make(8, 10), make(8, 15), make(8, 20), make(8, 30), make(8, 40), make(8, 45), make(8, 50)];
@@ -35,15 +35,15 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.add("ramp", LANES[2], b.z - K * 20 * SEG);
   b.arc(K * -20, 2);
   b.add("gift", LANES[0], b.z - K * 8 * SEG);
-  // puddles + the squirrel
+  // puddles + the bunny
   b.road(K * 30, 2.5, -600).scenery(K * 30, PARK);
   b.add("puddle", LANES[0], b.z - K * 27 * SEG);
   b.add("puddle", LANES[2], b.z - K * 22 * SEG);
   b.trail("star", 1, K * -26, 5);
-  b.add("squirrel", 1.5, b.z - K * 12 * SEG);
-  // acorns for the squirrel (5 placed, 3 needed)
+  b.add("bunny", 1.5, b.z - K * 12 * SEG);
+  // carrots for the bunny (5 placed, 3 needed)
   b.road(K * 30, -2).scenery(K * 30, PARK);
-  for (const [k, lane] of [[-26, 0], [-21, 2], [-16, 1], [-11, 0], [-6, 2]] as const) b.add("acorn", LANES[lane], b.z + K * k * SEG);
+  for (const [k, lane] of [[-26, 0], [-21, 2], [-16, 1], [-11, 0], [-6, 2]] as const) b.add("carrot", LANES[lane], b.z + K * k * SEG);
   b.trail("coin", 1, K * -24, 4);
   // shortcut: paper tunnel in the right lane skips the bridge loop
   b.road(K * 6).scenery(K * 6, TOWN);
@@ -55,7 +55,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.trail("coin", 1, K * -24, 6);
   b.add("ring", LANES[1], b.z - K * 10 * SEG);
   b.shortcut = { from, to: b.z };
-  b.add("squirrel-home", -1.5, b.z + K * 3 * SEG);
+  b.add("bunny-home", -1.5, b.z + K * 3 * SEG);
   // pickup 2, boost pad + ring
   b.road(K * 24, -2.5, -300).scenery(K * 24, TOWN);
   b.add("pickup", 0, b.z - K * 20 * SEG, { wide: true, n: 2 });
@@ -65,7 +65,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   // box & block slalom
   b.road(K * 30, 1.5).scenery(K * 30, SHOPS);
   b.add("boxes", LANES[0], b.z - K * 26 * SEG);
-  b.add("blocks", LANES[2], b.z - K * 20 * SEG);
+  b.add("ball", LANES[2], b.z - K * 20 * SEG);
   b.add("boxes", LANES[1], b.z - K * 14 * SEG);
   b.add("blocks", LANES[0], b.z - K * 8 * SEG);
   b.trail("star", 2, K * -26, 3);
@@ -81,7 +81,11 @@ export function buildMorningTown(seed = "morning-town"): Track {
   // library
   b.road(K * 22, 0, -400).scenery(K * 22, SHOPS, 0.6);
   b.add("library", 0, b.z - K * 6 * SEG, { wide: true });
+  b.add("arch-start", 0, b.z - K * 6 * SEG - 3 * SEG, { wide: true, n: 1 }); // finish arch
   b.fill();
+  // animal friends cheering at the roadside, close to the road so children see them
+  for (let z = 10 * SEG, i = 0; z < b.z - 12 * SEG; z += (7 + b.rng() * 6) * SEG, i++)
+    b.add(PETS[i % PETS.length], (i % 2 ? 1 : -1) * (1.3 + b.rng() * 0.25), z);
   const t = b.build();
   const end = libraryZ(t);
   // clock balloons sit where the story clock shows their time, so balloon and HUD always agree.

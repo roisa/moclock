@@ -29,7 +29,7 @@ function smartBot(takeShortcut: boolean) {
     if (haz && !r.air) s.input.jump = true;
     const tun = ahead.find((i) => i.kind === "tunnel");
     const want = tun ? (takeShortcut ? 2 : 0) : (() => {
-      const c = ahead.find((i) => ["star", "coin", "balloon", "acorn", "gift", "ramp", "ring", "pocketclock"].includes(i.kind));
+      const c = ahead.find((i) => ["star", "coin", "balloon", "carrot", "gift", "ramp", "ring", "pocketclock"].includes(i.kind));
       return c ? LANES.indexOf(c.x as (typeof LANES)[number]) : -1;
     })();
     if (want >= 0 && want !== r.lane) s.input.steer.push(Math.sign(want - r.lane));
@@ -80,13 +80,13 @@ describe("GameSim", () => {
     expect(sim.stats.time).toBe(make(9, 0));
     expect(praiseStars(sim.stats)).toBeGreaterThanOrEqual(1);
   });
-  it("a player who rides well collects most stars, balloons and helps the squirrel", () => {
+  it("a player who rides well collects most stars, balloons and helps the bunny", () => {
     const sim = new GameSim(morningWorld());
     const ev = ride(sim, smartBot(false));
     expect(sim.done).toBe(true);
     expect(sim.stats.stars / sim.stats.starsTotal).toBeGreaterThan(0.5);
     expect(sim.stats.balloons.length).toBeGreaterThanOrEqual(5);
-    expect(sim.stats.acorns).toBeGreaterThanOrEqual(3);
+    expect(sim.stats.carrots).toBeGreaterThanOrEqual(3);
     expect(sim.stats.token).toBe(true);
     expect(ev.some((e) => e.type === "ramp")).toBe(true);
     expect(ev.some((e) => e.type === "boost")).toBe(true);
