@@ -11,16 +11,16 @@ export const SEG = 200; // segment length
 export const LANES = [-0.62, 0, 0.62] as const;
 export const LANE_HALF = 0.3; // collision half-width
 
-export type Collect = "star" | "coin" | "gift" | "balloon" | "carrot" | "pocketclock" | "ring" | "token";
+export type Collect = "star" | "coin" | "gift" | "balloon" | "carrot" | "pocketclock" | "ring" | "token" | "magnet";
 export type Hazard = "log" | "boxes" | "blocks" | "ball" | "puddle";
 export type Feature = "ramp" | "boost" | "pickup" | "tunnel" | "bunny" | "bunny-home" | "library" | "arch-start" | "paper-arch";
-export type Deco = "tree" | "tree2" | "house" | "bush" | "flowers" | "lamp" | "shop" | "tower" | "fence" | "sign" | "windmill" | "bakery" | "pond" | "school" | "signpost" | "tent" | "masjid" | Pet;
+export type Deco = "tree" | "tree2" | "house" | "bush" | "flowers" | "lamp" | "shop" | "tower" | "fence" | "sign" | "windmill" | "bakery" | "pond" | "school" | "signpost" | "tent" | "masjid" | "bench" | "busstop" | "fruitcart" | "flowerarch" | "fountain" | Pet;
 /** cheering animal friends along the road (app-ayah library art) */
 export type Pet = "pet-puppy" | "pet-kitten" | "pet-duckling" | "pet-chick" | "pet-lamb" | "pet-hamster" | "pet-cow" | "pet-turtle-green";
 export const PETS: Pet[] = ["pet-puppy", "pet-kitten", "pet-duckling", "pet-chick", "pet-lamb", "pet-hamster", "pet-cow", "pet-turtle-green"];
 export type Kind = Collect | Hazard | Feature | Deco;
 
-export const isCollect = (k: Kind): k is Collect => ["star", "coin", "gift", "balloon", "carrot", "pocketclock", "ring", "token"].includes(k);
+export const isCollect = (k: Kind): k is Collect => ["star", "coin", "gift", "balloon", "carrot", "pocketclock", "ring", "token", "magnet"].includes(k);
 export const isHazard = (k: Kind): k is Hazard => ["log", "boxes", "blocks", "ball", "puddle"].includes(k);
 export const isDeco = (k: Kind) => !isCollect(k) && !isHazard(k) && !["ramp", "boost", "pickup", "tunnel", "bunny", "bunny-home", "library", "arch-start", "paper-arch"].includes(k);
 

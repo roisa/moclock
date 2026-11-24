@@ -83,8 +83,7 @@ export function Worlds() {
           return (
             <button key={w} className={"ru-world" + (open ? "" : " locked")} disabled={!open} onClick={() => go("mission/" + w)} aria-label={t("ru.w." + w) + (open ? "" : " — " + t("ru.comingSoon"))}>
               <div className="art" style={{ background: L.sky }}>
-                <img className="scene" src={kit("world-" + w + ".webp")} alt="" />
-                <img className="landmark" src={kit(L.icon)} alt="" />
+                <img className="scene" src={kit("scene-" + w + ".webp")} alt="" />
                 <div className="clk"><Clock t={L.time} size={54} /></div>
               </div>
               <div className="meta">

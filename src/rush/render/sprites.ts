@@ -6,7 +6,7 @@
  * here. Painters draw once into an offscreen canvas that is reused every frame.
  */
 type Img = HTMLCanvasElement | HTMLImageElement;
-export interface Sprite { img: Img; w: number; h: number; /** world width in road half-widths */ ww: number; /** ground anchor (0..1 of height) */ base: number }
+export interface Sprite { img: Img; w: number; h: number; /** world width in road half-widths */ ww: number; /** ground anchor (0..1 of height) */ base: number; /** clock face position (fractions of the image), for art with a printed face */ face?: { x: number; y: number; r: number }; art?: boolean }
 
 // relative to the page (the site root): rush/kit/… and rush/art/…
 const BASE = "rush/";
@@ -18,7 +18,7 @@ export const WORLD_W: Record<string, number> = {
   star: 0.2, coin: 0.18, gift: 0.26, balloon: 0.34, carrot: 0.2, pocketclock: 0.22, ring: 0.5, token: 0.2,
   log: 0.5, boxes: 0.36, blocks: 0.4, ball: 0.36, puddle: 0.5, ramp: 0.5, boost: 0.46,
   pickup: 2.4, tunnel: 0.72, "paper-arch": 2.6, bunny: 0.5, "bunny-home": 0.75, library: 2.2, "arch-start": 2.4,
-  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, "carrot-bag": 0.3, signpost: 0.5, tent: 0.75, books: 0.4,
+  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, bench: 0.45, busstop: 0.7, fruitcart: 0.6, flowerarch: 0.7, fountain: 0.6, magnet: 0.26, "carrot-bag": 0.3, signpost: 0.5, tent: 0.75, books: 0.4,
   "pet-puppy": 0.32, "pet-kitten": 0.3, "pet-duckling": 0.26, "pet-chick": 0.24, "pet-lamb": 0.32, "pet-hamster": 0.26, "pet-cow": 0.36, "pet-turtle-green": 0.3,
 };
 /** kit images used as the sprite until bespoke art exists */
@@ -274,7 +274,9 @@ export function sprite(id: string): Sprite {
   return painted ?? NOOP;
 }
 
-let atlas: Promise<Record<string, { w: number; h: number; frames: number }>> | null = null;
+let atlas: Promise<Record<string, { w: number; h: number; frames: number; fx?: number; fy?: number; fr?: number }>> | null = null;
+/** game ids drawn with differently named generated art */
+const ALIAS: Record<string, string> = { ring: "wingshoe", "balloon-3": "balloon-0", "balloon-4": "balloon-1", "balloon-5": "balloon-2" };
 /** generated art present on the server (written by scripts/rush-slice.py) */
 export function artAtlas() {
   if (!atlas) atlas = fetch(BASE + "art/atlas.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
@@ -288,11 +290,14 @@ export async function preload(ids: string[]): Promise<void> {
     ids.map((id) => {
       if (loading.has(id)) return loading.get(id)!;
       const tryKit = () => (KIT[id] ? loadImg(BASE + KIT[id]) : Promise.reject());
-      const p = (have[id]?.frames === 1 ? loadImg(BASE + "art/" + id + ".webp") : Promise.reject())
+      const file = ALIAS[id] ?? id;
+      const meta = have[file];
+      const p = (meta?.frames === 1 ? loadImg(BASE + "art/" + file + ".webp") : Promise.reject())
         .catch(tryKit)
         .then((img) => {
           const ww = WORLD_W[id] ?? 1;
-          cache.set(id, { img, w: img.naturalWidth, h: img.naturalHeight, ww, base: 1 });
+          const fromArt = !!meta && img.src.includes("/art/");
+          cache.set(id, { img, w: img.naturalWidth, h: img.naturalHeight, ww, base: 1, art: fromArt, face: fromArt && meta?.fx != null ? { x: meta.fx!, y: meta.fy!, r: meta.fr! } : undefined });
         })
         .catch(() => void sprite(id));
       loading.set(id, p);

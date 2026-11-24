@@ -159,6 +159,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         case "friend-help": { const q = rp(); sc.fx.emit("heart", q.x, q.y - 40, 8, { size: 14, speed: 80 }); audio.sfx(e.token ? "fanfare" : "correct"); say(e.token ? "ru.say.friendThanks" : "ru.say.friendThanksSmall", { force: true });
           window.setTimeout(() => say("ru.say.kind", { force: true }), 3200); break; }
         case "tunnel-in": audio.sfx("whoosh"); say("ru.say.tunnel", { force: true }); break;
+        case "magnet": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 18, { color: "#ff6b6b", size: 6, speed: 260 }); audio.sfx("correct"); say("ru.say.magnet", { force: true }); break; }
         case "tunnel-near": say("ru.say.tunnelHint", { force: true }); break;
         // friends overtaking cheer Mo on; when Mo passes them they cheer too (sparingly)
         case "rival-pass": say(`ru.rival.${e.who}.${e.ahead ? "pass" : "passed"}`, { gap: 9 }); break;

@@ -9,7 +9,7 @@ import { createServer } from "vite";
 import { writeFileSync } from "fs";
 
 const vite = await createServer({ server: { middlewareMode: true }, appType: "custom", logLevel: "error" });
-const { PACKS, GROUPS, packById } = await vite.ssrLoadModule("/src/rush/assets/packs.ts");
+const { PACKS, GROUPS, packById, BACKGROUNDS } = await vite.ssrLoadModule("/src/rush/assets/packs.ts");
 const B = await vite.ssrLoadModule("/src/rush/assets/bible.ts");
 await vite.close();
 
@@ -74,6 +74,22 @@ for (const [label, list] of [["⭐ Make now", now], ["Later", todo.filter((p) =>
     lib += `\n### ${p.n}. ${p.title} ${p.priority === "now" ? "⭐ NOW" : "(later)"}\n\n**Attach:** ${p.refs.length ? p.refs.map(refName).join("; ") : "nothing"}  \n**Save as:** \`art-src/rush/${p.id}.png\`\n\n\`\`\`text\n${promptFor(p)}\n\`\`\`\n`;
   }
 }
+/* ---------------- backgrounds: one prompt per image */
+const bgPrompt = (b) => [
+  b.transparentSky
+    ? `PNG with a transparent sky. Create ONE single wide background layer (${b.size[0]} × ${b.size[1]}) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.`
+    : `Create ONE single full-bleed background picture (${b.size[0]} × ${b.size[1]}, ${b.size[0] > b.size[1] ? "landscape" : "portrait"}) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.`,
+  `1. WHAT: ${b.title} — used for: ${b.where}.`,
+  `2. ${B.STYLE}`,
+  `3. SCENE: ${b.subject}.`,
+  `4. KEEP CLEAR: ${b.keepClear}.`,
+  `5. LIGHT: ${b.light}.`,
+  `6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.`,
+  `7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.`,
+  b.transparentSky ? `8. TRANSPARENCY: ${b.keepClear}.\nOUTPUT: PNG, transparent sky.` : `8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).\nOUTPUT: PNG, full background.`,
+].join("\n");
+lib += `\n---\n\n## Backgrounds — one prompt per image\n\nThe backgrounds are generated one per image (never 6 in a grid) so each keeps full quality. Screen backgrounds fill the whole picture (a background cannot be transparent); the ride horizon layers keep a transparent sky because the game paints the sky and time of day. Attach **docs/rush/concept-board.png** and **art-src/rush/p26-road-scenes.png** (your road scenes) as style references.\n\n| # | Background | Size | File name |\n|---|---|---|---|\n${BACKGROUNDS.map((b) => `| B${b.n} | ${b.title} | ${b.size.join("×")} | \`art-src/rush/${b.id}.png\` |`).join("\n")}\n`;
+for (const b of BACKGROUNDS) lib += `\n### B${b.n}. ${b.title}\n\n**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  \n**Save as:** \`art-src/rush/${b.id}.png\`\n\n\`\`\`text\n${bgPrompt(b)}\n\`\`\`\n`;
 writeFileSync("docs/rush/04-PROMPT-LIBRARY.md", lib);
 
 /* ---------------- 03 asset bible */

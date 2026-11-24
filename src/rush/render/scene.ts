@@ -224,6 +224,7 @@ export class Scene {
       g.drawImage(f.img, x - s / 2, y - (s * f.h) / f.w / 2, s, (s * f.h) / f.w);
       if (u >= 1) { this.flyers.splice(k, 1); this.fx.emit("star", tx, ty, 8, { color: "#ffd23f", size: 7, speed: 160 }); }
     }
+    if (r.magnet > 0 && !this.reduced && Math.random() < 0.35) this.fx.emit("spark", rp.x + (Math.random() - 0.5) * this.riderH * 0.6, rp.y - this.riderH * (0.3 + Math.random() * 0.5), 1, { color: Math.random() < 0.5 ? "#ff6b6b" : "#ffd23f", size: 4, speed: 40, life: 0.5 });
     // speed lines + particles
     if (!this.reduced && ((r.boost > 0 && Math.random() < 0.7) || (spd > 0.95 && Math.random() < 0.12))) this.fx.lines(W, H, r.boost > 0 ? 2 : 1);
     this.fx.update(dt);
@@ -349,9 +350,13 @@ export class Scene {
       star5(g, x + w * 0.45, by + h * 0.1, w * (0.12 + tw * 0.06)); g.fill();
     }
     // live overlays
-    if (it.kind === "balloon") this.face(x, by + h * 0.373, w * 0.3, it.n ?? time, 1);
+    if (it.kind === "balloon") {
+      // the balloon art has a printed 8 o'clock face: paint over it with the right time
+      if (s.face) this.face(bx + w * s.face.x, by + h * s.face.y, w * s.face.r * 1.04, it.n ?? time, 1);
+      else this.face(x, by + h * 0.373, w * 0.3, it.n ?? time, 1);
+    }
     else if (it.kind === "tower") this.face(x, by + h * (220 / 520), w * (46 / 220), time, 0);
-    else if (it.kind === "pocketclock") this.face(x, by + h * 0.55, w * 0.2, time, 1);
+    else if (it.kind === "pocketclock" && !s.art) this.face(x, by + h * 0.55, w * 0.2, time, 1);
     else if (it.kind === "windmill") this.sails(x, by + h * 0.4, w * 0.48, clock);
     else if (it.kind === "pickup" && !it.hit) {
       const bs = sprite("books");

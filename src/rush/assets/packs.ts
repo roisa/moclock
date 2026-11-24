@@ -299,6 +299,11 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p11-wobble": ["done", "your bump sheet (frame 3, over-stretched leg, left out; the toy block removed)"],
   "p15-celebrate": ["done", "your celebration sheet (Delivered screen)"],
   "p29-obstacles": ["done", "your log, boxes, blocks, puddle, ramp and boost pad"],
+  "p28-balloons": ["done", "your clock balloons (blue, pink, star) — the game paints the right time on the face"],
+  "p24-roadside": ["done", "your bench + lamp, bus stop, fruit cart, signpost, flower arch, fountain"],
+  "p26-worlds": ["done", "your six road scenes are the adventure cards"],
+  "p35-icons": ["done", "your power-ups: coin, winged shoe (rainbow ring), magnet, gift (clock and shield kept for later)"],
+  "p36-screens": ["covered", "your treasure chest (rewards) + app-ayah props", "later"],
   "p38-ais-ref": ["done", "your Baby Ais poses (home, mission card)"],
   "p39-ais-ride": ["done", "your Baby Ais riding frames — she races on the road"],
   "p40-adam-ref": ["done", "your Kak Adam poses (home, mission card)"],
@@ -308,14 +313,10 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p19-packages": ["done", "your packages: storybook bundle, gift, box, letter, picnic basket, carrot bag"],
   "p21-bike-extras": ["covered", "later polish", "later"],
   "p23-trees": ["covered", "drawn by the game", "later"],
-  "p24-roadside": ["covered", "app-ayah village pieces + game drawings", "later"],
   "p25-sky": ["covered", "the game paints sky, sun and clouds", "later"],
-  "p26-worlds": ["covered", "app-ayah NurConnect scene backgrounds", "later"],
   "p27-collect": ["covered", "app-ayah star, coin, gift, carrot, badge", "later"],
   "p31-squirrel": ["covered", "replaced by the app-ayah bunny (carrot quest)", "later"],
   "p33-friends": ["covered", "app-ayah pets cheer along the road", "later"],
-  "p35-icons": ["covered", "app-ayah UI icons", "later"],
-  "p36-screens": ["covered", "app-ayah chest, trophy, ribbons, cards", "later"],
   "p37-effects": ["covered", "game particles + app-ayah effects", "later"],
 };
 /** the few images still worth making for Morning Town; everything else waits */
@@ -325,3 +326,51 @@ for (const p of PACKS) { const s = STATUS[p.id]; if (s) { p.status = s[0]; p.not
 
 export const GROUPS = [...new Set(PACKS.map((p) => p.group))];
 export const packById = (id: string) => PACKS.find((p) => p.id === id);
+
+/**
+ * Screen and world BACKGROUNDS — one prompt per image (never a grid), so each is generated at
+ * full quality. Screen backgrounds are full-bleed pictures (a background cannot be transparent);
+ * horizon layers keep a transparent sky because the game paints the sky and time of day.
+ */
+export interface Background { id: string; n: number; title: string; size: [number, number]; where: string; transparentSky?: boolean; subject: string; keepClear: string; light: string }
+export const BACKGROUNDS: Background[] = [
+  { id: "bg-home", n: 1, title: "Home screen", size: [1536, 1024], where: "Main menu (landscape)",
+    subject: "a sunny Morning Town street seen from a grassy meadow: pastel storybook houses with rounded roofs, a cream clock tower and a small white masjid with a green dome in the distance, round puffy trees, flower beds, a winding light-grey road disappearing into the town, soft rolling hills, a few puffy clouds",
+    keepClear: "the left 45% is open grass and road (Baby Mo, Ais and Kak Adam stand there); the right 45% is calm sky and soft hills (logo and buttons go there)", light: "early morning, warm golden sun from the upper left, pale-blue sky" },
+  { id: "bg-splash", n: 2, title: "Splash screen (portrait)", size: [1024, 1536], where: "First screen on phones",
+    subject: "a road seen from the middle of the lane running straight toward the viewer and up into a storybook town on a hill, houses and trees on both sides, the clock tower at the top of the road, a sunrise behind it",
+    keepClear: "the top 30% is open sky (logo); the centre of the road in the lower half is clear (Baby Mo and Ais ride there)", light: "sunrise, warm pink-gold sky fading to light blue" },
+  { id: "bg-mission", n: 3, title: "Mission screen", size: [1536, 1024], where: "Mission card with the du'a",
+    subject: "the front of Baby Mo's cosy home in the morning: a pastel house with a round door, a small garden with flowers, a wooden fence, a stepping-stone path to the street, the push balance bike parking spot by the door (no bike drawn)",
+    keepClear: "the left third is open garden (Baby Mo stands there); the right 55% is soft and simple (the mission card covers it)", light: "fresh morning light, dew sparkle" },
+  { id: "bg-delivered", n: 4, title: "Delivered screen", size: [1536, 1024], where: "After the delivery",
+    subject: "inside the cheerful town library: low wooden shelves full of colourful books, a reading rug with cushions, round windows with sunlight, paper bunting, potted plants; a few children's backpacks on the rug (no people drawn)",
+    keepClear: "the left half is open floor (Mo and the books stand there); the right half is calm wall and shelves (the result card covers it)", light: "warm indoor sunlight" },
+  { id: "bg-rewards", n: 5, title: "Rewards screen", size: [1536, 1024], where: "Stars and unlocks",
+    subject: "a soft celebration sky: pastel clouds, gentle rainbow, sparkles and a few floating stars, a grassy hill line along the bottom edge",
+    keepClear: "everything except the bottom 15% is calm and uncluttered (chest, characters and panel go on top)", light: "bright, happy, pastel" },
+  { id: "bg-garage", n: 6, title: "Bike garage", size: [1536, 1024], where: "Bike colours",
+    subject: "a cosy wooden bike garage: pegboard with toy tools, a small shelf with a pump and a helmet, a round wooden turntable platform in the centre with a soft spotlight, bunting and a window with morning light (no bikes drawn, no text)",
+    keepClear: "the centre is the turntable (the bike is placed on it); the right 45% wall is plain (colour cards go there)", light: "warm indoor light, soft spotlight on the turntable" },
+  { id: "bg-collection", n: 7, title: "My collection", size: [1536, 1024], where: "Bags, helmets, tokens",
+    subject: "a bright kids' bedroom corner: an open wooden wardrobe with shelves of colourful helmets and backpacks, a star rug, a window with curtains, a small plant",
+    keepClear: "the centre and right are calm (item cards go there)", light: "soft daylight" },
+  { id: "bg-parents", n: 8, title: "Parent settings", size: [1536, 1024], where: "Parent area",
+    subject: "a very calm, simple background: soft cream and mint gradient with a faint pattern of tiny stars, crescent moons and clocks",
+    keepClear: "everything — the settings panels cover most of it", light: "flat, soft" },
+  { id: "far-morning", n: 9, title: "Ride horizon — Morning Town", size: [1536, 1024], where: "Far scenery layer behind the road (scrolls sideways)", transparentSky: true,
+    subject: "a long row of tiny distant pastel houses, round trees, the clock tower, a small masjid dome and soft green hills along the horizon",
+    keepClear: "the TOP 60% must be fully transparent (no sky); the scenery sits in the bottom 40%; the left and right edges must tile seamlessly", light: "morning, matching the game's soft shading" },
+  { id: "far-park", n: 10, title: "Ride horizon — Sunny Park", size: [1536, 1024], where: "Later world", transparentSky: true,
+    subject: "rolling park hills with picnic trees, a pond, a flower arch and a tiny playground far away",
+    keepClear: "the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly", light: "noon" },
+  { id: "far-seaside", n: 11, title: "Ride horizon — Playtime Village (seaside)", size: [1536, 1024], where: "Later world", transparentSky: true,
+    subject: "a calm blue sea, a red-and-white lighthouse on a little island, a sailboat, palm trees and beach huts along the shore",
+    keepClear: "the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly", light: "afternoon" },
+  { id: "far-sunset", n: 12, title: "Ride horizon — Sunset Town", size: [1536, 1024], where: "Later world", transparentSky: true,
+    subject: "orange and golden autumn trees, houses with warm lit windows, a masjid with a glowing dome far away",
+    keepClear: "the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly", light: "sunset, warm orange glow" },
+  { id: "far-dream", n: 13, title: "Ride horizon — Dreamland (night)", size: [1536, 1024], where: "Later world", transparentSky: true,
+    subject: "soft night hills with glowing lanterns, a masjid with blue domes lit gently, cloud cottages and fireflies",
+    keepClear: "the TOP 60% fully transparent (the game paints the night sky, moon and stars); scenery in the bottom 40%; edges tile seamlessly", light: "night, gentle warm lantern glow" },
+];
