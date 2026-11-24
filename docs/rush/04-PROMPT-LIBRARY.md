@@ -2,7 +2,7 @@
 
 > Generated from `src/rush/assets/packs.ts` by `npm run docs:rush`.
 
-**Only 9 images are left to make — 0 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 34 (✅ / 📚 in the checklist).
+**Only 8 images are left to make — 0 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 35 (✅ / 📚 in the checklist).
 Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 grid, on a PNG with a transparent background.
 
 ## How to use
@@ -39,19 +39,19 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 21 | Bike accessories | 📚 already covered | later polish |
 | 22 | Town buildings | later | `p22-buildings.png` |
 | 23 | Trees | 📚 already covered | drawn by the game |
-| 24 | Roadside things | 📚 already covered | app-ayah village pieces + game drawings |
+| 24 | Roadside things | ✅ done | your bench + lamp, bus stop, fruit cart, signpost, flower arch, fountain |
 | 25 | Sky things | 📚 already covered | the game paints sky, sun and clouds |
-| 26 | World cards (floating dioramas) | 📚 already covered | app-ayah NurConnect scene backgrounds |
+| 26 | World cards (floating dioramas) | ✅ done | your six road scenes are the adventure cards |
 | 27 | Things to collect | 📚 already covered | app-ayah star, coin, gift, carrot, badge |
-| 28 | Clock balloons (blank faces) | later | `p28-balloons.png` |
+| 28 | Clock balloons (blank faces) | ✅ done | your clock balloons (blue, pink, star) — the game paints the right time on the face |
 | 29 | Soft obstacles and road pieces | ✅ done | your log, boxes, blocks, puddle, ramp and boost pad |
 | 30 | Arches, tunnel and rings | later | `p30-arches.png` |
 | 31 | Squirrel friend | 📚 already covered | replaced by the app-ayah bunny (carrot quest) |
 | 32 | The librarian | later | `p32-librarian.png` |
 | 33 | More town friends | 📚 already covered | app-ayah pets cheer along the road |
 | 34 | Game logo | later | `p34-logo.png` |
-| 35 | Menu and HUD icons | 📚 already covered | app-ayah UI icons |
-| 36 | Screen props | 📚 already covered | app-ayah chest, trophy, ribbons, cards |
+| 35 | Menu and HUD icons | ✅ done | your power-ups: coin, winged shoe (rainbow ring), magnet, gift (clock and shield kept for later) |
+| 36 | Screen props | 📚 already covered | your treasure chest (rewards) + app-ayah props |
 | 37 | Effects | 📚 already covered | game particles + app-ayah effects |
 | 38 | Baby Ais reference poses (with helmet over her hijab) | ✅ done | your Baby Ais poses (home, mission card) |
 | 39 | Baby Ais riding (6 rear frames) | ✅ done | your Baby Ais riding frames — she races on the road |
@@ -190,30 +190,6 @@ PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate ite
 OUTPUT: PNG, transparent background.
 ```
 
-### 28. Clock balloons (blank faces) (later)
-
-**Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
-**Save as:** `art-src/rush/p28-balloons.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate items for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Clock balloons (blank faces). Round helium balloons shaped like alarm clocks: two little bells on top, glossy body, a clean BLANK white clock face with only 12 hour marks and NO hands (the game draws the time), a curly string.
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-5. CAMERA: Front view.
-6. THE 6 CELLS:
-   1. pink
-   2. sky blue
-   3. yellow
-   4. mint
-   5. lavender
-   6. orange
-7. GRID RULES: exactly one item per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; clock hands or numbers on the faces; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
 ### 30. Arches, tunnel and rings (later)
 
 **Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
@@ -301,4 +277,260 @@ PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate ite
 9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
 10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
 OUTPUT: PNG, transparent background.
+```
+
+---
+
+## Backgrounds — one prompt per image
+
+The backgrounds are generated one per image (never 6 in a grid) so each keeps full quality. Screen backgrounds fill the whole picture (a background cannot be transparent); the ride horizon layers keep a transparent sky because the game paints the sky and time of day. Attach **docs/rush/concept-board.png** and **art-src/rush/p26-road-scenes.png** (your road scenes) as style references.
+
+| # | Background | Size | File name |
+|---|---|---|---|
+| B1 | Home screen | 1536×1024 | `art-src/rush/bg-home.png` |
+| B2 | Splash screen (portrait) | 1024×1536 | `art-src/rush/bg-splash.png` |
+| B3 | Mission screen | 1536×1024 | `art-src/rush/bg-mission.png` |
+| B4 | Delivered screen | 1536×1024 | `art-src/rush/bg-delivered.png` |
+| B5 | Rewards screen | 1536×1024 | `art-src/rush/bg-rewards.png` |
+| B6 | Bike garage | 1536×1024 | `art-src/rush/bg-garage.png` |
+| B7 | My collection | 1536×1024 | `art-src/rush/bg-collection.png` |
+| B8 | Parent settings | 1536×1024 | `art-src/rush/bg-parents.png` |
+| B9 | Ride horizon — Morning Town | 1536×1024 | `art-src/rush/far-morning.png` |
+| B10 | Ride horizon — Sunny Park | 1536×1024 | `art-src/rush/far-park.png` |
+| B11 | Ride horizon — Playtime Village (seaside) | 1536×1024 | `art-src/rush/far-seaside.png` |
+| B12 | Ride horizon — Sunset Town | 1536×1024 | `art-src/rush/far-sunset.png` |
+| B13 | Ride horizon — Dreamland (night) | 1536×1024 | `art-src/rush/far-dream.png` |
+
+### B1. Home screen
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-home.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Home screen — used for: Main menu (landscape).
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a sunny Morning Town street seen from a grassy meadow: pastel storybook houses with rounded roofs, a cream clock tower and a small white masjid with a green dome in the distance, round puffy trees, flower beds, a winding light-grey road disappearing into the town, soft rolling hills, a few puffy clouds.
+4. KEEP CLEAR: the left 45% is open grass and road (Baby Mo, Ais and Kak Adam stand there); the right 45% is calm sky and soft hills (logo and buttons go there).
+5. LIGHT: early morning, warm golden sun from the upper left, pale-blue sky.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B2. Splash screen (portrait)
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-splash.png`
+
+```text
+Create ONE single full-bleed background picture (1024 × 1536, portrait) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Splash screen (portrait) — used for: First screen on phones.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a road seen from the middle of the lane running straight toward the viewer and up into a storybook town on a hill, houses and trees on both sides, the clock tower at the top of the road, a sunrise behind it.
+4. KEEP CLEAR: the top 30% is open sky (logo); the centre of the road in the lower half is clear (Baby Mo and Ais ride there).
+5. LIGHT: sunrise, warm pink-gold sky fading to light blue.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B3. Mission screen
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-mission.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Mission screen — used for: Mission card with the du'a.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: the front of Baby Mo's cosy home in the morning: a pastel house with a round door, a small garden with flowers, a wooden fence, a stepping-stone path to the street, the push balance bike parking spot by the door (no bike drawn).
+4. KEEP CLEAR: the left third is open garden (Baby Mo stands there); the right 55% is soft and simple (the mission card covers it).
+5. LIGHT: fresh morning light, dew sparkle.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B4. Delivered screen
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-delivered.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Delivered screen — used for: After the delivery.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: inside the cheerful town library: low wooden shelves full of colourful books, a reading rug with cushions, round windows with sunlight, paper bunting, potted plants; a few children's backpacks on the rug (no people drawn).
+4. KEEP CLEAR: the left half is open floor (Mo and the books stand there); the right half is calm wall and shelves (the result card covers it).
+5. LIGHT: warm indoor sunlight.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B5. Rewards screen
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-rewards.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Rewards screen — used for: Stars and unlocks.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a soft celebration sky: pastel clouds, gentle rainbow, sparkles and a few floating stars, a grassy hill line along the bottom edge.
+4. KEEP CLEAR: everything except the bottom 15% is calm and uncluttered (chest, characters and panel go on top).
+5. LIGHT: bright, happy, pastel.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B6. Bike garage
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-garage.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Bike garage — used for: Bike colours.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a cosy wooden bike garage: pegboard with toy tools, a small shelf with a pump and a helmet, a round wooden turntable platform in the centre with a soft spotlight, bunting and a window with morning light (no bikes drawn, no text).
+4. KEEP CLEAR: the centre is the turntable (the bike is placed on it); the right 45% wall is plain (colour cards go there).
+5. LIGHT: warm indoor light, soft spotlight on the turntable.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B7. My collection
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-collection.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: My collection — used for: Bags, helmets, tokens.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a bright kids' bedroom corner: an open wooden wardrobe with shelves of colourful helmets and backpacks, a star rug, a window with curtains, a small plant.
+4. KEEP CLEAR: the centre and right are calm (item cards go there).
+5. LIGHT: soft daylight.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B8. Parent settings
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/bg-parents.png`
+
+```text
+Create ONE single full-bleed background picture (1536 × 1024, landscape) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet, no border, no frame.
+1. WHAT: Parent settings — used for: Parent area.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a very calm, simple background: soft cream and mint gradient with a faint pattern of tiny stars, crescent moons and clocks.
+4. KEEP CLEAR: everything — the settings panels cover most of it.
+5. LIGHT: flat, soft.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. FILL the whole canvas edge to edge (this is a background, so it is NOT transparent).
+OUTPUT: PNG, full background.
+```
+
+### B9. Ride horizon — Morning Town
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/far-morning.png`
+
+```text
+PNG with a transparent sky. Create ONE single wide background layer (1536 × 1024) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.
+1. WHAT: Ride horizon — Morning Town — used for: Far scenery layer behind the road (scrolls sideways).
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a long row of tiny distant pastel houses, round trees, the clock tower, a small masjid dome and soft green hills along the horizon.
+4. KEEP CLEAR: the TOP 60% must be fully transparent (no sky); the scenery sits in the bottom 40%; the left and right edges must tile seamlessly.
+5. LIGHT: morning, matching the game's soft shading.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. TRANSPARENCY: the TOP 60% must be fully transparent (no sky); the scenery sits in the bottom 40%; the left and right edges must tile seamlessly.
+OUTPUT: PNG, transparent sky.
+```
+
+### B10. Ride horizon — Sunny Park
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/far-park.png`
+
+```text
+PNG with a transparent sky. Create ONE single wide background layer (1536 × 1024) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.
+1. WHAT: Ride horizon — Sunny Park — used for: Later world.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: rolling park hills with picnic trees, a pond, a flower arch and a tiny playground far away.
+4. KEEP CLEAR: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+5. LIGHT: noon.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. TRANSPARENCY: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+OUTPUT: PNG, transparent sky.
+```
+
+### B11. Ride horizon — Playtime Village (seaside)
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/far-seaside.png`
+
+```text
+PNG with a transparent sky. Create ONE single wide background layer (1536 × 1024) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.
+1. WHAT: Ride horizon — Playtime Village (seaside) — used for: Later world.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: a calm blue sea, a red-and-white lighthouse on a little island, a sailboat, palm trees and beach huts along the shore.
+4. KEEP CLEAR: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+5. LIGHT: afternoon.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. TRANSPARENCY: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+OUTPUT: PNG, transparent sky.
+```
+
+### B12. Ride horizon — Sunset Town
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/far-sunset.png`
+
+```text
+PNG with a transparent sky. Create ONE single wide background layer (1536 × 1024) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.
+1. WHAT: Ride horizon — Sunset Town — used for: Later world.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: orange and golden autumn trees, houses with warm lit windows, a masjid with a glowing dome far away.
+4. KEEP CLEAR: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+5. LIGHT: sunset, warm orange glow.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. TRANSPARENCY: the TOP 60% fully transparent; scenery in the bottom 40%; edges tile seamlessly.
+OUTPUT: PNG, transparent sky.
+```
+
+### B13. Ride horizon — Dreamland (night)
+
+**Attach:** docs/rush/concept-board.png; art-src/rush/p26-road-scenes.png (style)  
+**Save as:** `art-src/rush/far-dream.png`
+
+```text
+PNG with a transparent sky. Create ONE single wide background layer (1536 × 1024) for the children's game "Baby Mo Time Rush". One picture only — not a grid, not a sheet.
+1. WHAT: Ride horizon — Dreamland (night) — used for: Later world.
+2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
+3. SCENE: soft night hills with glowing lanterns, a masjid with blue domes lit gently, cloud cottages and fireflies.
+4. KEEP CLEAR: the TOP 60% fully transparent (the game paints the night sky, moon and stars); scenery in the bottom 40%; edges tile seamlessly.
+5. LIGHT: night, gentle warm lantern glow.
+6. DEPTH: soft depth of field toward the back, gentle atmospheric haze, rounded friendly shapes, uncluttered so characters and buttons stay readable on top.
+7. NO PEOPLE OR CHARACTERS (the game adds Baby Mo and friends), no animals in the foreground, no text, no letters, no numbers, no logos, no watermark. Never depict Allah, prophets or angels; no faces on buildings.
+8. TRANSPARENCY: the TOP 60% fully transparent (the game paints the night sky, moon and stars); scenery in the bottom 40%; edges tile seamlessly.
+OUTPUT: PNG, transparent sky.
 ```

@@ -20,6 +20,7 @@ export type SimEvent =
   | { type: "friend-help"; carrots: number; token: boolean }
   | { type: "tunnel-in" }
   | { type: "tunnel-near" }
+  | { type: "magnet"; item: Item }
   | { type: "balloon-miss"; time: number }
   | { type: "tunnel-out" }
   | { type: "arrive" }
@@ -178,6 +179,10 @@ export class GameSim {
       if (it.move) it.x = Math.sin(this.t * 1.3 + (it.n ?? 0)) * 0.62;
       if (d > 0 && d < SEG * 4 && (it.kind === "balloon" || it.kind === "carrot" || it.kind === "gift") && Math.abs(it.x - r.x) < 0.75)
         it.x += (r.x - it.x) * Math.min(1, dt * 3.5);
+      if (r.magnet > 0 && (it.kind === "star" || it.kind === "coin") && d > 0 && d < SEG * 5 && Math.abs(it.x - r.x) < 1.4) {
+        it.x += (r.x - it.x) * Math.min(1, dt * 6);
+        it.y *= 1 - Math.min(1, dt * 4); // high star arcs come down too
+      }
       if (it.kind === "balloon" && d < -SEG * 0.5) { it.hit = true; this.events.push({ type: "balloon-miss", time: it.n! }); }
       if (it.kind === "tunnel" && !this.hinted && d > 0 && d < SEG * 16) { this.hinted = true; this.events.push({ type: "tunnel-near" }); }
     }
@@ -211,6 +216,7 @@ export class GameSim {
       it.hit = true;
       if (k === "star" || k === "coin") { this.stats.stars++; this.events.push({ type: k, item: it }); }
       else if (k === "gift") { this.stats.stars += 5; this.events.push({ type: "gift", item: it }); }
+      else if (k === "magnet") { r.magnet = 7; this.events.push({ type: "magnet", item: it }); }
       else if (k === "ring") { r.boost = Math.max(r.boost, BOOST_TIME * 0.6); this.stats.stars += 2; this.events.push({ type: "ring", item: it }); }
       else if (k === "pocketclock") { this.stats.pocketclock = true; this.stats.stars += 3; this.events.push({ type: "pocketclock", item: it }); }
       else if (k === "balloon") { this.stats.balloons.push(it.n!); this.stats.stars += 2; this.events.push({ type: "balloon", item: it, time: it.n! }); }

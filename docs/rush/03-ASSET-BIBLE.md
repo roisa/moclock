@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (43 images: 34 done or covered, 9 to make, 0 of them now)
+## 7. Packs (43 images: 35 done or covered, 8 to make, 0 of them now)
 
 ### References
 
@@ -96,16 +96,16 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 |---|---|---|---|---|
 | 22 | Town buildings | later | items | `library`, `tower`, `bakery`, `shop`, `house`, `house2` |
 | 23 | Trees | 📚 already covered | items | `tree`, `tree2`, `tree3`, `tree4`, `tree5`, `tree6` |
-| 24 | Roadside things | 📚 already covered | items | `bush`, `flowers`, `lamp`, `fence`, `bench`, `mailbox` |
+| 24 | Roadside things | ✅ done | items | `bush`, `flowers`, `lamp`, `fence`, `bench`, `mailbox` |
 | 25 | Sky things | 📚 already covered | items | `cloud1`, `cloud2`, `cloud3`, `bird-1`, `bird-2`, `sun` |
-| 26 | World cards (floating dioramas) | 📚 already covered | items | `world-morning`, `world-park`, `world-play`, `world-sunset`, `world-dream`, `world-key` |
+| 26 | World cards (floating dioramas) | ✅ done | items | `world-morning`, `world-park`, `world-play`, `world-sunset`, `world-dream`, `world-key` |
 
 ### On the road
 
 | # | image | status | kind | game files |
 |---|---|---|---|---|
 | 27 | Things to collect | 📚 already covered | items | `star`, `coin`, `gift`, `token`, `pocketclock`, `acorn` |
-| 28 | Clock balloons (blank faces) | later | items | `balloon-0`, `balloon-1`, `balloon-2`, `balloon-3`, `balloon-4`, `balloon-5` |
+| 28 | Clock balloons (blank faces) | ✅ done | items | `balloon-0`, `balloon-1`, `balloon-2`, `balloon-3`, `balloon-4`, `balloon-5` |
 | 29 | Soft obstacles and road pieces | ✅ done | items | `log`, `boxes`, `blocks`, `puddle`, `ramp`, `boost` |
 | 30 | Arches, tunnel and rings | later | items | `pickup`, `tunnel`, `paper-arch`, `arch-start`, `ring`, `rainbow` |
 
@@ -122,7 +122,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 | # | image | status | kind | game files |
 |---|---|---|---|---|
 | 34 | Game logo | later | items | `logo` |
-| 35 | Menu and HUD icons | 📚 already covered | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
+| 35 | Menu and HUD icons | ✅ done | items | `icon-clock`, `icon-package`, `icon-map`, `icon-bike`, `icon-trophy`, `icon-garage` |
 | 36 | Screen props | 📚 already covered | items | `ui-clipboard`, `ui-chest`, `ui-banner`, `ui-turntable`, `ui-wardrobe`, `ui-library-door` |
 | 37 | Effects | 📚 already covered | items | `fx-sparkle`, `fx-dust`, `fx-confetti`, `fx-hearts`, `fx-splash`, `fx-pop` |
 

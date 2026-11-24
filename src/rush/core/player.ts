@@ -33,6 +33,8 @@ export interface Rider {
   wobble: number;
   wobbleDir: number;
   boost: number;
+  /** magnet power-up: stars and coins fly to Mo */
+  magnet: number;
   splash: number;
   pickup: number;
   lean: number; // −1..1 visual lean
@@ -41,7 +43,7 @@ export interface Rider {
 }
 
 export function newRider(): Rider {
-  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, splash: 0, pickup: 0, lean: 0, carrying: 0, stopped: true };
+  return { z: 0, x: LANES[1], lane: 1, speed: 0, h: 0, vy: 0, air: false, bigJump: false, prep: 0, land: 0, wobble: 0, wobbleDir: 1, boost: 0, magnet: 0, splash: 0, pickup: 0, lean: 0, carrying: 0, stopped: true };
 }
 
 export interface Input {
@@ -106,7 +108,7 @@ export function stepRider(r: Rider, dt: number, ev: (e: string) => void) {
       ev(r.bigJump ? "land-big" : "land");
     }
   }
-  for (const k of ["land", "wobble", "boost", "splash", "pickup"] as const) if (r[k] > 0) r[k] = Math.max(0, r[k] - dt);
+  for (const k of ["land", "wobble", "boost", "splash", "pickup", "magnet"] as const) if (r[k] > 0) r[k] = Math.max(0, r[k] - dt);
 }
 
 export function launch(r: Rider, v: number, big: boolean, ev: (e: string) => void) {

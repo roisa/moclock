@@ -69,7 +69,7 @@ export function Rewards({ f }: { f: Finished }) {
     <div className="ru-screen ru-rewards">
       <Ribbon color="purple">{t("ru.rewards")}</Ribbon>
       <div className="ru-rewards-body">
-        <div className="ru-reward-art"><img className="chest" src={kit("chest-open.webp")} alt="" /><img className="pair" src="rush/mo/pair-highfive.webp" alt="Baby Mo and Baby Ais" /></div>
+        <div className="ru-reward-art"><img className="chest" src="rush/art/chest.webp" alt="" /><img className="pair" src="rush/mo/pair-highfive.webp" alt="Baby Mo and Baby Ais" /></div>
         <div className="ru-panel">
           <p className="gain">+{f.s.stars} <img src={kit("star.webp")} alt="" /></p>
           <StarCount n={p.stars} />

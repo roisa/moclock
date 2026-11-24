@@ -264,3 +264,50 @@ for c, name in zip(pk, ["books", "gift", "pkg-box", "pkg-letter", "pkg-basket", 
     save(c, f"{ART}/{name}.webp")
     atlas[name] = {"w": c.width, "h": c.height, "frames": 1}
 json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)
+
+# ---------------------------------------------------------------- Kak Adam's bike: green frame → sky blue
+ad = Image.open(f"{MO}/adam-ride.webp").convert("RGBA")
+hsv = np.array(ad.convert("RGB").convert("HSV")).astype(np.float32)
+al = np.array(ad.getchannel("A"))
+h, s_, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+grn = (h > 50) & (h < 115) & (s_ > 70) & (al > 0)
+hsv[..., 0] = np.where(grn, 143, h)            # sky blue (PIL hue 0..255)
+hsv[..., 1] = np.where(grn, np.clip(s_ * 0.85, 0, 255), s_)
+hsv[..., 2] = np.where(grn, np.clip(v * 1.08, 0, 255), v)
+rgb = Image.fromarray(hsv.astype(np.uint8), "HSV").convert("RGB"); rgb.putalpha(Image.fromarray(al))
+save(rgb, f"{MO}/adam-ride.webp", 88)
+
+# ---------------------------------------------------------------- clocks, roadside, power-ups, packages, road scenes
+def items(src, names, maxside=360, thr=60):
+    out = {}
+    for c, n in zip(cells_of(src), names):
+        if not n: continue
+        c = c.crop(bbox(c, thr))
+        if max(c.size) > maxside: c = c.resize((round(c.width * maxside / max(c.size)), round(c.height * maxside / max(c.size))), Image.LANCZOS)
+        save(c, f"{ART}/{n}.webp"); atlas[n] = {"w": c.width, "h": c.height, "frames": 1}; out[n] = c
+    return out
+
+atlas = json.load(open(atlas_p)) if os.path.exists(atlas_p) else {}
+clk = items("p28-clocks.png", ["balloon-0", "balloon-1", "balloon-2", "pocketclock", "icon-calendar", "icon-hourglass"])
+# where each balloon's clock face is (the game paints its own face + hands there, so the time is always right)
+for n in ["balloon-0", "balloon-1", "balloon-2"]:
+    c = clk[n]; a = np.array(c.convert("RGB")).astype(int); al2 = np.array(c.getchannel("A"))
+    cream = (a.min(axis=2) > 215) & (al2 > 200)
+    ys, xs = np.where(cream)
+    cx, cy = np.median(xs), np.median(ys)
+    r = (np.percentile(xs, 97) - np.percentile(xs, 3)) / 2
+    atlas[n].update({"fx": round(cx / c.width, 3), "fy": round(cy / c.height, 3), "fr": round(r / c.width, 3)})
+atlas["balloon-2"].update({"fx": 0.5, "fy": 0.43, "fr": 0.3})  # star frame confuses the cream-face finder
+items("p24-roadside.png", ["bench", "busstop", "fruitcart", "signpost", "flowerarch", "fountain"])
+items("p35-powerups.png", ["coin", "pw-clock", "wingshoe", "pw-shield", "magnet", "gift"])
+items("p19b-packages.png", ["pkg-truckbox", "pkg-stargift", "pkg-airmail", "pkg-fruit", "pkg-lunch", "chest"])
+json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)
+
+# road scenes (white background) → adventure cards
+rs = Image.open(f"{SRC}/p26-road-scenes.png").convert("RGB")
+for i, n in enumerate(["town", "morning", "park", "play", "sunset", "dream"]):
+    c = rs.crop(((i % 3) * 512, (i // 3) * 512, (i % 3 + 1) * 512, (i // 3 + 1) * 512))
+    g = np.array(c).min(axis=2) < 235
+    ys, xs = np.where(g)
+    c = c.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)).resize((420, 420), Image.LANCZOS)
+    c.save(f"public/rush/kit/scene-{n}.webp", quality=84, method=6); print("scene", n)

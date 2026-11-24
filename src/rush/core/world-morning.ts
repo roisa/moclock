@@ -6,9 +6,9 @@ import { TrackBuilder, LANES, SEG, PETS, type Track, type Deco } from "./track";
 import { MORNING, progressAt } from "./clock";
 import { make } from "../../engine/time";
 
-const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "lamp", "house", "tree", "fence"];
-const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "tree", "tent"];
-const SHOPS: Deco[] = ["shop", "bakery", "lamp", "house", "flowers", "tree"];
+const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "bench", "house", "tree", "busstop", "fountain"];
+const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "flowerarch", "tent", "bench"];
+const SHOPS: Deco[] = ["shop", "bakery", "fruitcart", "house", "flowers", "tree", "lamp"];
 
 export const MORNING_BALLOONS = [make(8, 10), make(8, 15), make(8, 20), make(8, 30), make(8, 40), make(8, 45), make(8, 50)];
 
@@ -36,6 +36,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.add("ramp", LANES[2], b.z - K * 20 * SEG);
   b.arc(K * -20, 2);
   b.add("gift", LANES[0], b.z - K * 8 * SEG);
+  b.add("magnet", LANES[1], b.z - K * 3 * SEG, { y: 0.2 }); // magnet power-up before the bunny stretch
   // puddles + the bunny
   b.road(K * 30, 2.5, -600).scenery(K * 30, PARK);
   b.add("puddle", LANES[0], b.z - K * 27 * SEG);
@@ -74,6 +75,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.trail("star", 1, K * -20, 3);
   b.trail("star", 2, K * -8, 3);
   b.add("gift", LANES[2], b.z - K * 4 * SEG);
+  b.add("magnet", LANES[0], b.z - K * 12 * SEG, { y: 0.2 });
   // rolling beach balls: a moving thing to steer around (soft — only a wobble if it hits)
   b.add("ball", 0, b.z + K * 10 * SEG, { move: true, n: 0 });
   b.add("ball", 0, b.z + K * 24 * SEG, { move: true, n: 2 });

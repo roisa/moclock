@@ -1,4 +1,33 @@
 {
+ "balloon-0": {
+  "fr": 0.27,
+  "frames": 1,
+  "fx": 0.507,
+  "fy": 0.464,
+  "h": 360,
+  "w": 300
+ },
+ "balloon-1": {
+  "fr": 0.293,
+  "frames": 1,
+  "fx": 0.488,
+  "fy": 0.444,
+  "h": 360,
+  "w": 285
+ },
+ "balloon-2": {
+  "fr": 0.3,
+  "frames": 1,
+  "fx": 0.5,
+  "fy": 0.43,
+  "h": 360,
+  "w": 305
+ },
+ "bench": {
+  "frames": 1,
+  "h": 348,
+  "w": 360
+ },
  "blocks": {
   "frames": 1,
   "h": 398,
@@ -19,20 +48,70 @@
   "h": 400,
   "w": 412
  },
+ "busstop": {
+  "frames": 1,
+  "h": 315,
+  "w": 360
+ },
  "carrot-bag": {
   "frames": 1,
   "h": 360,
   "w": 327
  },
+ "chest": {
+  "frames": 1,
+  "h": 346,
+  "w": 360
+ },
+ "coin": {
+  "frames": 1,
+  "h": 344,
+  "w": 360
+ },
+ "flowerarch": {
+  "frames": 1,
+  "h": 302,
+  "w": 360
+ },
+ "fountain": {
+  "frames": 1,
+  "h": 329,
+  "w": 360
+ },
+ "fruitcart": {
+  "frames": 1,
+  "h": 317,
+  "w": 360
+ },
  "gift": {
   "frames": 1,
+  "h": 319,
+  "w": 360
+ },
+ "icon-calendar": {
+  "frames": 1,
   "h": 360,
-  "w": 343
+  "w": 340
+ },
+ "icon-hourglass": {
+  "frames": 1,
+  "h": 360,
+  "w": 288
  },
  "log": {
   "frames": 1,
   "h": 275,
   "w": 420
+ },
+ "magnet": {
+  "frames": 1,
+  "h": 319,
+  "w": 360
+ },
+ "pkg-airmail": {
+  "frames": 1,
+  "h": 315,
+  "w": 360
  },
  "pkg-basket": {
   "frames": 1,
@@ -44,19 +123,64 @@
   "h": 327,
   "w": 360
  },
+ "pkg-fruit": {
+  "frames": 1,
+  "h": 355,
+  "w": 360
+ },
  "pkg-letter": {
   "frames": 1,
   "h": 309,
   "w": 360
+ },
+ "pkg-lunch": {
+  "frames": 1,
+  "h": 320,
+  "w": 360
+ },
+ "pkg-stargift": {
+  "frames": 1,
+  "h": 357,
+  "w": 360
+ },
+ "pkg-truckbox": {
+  "frames": 1,
+  "h": 351,
+  "w": 360
+ },
+ "pocketclock": {
+  "frames": 1,
+  "h": 360,
+  "w": 280
  },
  "puddle": {
   "frames": 1,
   "h": 198,
   "w": 420
  },
+ "pw-clock": {
+  "frames": 1,
+  "h": 313,
+  "w": 360
+ },
+ "pw-shield": {
+  "frames": 1,
+  "h": 339,
+  "w": 360
+ },
  "ramp": {
   "frames": 1,
   "h": 283,
   "w": 420
+ },
+ "signpost": {
+  "frames": 1,
+  "h": 360,
+  "w": 323
+ },
+ "wingshoe": {
+  "frames": 1,
+  "h": 295,
+  "w": 360
  }
 }
