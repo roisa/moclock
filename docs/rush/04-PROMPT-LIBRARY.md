@@ -287,16 +287,16 @@ The backgrounds are generated one per image (never 6 in a grid) so each keeps fu
 
 | # | Background | Size | File name |
 |---|---|---|---|
-| B1 | Home screen | 1536×1024 | `art-src/rush/bg-home.png` |
+| B1 | Home screen | 1536×1024 | ✅ your masjid street (home screen) |
 | B2 | Splash screen (portrait) | 1024×1536 | `art-src/rush/bg-splash.png` |
-| B3 | Mission screen | 1536×1024 | `art-src/rush/bg-mission.png` |
+| B3 | Mission screen | 1536×1024 | ✅ your houses street (mission) |
 | B4 | Delivered screen | 1536×1024 | `art-src/rush/bg-delivered.png` |
-| B5 | Rewards screen | 1536×1024 | `art-src/rush/bg-rewards.png` |
+| B5 | Rewards screen | 1536×1024 | ✅ your market street (rewards, new adventure) |
 | B6 | Bike garage | 1536×1024 | `art-src/rush/bg-garage.png` |
 | B7 | My collection | 1536×1024 | `art-src/rush/bg-collection.png` |
 | B8 | Parent settings | 1536×1024 | `art-src/rush/bg-parents.png` |
 | B9 | Ride horizon — Morning Town | 1536×1024 | `art-src/rush/far-morning.png` |
-| B10 | Ride horizon — Sunny Park | 1536×1024 | `art-src/rush/far-park.png` |
+| B10 | Ride horizon — Sunny Park | 1536×1024 | ✅ your park + bridge (adventure picker) |
 | B11 | Ride horizon — Playtime Village (seaside) | 1536×1024 | `art-src/rush/far-seaside.png` |
 | B12 | Ride horizon — Sunset Town | 1536×1024 | `art-src/rush/far-sunset.png` |
 | B13 | Ride horizon — Dreamland (night) | 1536×1024 | `art-src/rush/far-dream.png` |

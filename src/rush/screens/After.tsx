@@ -66,7 +66,7 @@ export function Rewards({ f }: { f: Finished }) {
   useEffect(() => { audio.sfx("correct"); }, []);
   const next = WORLDS[WORLDS.indexOf(f.world) + 1];
   return (
-    <div className="ru-screen ru-rewards">
+    <div className="ru-screen ru-rewards" style={{ backgroundImage: "url(rush/bg-market.webp)" }}>
       <Ribbon color="purple">{t("ru.rewards")}</Ribbon>
       <div className="ru-rewards-body">
         <div className="ru-reward-art"><img className="chest" src="rush/art/chest.webp" alt="" /><img className="pair" src="rush/mo/pair-highfive.webp" alt="Baby Mo and Baby Ais" /></div>
@@ -91,7 +91,7 @@ export function WorldUnlock({ world }: { world: WorldId }) {
   const { t } = useRush();
   useEffect(() => { audio.sfx("fanfare"); }, []);
   return (
-    <div className="ru-screen ru-unlockw">
+    <div className="ru-screen ru-unlockw" style={{ backgroundImage: "url(rush/bg-market.webp)" }}>
       <Confetti />
       <Ribbon>{t("ru.worldUnlocked")}</Ribbon>
       <div className="ru-panel ru-unlockw-card">

@@ -311,3 +311,33 @@ for i, n in enumerate(["town", "morning", "park", "play", "sunset", "dream"]):
     ys, xs = np.where(g)
     c = c.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)).resize((420, 420), Image.LANCZOS)
     c.save(f"public/rush/kit/scene-{n}.webp", quality=84, method=6); print("scene", n)
+
+# ---------------------------------------------------------------- UI kit (buttons + icons) and screen backgrounds
+UI = "public/rush/ui"; os.makedirs(UI, exist_ok=True)
+kitim = Image.open(f"{SRC}/ui-kit.png").convert("RGBA")
+ka = np.array(kitim)[..., 3]
+def cut(x0, x1, y0, y1):
+    """element between x0..x1, refined to the emptiest column if the white outlines touch"""
+    return kitim.crop((x0, y0, x1, y1))
+def split(x0, x1, y0, y1, n):
+    dens = (ka[y0:y1, x0:x1] > 150).sum(axis=0)
+    xs = [x0]
+    for k in range(1, n):
+        lo, hi = int((k - 0.2) * (x1 - x0) / n), int((k + 0.2) * (x1 - x0) / n)
+        xs.append(x0 + lo + int(np.argmin(dens[lo:hi])))
+    return [(xs[i], (xs[i + 1] if i + 1 < n else x1)) for i in range(n)]
+ROWS = [
+    (51, 283, [((17, 397), ["btn-play"]), ((407, 595), ["btn-home"]), ((597, 784), ["btn-settings"]), ((785, 1152), ["btn-sound", "btn-music"]), ((1154, 1332), ["btn-info"]), ((1333, 1518), ["btn-back"])]),
+    (307, 530, [((26, 248), ["ic-map"]), ((263, 480), ["ic-shop"]), ((485, 896), ["ic-bag", "ic-trophy"]), ((906, 1096), ["ic-calendar"]), ((1106, 1317), ["ic-gift"]), ((1319, 1517), ["ic-badge"])]),
+    (758, 997, [((36, 495), ["ctl-left", "ctl-right"]), ((505, 739), ["ctl-jump"]), ((752, 998), ["ctl-star"]), ((1008, 1248), ["ctl-voice"]), ((1260, 1497), ["ctl-pause"])]),
+]
+for y0, y1, segs in ROWS:
+    for (x0, x1), names in segs:
+        for (a0, a1), n in zip(split(x0, x1, y0, y1, len(names)), names):
+            c = kitim.crop((a0, y0, a1, y1)); c = c.crop(bbox(c, 40))
+            c = c.resize((round(c.width * 200 / c.height), 200), Image.LANCZOS) if c.height > 200 else c
+            save(c, f"{UI}/{n}.webp")
+for n in ["home", "street", "park", "market"]:
+    b = Image.open(f"{SRC}/bg-{n}.png").convert("RGB")
+    b = b.resize((1600, round(b.height * 1600 / b.width)), Image.LANCZOS)
+    b.save(f"public/rush/bg-{n}.webp", quality=82, method=6); print("bg", n, b.size)

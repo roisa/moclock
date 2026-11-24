@@ -27,7 +27,7 @@ export function Splash({ onStart }: { onStart: () => void }) {
 export function Home({ onGate }: { onGate: () => void }) {
   const { p, t, update } = useRush();
   return (
-    <div className="ru-screen ru-home" style={{ backgroundImage: `url(${kit("bg-home.webp")})` }}>
+    <div className="ru-screen ru-home" style={{ backgroundImage: "url(rush/bg-home.webp)" }}>
       <div className="ru-home-top">
         <StarCount n={p.stars} />
         <NextPrayerChip />
@@ -46,10 +46,10 @@ export function Home({ onGate }: { onGate: () => void }) {
         </div>
         <div className="ru-home-menu">
           <Logo />
-          <Pill big onClick={() => go("worlds")}><PlayTri /> {t("ru.play")}</Pill>
+          <button className="ru-playbtn" onClick={() => { audio.sfx("tap"); go("worlds"); }} aria-label={t("ru.play")}><img src="rush/ui/btn-play.webp" alt="" draggable={false} /><span>{t("ru.play")}</span></button>
           <div className="row">
-            <Pill color="blue" onClick={() => go("garage")}>{t("ru.garage")}</Pill>
-            <Pill color="pink" onClick={() => go("collection")}>{t("ru.collection")}</Pill>
+            <Pill color="blue" onClick={() => go("garage")}><img className="pill-ic" src="rush/ui/ic-shop.webp" alt="" />{t("ru.garage")}</Pill>
+            <Pill color="pink" onClick={() => go("collection")}><img className="pill-ic" src="rush/ui/ic-bag.webp" alt="" />{t("ru.collection")}</Pill>
           </div>
           <nav className="ru-more" aria-label={t("ru.moreGames")}>
             <a href="./learn/">{t("ru.toLearn")}</a>
@@ -60,7 +60,6 @@ export function Home({ onGate }: { onGate: () => void }) {
     </div>
   );
 }
-const PlayTri = () => <svg viewBox="0 0 20 20" width="22" height="22" aria-hidden="true"><path d="M5 3l12 7-12 7z" fill="currentColor" /></svg>;
 
 const WORLD_LOOK: Record<WorldId, { sky: string; ground: string; time: number; icon: string }> = {
   morning: { sky: "linear-gradient(#ffd79a,#9ed8ff)", ground: "#7ece68", time: make(8, 0), icon: "v-school.webp" },
@@ -73,7 +72,7 @@ const WORLD_LOOK: Record<WorldId, { sky: string; ground: string; time: number; i
 export function Worlds() {
   const { p, t } = useRush();
   return (
-    <div className="ru-screen ru-worlds">
+    <div className="ru-screen ru-worlds" style={{ backgroundImage: "url(rush/bg-park.webp)" }}>
       <Top title={t("ru.adventures")} onBack={() => go("")} right={<StarCount n={p.stars} />} />
       <div className="ru-world-list">
         {WORLDS.map((w, i) => {
@@ -106,7 +105,7 @@ export function Mission({ world }: { world: WorldId }) {
     return () => clearTimeout(h);
   }, [lang]);
   return (
-    <div className="ru-screen ru-mission" style={{ backgroundImage: `url(${kit("bg-home.webp")})` }}>
+    <div className="ru-screen ru-mission" style={{ backgroundImage: "url(rush/bg-street.webp)" }}>
       <Top title={t("ru.w." + world)} onBack={() => go("worlds")} />
       <div className="ru-mission-body">
         <div className="ru-mission-hero"><img className="ru-mo ru-mission-mo" src="rush/mo/front.webp" alt="Baby Mo" draggable={false} /><BikeSide bike="green" width={220} /></div>

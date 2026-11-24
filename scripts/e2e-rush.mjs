@@ -29,7 +29,7 @@ async function ride(lang) {
   ctx.setDefaultTimeout(20000);
   await p.goto(BASE + "?simspeed=4&nodua&noprayer#/", { waitUntil: "networkidle" });
   await p.click(".ru-splash");
-  await p.click(".ru-home .ru-pill.big");
+  await p.click(".ru-playbtn");
   await p.click(".ru-world >> nth=0");
   await p.waitForSelector(".ru-clip");
   const mission = await p.textContent(".ru-clip");

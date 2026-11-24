@@ -231,7 +231,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src="rush/art/books.webp" alt="" />)}
           {sim.friendMet && !sim.stats.token && <span className="carrots"><img src={kit("carrot.webp")} alt="" />{hud.carrots}/3</span>}
         </div>
-        <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><i /><i /></button>
+        <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><img src="rush/ui/ctl-pause.webp" alt="" draggable={false} /></button>
       </div>
       {line && <div className="ru-say" role="status"><img src="rush/mo/face.webp" alt="" />{line}</div>}
       {phase === "ready" && count === null && dua && (
@@ -248,10 +248,10 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       {phase === "ride" && (
         <div className="ru-controls">
           <div className="ru-steer">
-            <button className="ru-ctl" aria-label={t("ru.left")} onPointerDown={steer(-1)}><svg viewBox="0 0 40 40"><path d="M25 8 12 20l13 12" /></svg></button>
-            <button className="ru-ctl" aria-label={t("ru.right")} onPointerDown={steer(1)}><svg viewBox="0 0 40 40"><path d="M15 8l13 12-13 12" /></svg></button>
+            <button className="ru-ctl" aria-label={t("ru.left")} onPointerDown={steer(-1)}><img src="rush/ui/ctl-left.webp" alt="" draggable={false} /></button>
+            <button className="ru-ctl" aria-label={t("ru.right")} onPointerDown={steer(1)}><img src="rush/ui/ctl-right.webp" alt="" draggable={false} /></button>
           </div>
-          <button className="ru-ctl jump" aria-label={t("ru.jump")} onPointerDown={jump}><svg viewBox="0 0 40 40"><path d="M10 26 20 14l10 12" /></svg><span>{t("ru.jump")}</span></button>
+          <button className="ru-ctl jump" aria-label={t("ru.jump")} onPointerDown={jump}><img src="rush/ui/ctl-jump.webp" alt="" draggable={false} /><span>{t("ru.jump")}</span></button>
         </div>
       )}
       {paused && (
