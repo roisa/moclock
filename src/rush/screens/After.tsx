@@ -26,7 +26,7 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
         <div className="ru-door">
           <img className="lib" src={kit("v-school.webp")} alt="" />
           <Mo pose="mo-yeyy" h="38vh" className="ru-delivered-mo" />
-          <span className="book on b1" /><span className="book on b2" /><span className="book on b3" />
+          <img className="books" src={kit("books.webp")} alt="" />
         </div>
         <div className="ru-panel ru-result">
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>
@@ -35,7 +35,7 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
           <ul>
             <li><img src={kit("star.webp")} alt="" />{t("ru.stars")}<b>{s.stars}</b></li>
             <li><span className="mini-balloon" />{t("ru.balloons")}<b>{s.balloons.length}</b></li>
-            <li><img src={kit("p-badge.webp")} alt="" />{t("ru.friend")}<b>{s.token ? t("ru.yes") : t("ru.notYet")}</b></li>
+            <li><img src={kit("pet-rabbit.webp")} alt="" />{t("ru.friend")}<b>{s.token ? t("ru.yes") : t("ru.notYet")}</b></li>
             <li><span className="mini-tunnel" />{t("ru.shortcut")}<b>{s.shortcut ? t("ru.yes") : t("ru.notYet")}</b></li>
           </ul>
           <Pill big onClick={onNext}>{t("ru.continue")}</Pill>
@@ -53,7 +53,7 @@ export function Rewards({ f }: { f: Finished }) {
     <div className="ru-screen ru-rewards">
       <Ribbon color="purple">{t("ru.rewards")}</Ribbon>
       <div className="ru-rewards-body">
-        <img className="chest" src={kit("chest-open.webp")} alt="" />
+        <div className="ru-reward-art"><img className="chest" src={kit("chest-open.webp")} alt="" /><img className="trophy" src={kit("trophy-gold.webp")} alt="" /></div>
         <div className="ru-panel">
           <p className="gain">+{f.s.stars} <img src={kit("star.webp")} alt="" /></p>
           <StarCount n={p.stars} />

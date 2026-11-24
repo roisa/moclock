@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { GameSim, type SimEvent, type Stats } from "../core/sim";
 import { morningWorld } from "../core/morning";
 import { Scene } from "../render/scene";
-import { preload, ALL_SPRITES, image } from "../render/sprites";
+import { preload, ALL_SPRITES, image, artAtlas, sprite } from "../render/sprites";
 import { BIKES } from "../render/rider";
 import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
@@ -24,8 +24,9 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
   const sim = useMemo(() => new GameSim(morningWorld()), []);
   const cv = useRef<HTMLCanvasElement>(null);
   const scene = useRef<Scene | null>(null);
-  const [hud, setHud] = useState({ stars: 0, pk: 0, time: sim.time, acorns: 0 });
+  const [hud, setHud] = useState({ stars: 0, pk: 0, time: sim.time, carrots: 0 });
   const [phase, setPhase] = useState<"ready" | "ride" | "arrive">("ready");
+  const [count, setCount] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [line, setLine] = useState<string | null>(null);
   const [pulse, setPulse] = useState(0);
@@ -55,7 +56,14 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     const ro = new ResizeObserver(fit);
     ro.observe(c);
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
+    image("mo/ride.webp").then((i) => (sc.riderStrip = i)).catch(() => {}); // the approved riding sheet
     preload(ALL_SPRITES).catch(() => {});
+    // generated animation strips (rush-slice.py) replace the placeholder rider clip by clip
+    artAtlas().then((at) => {
+      for (const [id, a] of Object.entries(at)) {
+        if (a.frames > 1) image("art/" + id + ".webp").then((img) => (sc.sheets[id] = { img, w: a.w, h: a.h, frames: a.frames, fps: (a as { fps?: number }).fps ?? 12 })).catch(() => {});
+      }
+    });
     let raf = 0, last = performance.now(), acc = 0, clock = 0;
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
@@ -68,11 +76,16 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       handle(sim.drain());
       sc.render(sim, clock, dt);
       const time = sim.time;
-      setHud((h) => (h.stars !== sim.stats.stars || h.pk !== sim.stats.packages || h.time !== time || h.acorns !== sim.stats.acorns ? { stars: sim.stats.stars, pk: sim.stats.packages, time, acorns: sim.stats.acorns } : h));
+      setHud((h) => (h.stars !== sim.stats.stars || h.pk !== sim.stats.packages || h.time !== time || h.carrots !== sim.stats.carrots ? { stars: sim.stats.stars, pk: sim.stats.packages, time, carrots: sim.stats.carrots } : h));
     };
     raf = requestAnimationFrame(loop);
-    const go = window.setTimeout(() => { sim.start(); setPhase("ride"); }, 1400);
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); clearTimeout(go); };
+    // ready → 3, 2, 1, Go! (a friendly race start; the ride itself has no timer)
+    const steps = [1300, 1950, 2600, 3250];
+    const ts = steps.map((ms, i) => window.setTimeout(() => {
+      if (i < 3) { setCount(3 - i); audio.sfx("beep"); }
+      else { setCount(0); sim.start(); setPhase("ride"); window.setTimeout(() => setCount(null), 700); }
+    }, ms));
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); ts.forEach(clearTimeout); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,8 +101,12 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         case "ring": { const q = at(e.item.id); sc.fx.emit("spark", q.x, q.y, 20, { size: 6, speed: 300 }); audio.sfx("whoosh"); break; }
         case "pocketclock": { const q = at(e.item.id); sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 10 }); audio.sfx("fanfare"); say({ k: "ru.say.balloon", p: { t: { time: sim.time } } }, { force: true }); break; }
         case "balloon": { const q = at(e.item.id); sc.fx.emit("confetti", q.x, q.y, 22, { up: 200, life: 1 }); audio.sfx("pop"); say({ k: "ru.say.balloon", p: { t: { time: e.time } } }, { gap: 3 }); break; }
-        case "acorn": { const q = at(e.item.id); sc.fx.emit("heart", q.x, q.y, 2, { size: 10, speed: 40 }); audio.sfx("pop"); break; }
-        case "pickup": { const q = rp(); sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 9, speed: 260 }); audio.sfx("correct"); audio.haptic("success"); say(("ru.say.pickup" + Math.min(3, e.carrying)), { force: true }); break; }
+        case "carrot": { const q = at(e.item.id); sc.fx.emit("heart", q.x, q.y, 2, { size: 10, speed: 40 }); audio.sfx("pop"); break; }
+        case "pickup": {
+          const q = rp();
+          const bk = sprite("books");
+          sc.fly(bk.img, bk.w, bk.h, sc.W / 2, sc.H * 0.3, sc.riderH * 0.6);
+          sc.fx.emit("star", q.x, q.y, 16, { color: "#ffd23f", size: 9, speed: 260 }); audio.sfx("correct"); audio.haptic("success"); say(("ru.say.pickup" + Math.min(3, e.carrying)), { force: true }); break; }
         case "bump": { const r = sc.riderXY(sim); sc.fx.emit("dust", r.x, r.y - 10, 8, { speed: 120, size: 12 }); sc.bump(); audio.sfx("gentle"); audio.haptic("soft"); say("ru.say.bump", { gap: 10 }); break; }
         case "splash": { const r = sc.riderXY(sim); sc.fx.emit("drop", r.x, r.y - 10, 18, { speed: 260, up: 320, size: 9 }); audio.sfx("whoosh"); break; }
         case "boost": audio.sfx("whoosh"); say("ru.say.boost", { gap: 12 }); break;
@@ -159,13 +176,14 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           <Digital t={hud.time} size="s" />
         </div>
         <div className="ru-hud-pk" aria-label={t({ k: "ru.packages", p: { a: hud.pk, b: 3 } })}>
-          {[0, 1, 2].map((i) => <span key={i} className={"book" + (i < hud.pk ? " on" : "")} />)}
-          {sim.friendMet && !sim.stats.token && <span className="acorns">🌰 {hud.acorns}/3</span>}
+          {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src={kit("books.webp")} alt="" />)}
+          {sim.friendMet && !sim.stats.token && <span className="carrots"><img src={kit("carrot.webp")} alt="" />{hud.carrots}/3</span>}
         </div>
         <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><i /><i /></button>
       </div>
-      {line && <div className="ru-say" role="status"><img src={"characters/mo-wave.webp"} alt="" />{line}</div>}
-      {phase === "ready" && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
+      {line && <div className="ru-say" role="status"><img src="rush/mo/face.webp" alt="" />{line}</div>}
+      {phase === "ready" && count === null && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
+      {count !== null && <div className={"ru-count-big" + (count === 0 ? " go" : "")} key={count} aria-live="assertive">{count === 0 ? t("ru.go") : count}</div>}
       {phase === "ride" && (
         <div className="ru-controls">
           <div className="ru-steer">

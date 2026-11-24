@@ -15,14 +15,18 @@ const loading = new Map<string, Promise<void>>();
 
 /** world sizes (road half-width = 1) */
 export const WORLD_W: Record<string, number> = {
-  star: 0.2, coin: 0.18, gift: 0.24, balloon: 0.26, acorn: 0.14, pocketclock: 0.22, ring: 0.5, token: 0.2,
-  log: 0.5, boxes: 0.36, blocks: 0.4, puddle: 0.5, ramp: 0.5, boost: 0.46,
-  pickup: 2.4, tunnel: 0.72, "paper-arch": 2.6, squirrel: 0.3, "squirrel-home": 0.9, library: 2.2, "arch-start": 2.4,
-  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2,
+  star: 0.2, coin: 0.18, gift: 0.26, balloon: 0.26, carrot: 0.2, pocketclock: 0.22, ring: 0.5, token: 0.2,
+  log: 0.5, boxes: 0.36, blocks: 0.4, ball: 0.36, puddle: 0.5, ramp: 0.5, boost: 0.46,
+  pickup: 2.4, tunnel: 0.72, "paper-arch": 2.6, bunny: 0.36, "bunny-home": 0.75, library: 2.2, "arch-start": 2.4,
+  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, signpost: 0.4, tent: 0.75, books: 0.4,
+  "pet-puppy": 0.32, "pet-kitten": 0.3, "pet-duckling": 0.26, "pet-chick": 0.24, "pet-lamb": 0.32, "pet-hamster": 0.26, "pet-cow": 0.36, "pet-turtle-green": 0.3,
 };
 /** kit images used as the sprite until bespoke art exists */
 const KIT: Record<string, string> = {
-  star: "kit/star.webp", coin: "kit/coin.webp", gift: "kit/gift-purple.webp", house: "kit/v-house.webp", shop: "kit/v-market.webp",
+  star: "kit/star.webp", coin: "kit/coin.webp", gift: "kit/gift-red.webp", carrot: "kit/carrot.webp", ball: "kit/ball-beach-rainbow.webp",
+  bunny: "kit/pet-rabbit.webp", "bunny-home": "kit/v-garden.webp", signpost: "kit/signpost.webp", tent: "kit/tent.webp", books: "kit/books.webp",
+  "pet-puppy": "kit/pet-puppy.webp", "pet-kitten": "kit/pet-kitten.webp", "pet-duckling": "kit/pet-duckling.webp", "pet-chick": "kit/pet-chick.webp",
+  "pet-lamb": "kit/pet-lamb.webp", "pet-hamster": "kit/pet-hamster.webp", "pet-cow": "kit/pet-cow.webp", "pet-turtle-green": "kit/pet-turtle-green.webp", house: "kit/v-house.webp", shop: "kit/v-market.webp",
   flowers: "kit/v-garden.webp", sign: "kit/v-sign.webp", library: "kit/v-school.webp", pond: "kit/v-pond.webp", token: "kit/p-badge.webp",
 };
 
@@ -142,7 +146,7 @@ const P: Record<string, Painter> = {
     cols.forEach((c, i) => { g.fillStyle = c; g.beginPath(); g.moveTo(30 + i * 40, 130); g.lineTo(70 + i * 40, 130); g.lineTo(60 + i * 32, 10); g.lineTo(32 + i * 32, 10); g.fill(); });
     g.fillStyle = "rgba(255,255,255,.9)"; for (const y of [24, 62, 100]) { g.beginPath(); g.moveTo(110, y + 26); g.lineTo(150, y); g.lineTo(190, y + 26); g.lineTo(172, y + 26); g.lineTo(150, y + 12); g.lineTo(128, y + 26); g.fill(); }
   } },
-  acorn: { w: 120, h: 140, draw(g) {
+  carrot: { w: 120, h: 140, draw(g) {
     g.fillStyle = rad(g, 60, 86, 48, "#e2a066", "#a8642e"); g.beginPath(); g.ellipse(60, 88, 40, 46, 0, 0, 7); g.fill();
     g.fillStyle = rad(g, 60, 44, 50, "#a8794a", "#6e4a28"); g.beginPath(); g.ellipse(60, 48, 50, 26, 0, 0, 7); g.fill();
     g.fillStyle = "#6e4a28"; rr(g, 54, 6, 12, 22, 6); g.fill();
@@ -158,7 +162,7 @@ const P: Record<string, Painter> = {
     cols.forEach((c, i) => { g.strokeStyle = c; g.lineWidth = 9; g.beginPath(); g.arc(130, 130, 118 - i * 9, 0, 7); g.stroke(); });
     g.fillStyle = "rgba(255,255,255,.25)"; g.beginPath(); g.arc(130, 130, 64, 0, 7); g.fill();
   } },
-  squirrel: { w: 200, h: 220, draw(g) {
+  bunny: { w: 200, h: 220, draw(g) {
     g.fillStyle = rad(g, 140, 90, 80, "#f0a860", "#c06a2a"); g.beginPath(); g.ellipse(144, 96, 46, 84, 0.25, 0, 7); g.fill();
     g.fillStyle = "rgba(255,240,220,.5)"; g.beginPath(); g.ellipse(150, 70, 14, 50, 0.25, 0, 7); g.fill();
     g.fillStyle = rad(g, 80, 150, 60, "#f2b070", "#c87a36"); g.beginPath(); g.ellipse(84, 160, 44, 52, 0, 0, 7); g.fill();
@@ -170,7 +174,7 @@ const P: Record<string, Painter> = {
     g.fillStyle = "#5a3018"; g.beginPath(); g.arc(80, 100, 5, 0, 7); g.fill();
     g.fillStyle = "rgba(255,120,120,.45)"; for (const s of [-1, 1]) { g.beginPath(); g.arc(80 + s * 26, 100, 7, 0, 7); g.fill(); }
   } },
-  "squirrel-home": { w: 300, h: 420, draw(g) {
+  "bunny-home": { w: 300, h: 420, draw(g) {
     g.fillStyle = lin(g, 200, 420, "#a0673a", "#6e4422"); rr(g, 110, 170, 80, 250, 20); g.fill();
     g.fillStyle = "#3a2210"; g.beginPath(); g.ellipse(150, 300, 22, 28, 0, 0, 7); g.fill();
     blob(g, 150, 120, 120, "#a6eb90", "#3a9140"); blob(g, 70, 170, 60, "#8fe07a", "#3f9a43"); blob(g, 230, 170, 60, "#8fe07a", "#3f9a43");

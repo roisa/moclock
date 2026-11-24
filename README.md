@@ -92,8 +92,8 @@ npm run test:offline:racers   # racer works offline after the first visit
 
 ```bash
 npm run dev                   # http://localhost:5173/  (Time Adventure: /learn/, Time Racers: /racers/)
-npm run docs:rush             # regenerate the asset bible + image prompt library from src/rush/assets/catalog.ts
-python3 scripts/rush-slice.py art-src/rush/<id>.png <id> --grid 4x2   # drop a generated sprite sheet into the game
+npm run docs:rush             # regenerate the asset bible + image prompts (6 per image) from src/rush/assets/packs.ts
+python3 scripts/rush-slice.py art-src/rush/p23-trees.png   # cut a generated 6-item image into game files
 npm run build && npx vite preview --port 4174 &
 npm run e2e:rush              # full delivery in EN + ID, rewards, saves, layouts light/dark
 ```

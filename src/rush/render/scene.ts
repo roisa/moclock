@@ -7,7 +7,7 @@ import { SEG, type Item, type Track } from "../core/track";
 import type { GameSim } from "../core/sim";
 import { handAngles } from "../../engine/time";
 import { sprite, star5, type Sprite } from "./sprites";
-import { drawRider, type Look, type Sheets } from "./rider";
+import { drawRider, drawRiderStrip, type Look, type Sheets } from "./rider";
 import { Particles } from "./particles";
 import { daylight } from "../core/clock";
 
@@ -39,6 +39,17 @@ export class Scene {
   private townX = 0;
   private clouds = Array.from({ length: 6 }, (_, i) => ({ x: Math.random(), y: 0.06 + (i % 3) * 0.08, s: 0.6 + Math.random() * 0.7, v: 0.004 + Math.random() * 0.006 }));
   private shake = 0;
+  /** smoothed camera: lateral follow, bank (roll) into curves and steering, boost zoom */
+  private camX = 0;
+  private roll = 0;
+  private zoom = 1;
+  /** push-stride phase of the rider (radians) — drives frames, bob and dust */
+  private stride = 0;
+  private foot = 0;
+  /** things flying across the screen (a book bundle into the backpack) */
+  private flyers: { img: CanvasImageSource; w: number; h: number; x0: number; y0: number; t: number; dur: number; size: number }[] = [];
+  /** Baby Mo riding sheet (6 rear frames) */
+  riderStrip: HTMLImageElement | null = null;
   private vis: { i: number; a: Proj; b: Proj; fog: number }[] = [];
   constructor(public canvas: HTMLCanvasElement) {
     this.g = canvas.getContext("2d")!;
@@ -57,8 +68,11 @@ export class Scene {
   get riderH() { return Math.max(this.KX * 0.4, this.H * 0.17); }
   /** screen position of the rider's ground contact */
   riderXY(sim: GameSim) {
-    const camX = sim.r.x * ROAD_W * 0.55;
-    return { x: this.W / 2 + ((sim.r.x * ROAD_W - camX) / CAM_H) * this.KX, y: this.HOR + this.KY };
+    return { x: this.W / 2 + ((sim.r.x * ROAD_W - this.camX) / CAM_H) * this.KX, y: this.HOR + this.KY };
+  }
+  /** fly a picture from a screen point into Baby Mo's backpack */
+  fly(img: CanvasImageSource, w: number, h: number, x0: number, y0: number, size: number) {
+    this.flyers.push({ img, w, h, x0, y0, t: 0, dur: 0.6, size });
   }
   /** last screen position of an item (for particles on collect) */
   itemXY(id: number) {
@@ -91,11 +105,31 @@ export class Scene {
     const seg = (i: number) => (i < 0 ? { curve: 0, y: 0 } : track.segs[Math.min(i, track.segs.length - 1)]);
     const yAt = (z: number) => { const i = Math.floor(z / SEG); const s = seg(i), p = seg(i - 1); const f = (z - i * SEG) / SEG; return (i <= 0 ? 0 : p.y) + (s.y - (i <= 0 ? 0 : p.y)) * f; };
     const camY = yAt(r.z) + CAM_H;
-    const camX = r.x * ROAD_W * 0.55;
+    // --- camera: follows Mo sideways with a little lag, banks into curves and steering, zooms on boost
+    const ease = (k: number) => Math.min(1, dt * k);
+    this.camX += (r.x * ROAD_W * 0.55 - this.camX) * ease(5);
+    const camX = this.camX;
+    const spd = Math.min(1.5, r.speed / 2300);
+    const curveNow = seg(Math.floor(r.z / SEG)).curve;
+    const rollTarget = this.reduced ? 0 : Math.max(-0.05, Math.min(0.05, -curveNow * 0.012 * spd - r.lean * 0.018));
+    this.roll += (rollTarget - this.roll) * ease(3);
+    this.zoom += ((r.boost > 0 && !this.reduced ? 1.07 : 1) - this.zoom) * ease(4);
+    // push strides: quick running steps while speeding up, slower dabs while gliding at speed
+    if (!r.stopped && !r.air) {
+      const cadence = r.speed < 2300 * 0.9 || r.boost > 0 ? 2.6 : 1.4;
+      this.stride += dt * cadence * Math.PI * 2 * Math.min(1, 0.35 + spd);
+    }
+    const foot = Math.sin(this.stride) > 0 ? 1 : 0;
     let shx = 0, shy = 0;
     if (this.shake > 0) { this.shake -= dt; shx = (Math.random() - 0.5) * 8; shy = (Math.random() - 0.5) * 6; }
+    if (!this.reduced && !r.stopped && !r.air) shy += Math.abs(Math.sin(this.stride)) * 1.6; // tiny camera bob with each stride
     g.save();
     g.translate(shx, shy);
+    const pivotY = H * 0.78;
+    g.translate(W / 2, pivotY);
+    g.rotate(this.roll);
+    g.scale(this.zoom, this.zoom);
+    g.translate(-W / 2, -pivotY);
 
     // --- sky & environment
     const s0 = seg(base);
@@ -144,7 +178,7 @@ export class Scene {
       if (!list || !list.length) continue;
       const pa = this.proj[n], pb = this.proj[n + 1];
       for (const it of list) {
-        if (it.hit && !it.wide && !["squirrel", "squirrel-home", "tunnel", "ramp", "boost"].includes(it.kind)) continue;
+        if (it.hit && !it.wide && !["bunny", "bunny-home", "tunnel", "ramp", "boost"].includes(it.kind)) continue;
         const f = (it.z - i * SEG) / SEG;
         const sc = pa.scale + (pb.scale - pa.scale) * f;
         const cx = pa.x + (pb.x - pa.x) * f;
@@ -155,9 +189,26 @@ export class Scene {
     }
     // --- rider
     const rp = this.riderXY(sim);
-    drawRider(g, rp.x, rp.y, this.riderH, r, clock, this.body, this.look, this.sheets);
+    if (this.riderStrip) {
+      drawRiderStrip(g, rp.x, rp.y, this.riderH * 1.12, r, clock, this.riderStrip, this.stride, curveNow);
+      // a little dust puff from the foot that pushes off
+      if (foot !== this.foot && !r.stopped && !r.air && r.speed > 300 && !this.reduced)
+        this.fx.emit("dust", rp.x + (foot ? 1 : -1) * this.riderH * 0.2, rp.y - 6, 2, { speed: 60, size: 6, life: 0.45 });
+    } else drawRider(g, rp.x, rp.y, this.riderH, r, clock, this.body, this.look, this.sheets);
+    this.foot = foot;
+    // flying book bundles → backpack
+    for (let k = this.flyers.length - 1; k >= 0; k--) {
+      const f = this.flyers[k];
+      f.t += dt;
+      const u = Math.min(1, f.t / f.dur), e = u * u * (3 - 2 * u);
+      const tx = rp.x, ty = rp.y - this.riderH * 0.62;
+      const x = f.x0 + (tx - f.x0) * e, y = f.y0 + (ty - f.y0) * e - Math.sin(u * Math.PI) * this.riderH * 0.5;
+      const s = f.size * (1 - 0.55 * e);
+      g.drawImage(f.img, x - s / 2, y - (s * f.h) / f.w / 2, s, (s * f.h) / f.w);
+      if (u >= 1) { this.flyers.splice(k, 1); this.fx.emit("star", tx, ty, 8, { color: "#ffd23f", size: 7, speed: 160 }); }
+    }
     // speed lines + particles
-    if (r.boost > 0 && !this.reduced && Math.random() < 0.7) this.fx.lines(W, H, 2);
+    if (!this.reduced && ((r.boost > 0 && Math.random() < 0.7) || (spd > 0.95 && Math.random() < 0.12))) this.fx.lines(W, H, r.boost > 0 ? 2 : 1);
     this.fx.update(dt);
     this.fx.draw(g);
     if (tunnel) {
@@ -179,7 +230,10 @@ export class Scene {
     sky.addColorStop(0, mix(top, top, 0));
     sky.addColorStop(1, mix(bot, bot, 0));
     g.fillStyle = sky;
-    g.fillRect(0, 0, W, HOR + 60);
+    g.fillRect(-W * 0.3, -H * 0.3, W * 1.6, HOR + 60 + H * 0.3);
+    // ground under everything (the camera banks, so cover the corners)
+    g.fillStyle = tunnel ? "#fff0c8" : mix([116, 196, 96], [104, 190, 88], day);
+    g.fillRect(-W * 0.3, HOR + 40, W * 1.6, H);
     if (tunnel) return;
     // sun climbs as the morning goes on
     const sx = W * 0.78, sy = HOR - (HOR * 0.75) * (0.25 + 0.75 * day);
@@ -204,8 +258,8 @@ export class Scene {
   }
   private tile(s: Sprite, off: number, bottom: number, h: number) {
     const w = (h * s.w) / s.h;
-    let x0 = -(((off * this.W) % w) + w) % w;
-    for (; x0 < this.W; x0 += w) this.g.drawImage(s.img, x0, bottom - h, w + 1, h);
+    let x0 = -(((off * this.W) % w) + w) % w - w * Math.ceil((this.W * 0.3) / w);
+    for (; x0 < this.W * 1.3; x0 += w) this.g.drawImage(s.img, x0, bottom - h, w + 1, h);
   }
 
   private drawSegment(i: number, p1: Proj, p2: Proj, fog: number, tunnel: boolean, day: number) {
@@ -213,7 +267,7 @@ export class Scene {
     const alt = Math.floor(i / 3) % 2 === 0;
     // grass
     g.fillStyle = tunnel ? (alt ? "#ffe3f0" : "#fff0c8") : alt ? mix([126, 206, 104], [116, 200, 96], day) : mix([116, 196, 96], [104, 190, 88], day);
-    g.fillRect(0, p2.y, W, p1.y - p2.y + 2);
+    g.fillRect(-W * 0.3, p2.y, W * 1.6, p1.y - p2.y + 2);
     // curb (cream / peach)
     const r1 = p1.w * 1.12, r2 = p2.w * 1.12;
     quad(g, p1.x - r1, p1.y, p1.x + r1, p2.x + r2, p2.y, p2.x - r2, tunnel ? (alt ? "#ff9ec4" : "#7fcaff") : alt ? "#fff6e3" : "#ffb38a");
@@ -228,7 +282,7 @@ export class Scene {
     }
     if (fog > 0.55) {
       g.fillStyle = `rgba(235,245,255,${(fog - 0.55) * 1.4})`;
-      g.fillRect(0, p2.y, W, p1.y - p2.y + 1);
+      g.fillRect(-W * 0.3, p2.y, W * 1.6, p1.y - p2.y + 1);
     }
   }
 
@@ -239,14 +293,22 @@ export class Scene {
     const h = (w * s.h) / s.w;
     let bob = 0;
     let sx = 1;
-    if (it.kind === "star" || it.kind === "coin") { sx = Math.max(0.25, Math.abs(Math.cos(clock * 3 + it.id))); bob = Math.sin(clock * 4 + it.id) * h * 0.08; }
+    // stars and coins turn gently (never edge-on) and bob, with a soft glow behind
+    if (it.kind === "star" || it.kind === "coin") { sx = 0.78 + 0.22 * Math.cos(clock * 3 + it.id); bob = Math.sin(clock * 4 + it.id) * h * 0.08; }
     if (it.kind === "balloon" || it.kind === "pocketclock") bob = Math.sin(clock * 2.4 + it.id) * h * 0.05;
-    if (it.kind === "acorn" || it.kind === "gift") bob = Math.abs(Math.sin(clock * 5 + it.id)) * h * 0.15;
-    if (it.kind === "squirrel") bob = Math.abs(Math.sin(clock * 6)) * h * 0.06;
+    if (it.kind === "carrot" || it.kind === "gift") bob = Math.abs(Math.sin(clock * 5 + it.id)) * h * 0.15;
+    if (it.kind === "bunny") bob = Math.abs(Math.sin(clock * 6)) * h * 0.06;
     const lift = it.y * unit;
     const bx = x - (w * sx) / 2, by = y - h - lift - bob;
     if (y - lift < 0 || bx > this.W || bx + w < 0) return;
     this.pos.set(it.id, { x, y: by + h / 2, s: w });
+    if ((it.kind === "star" || it.kind === "coin" || it.kind === "gift" || it.kind === "carrot") && w > 6) {
+      const gl = g.createRadialGradient(x, by + h / 2, 0, x, by + h / 2, w * 0.75);
+      gl.addColorStop(0, "rgba(255,240,160,.55)");
+      gl.addColorStop(1, "rgba(255,240,160,0)");
+      g.fillStyle = gl;
+      g.fillRect(x - w * 0.75, by + h / 2 - w * 0.75, w * 1.5, w * 1.5);
+    }
     // clip below the hill crest that hides it
     const visH = Math.min(h, clip - by);
     if (visH <= 0) return;
@@ -260,8 +322,8 @@ export class Scene {
       const bs = sprite("books");
       const bw = w * 0.16, bh = (bw * bs.h) / bs.w;
       g.drawImage(bs.img, x - bw / 2, by + h * 0.36 + Math.sin(clock * 3) * bh * 0.08, bw, bh);
-    } else if (it.kind === "squirrel-home" && it.hit) {
-      const sq = sprite("squirrel");
+    } else if (it.kind === "bunny-home" && it.hit) {
+      const sq = sprite("bunny");
       const sw = w * 0.32;
       g.drawImage(sq.img, x - sw * 0.2, by + h * 0.55 - Math.abs(Math.sin(clock * 7)) * sw * 0.2, sw, (sw * sq.h) / sq.w);
     }

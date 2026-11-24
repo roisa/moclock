@@ -1,0 +1,750 @@
+{
+ "p01-mo-ref": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "mo-ref-front",
+   "mo-ref-34",
+   "mo-ref-side",
+   "mo-ref-back",
+   "mo-stand-front",
+   "mo-stand-back"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p02-bike-ref": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "bike-side",
+   "bike-34",
+   "bike-front",
+   "bike-rear",
+   "bike-wheel",
+   "bike-detail"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p03-ride-key": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "mo-ride-34",
+   "mo-ride-side",
+   "mo-ride-front",
+   "mo-idle-rear",
+   "mo-push-side",
+   "mo-bag-side"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p04-ride": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-ride-loop",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p05-push": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-push",
+    "from": 0,
+    "to": 5,
+    "fps": 12,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p06-lean": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-lean-left",
+    "from": 0,
+    "to": 2,
+    "fps": 12,
+    "loop": false
+   },
+   {
+    "id": "mo-lean-right",
+    "from": 3,
+    "to": 5,
+    "fps": 12,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p07-jump": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-jump-prep",
+    "from": 0,
+    "to": 1,
+    "fps": 12,
+    "loop": false
+   },
+   {
+    "id": "mo-jump-air",
+    "from": 2,
+    "to": 3,
+    "fps": 6,
+    "loop": true
+   },
+   {
+    "id": "mo-land",
+    "from": 4,
+    "to": 5,
+    "fps": 12,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p08-boost": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-boost",
+    "from": 0,
+    "to": 5,
+    "fps": 12,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p09-pickup": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-pickup",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p10-carry": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-ride-carry",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p11-wobble": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-wobble",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p12-idle": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-idle-bike",
+    "from": 0,
+    "to": 5,
+    "fps": 6,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p13-look-wave": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-look",
+    "from": 0,
+    "to": 2,
+    "fps": 8,
+    "loop": false
+   },
+   {
+    "id": "mo-wave-ride",
+    "from": 3,
+    "to": 5,
+    "fps": 8,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p14-faces": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "mo-face-happy",
+   "mo-face-blink",
+   "mo-face-surprised",
+   "mo-face-excited",
+   "mo-face-thinking",
+   "mo-face-proud"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p15-celebrate": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-celebrate",
+    "from": 0,
+    "to": 5,
+    "fps": 8,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p16-help": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-help",
+    "from": 0,
+    "to": 5,
+    "fps": 6,
+    "loop": false
+   }
+  ],
+  "baseline": true
+ },
+ "p17-bike-colors": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "bike-green",
+   "bike-blue",
+   "bike-yellow",
+   "bike-pink",
+   "bike-lavender",
+   "bike-rainbow"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p18-bags": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "bag-yellow",
+   "bag-blue",
+   "bag-pink",
+   "bag-books",
+   "bag-picnic",
+   "bag-moon"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p19-packages": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "pkg-storybooks",
+   "pkg-gift",
+   "pkg-picnic",
+   "pkg-toy",
+   "pkg-food",
+   "pkg-teddy"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p20-helmets": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "helmet-white",
+   "helmet-blue",
+   "helmet-yellow",
+   "helmet-mint",
+   "helmet-lavender",
+   "helmet-orange"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p21-bike-extras": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "acc-bell",
+   "acc-basket",
+   "acc-streamers",
+   "acc-flag",
+   "acc-light",
+   "acc-beads"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p22-buildings": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "library",
+   "tower",
+   "bakery",
+   "shop",
+   "house",
+   "house2"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p23-trees": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "tree",
+   "tree2",
+   "tree3",
+   "tree4",
+   "tree5",
+   "tree6"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p24-roadside": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "bush",
+   "flowers",
+   "lamp",
+   "fence",
+   "bench",
+   "mailbox"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p25-sky": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "cloud1",
+   "cloud2",
+   "cloud3",
+   "bird-1",
+   "bird-2",
+   "sun"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p26-worlds": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "world-morning",
+   "world-park",
+   "world-play",
+   "world-sunset",
+   "world-dream",
+   "world-key"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p27-collect": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "star",
+   "coin",
+   "gift",
+   "token",
+   "pocketclock",
+   "acorn"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p28-balloons": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "balloon-0",
+   "balloon-1",
+   "balloon-2",
+   "balloon-3",
+   "balloon-4",
+   "balloon-5"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p29-obstacles": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "log",
+   "boxes",
+   "blocks",
+   "puddle",
+   "ramp",
+   "boost"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p30-arches": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "pickup",
+   "tunnel",
+   "paper-arch",
+   "arch-start",
+   "ring",
+   "rainbow"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p31-squirrel": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "squirrel",
+   "squirrel-sad",
+   "squirrel-happy",
+   "squirrel-hug",
+   "squirrel-wave",
+   "squirrel-home"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p32-librarian": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "librarian",
+   "librarian-wave",
+   "librarian-receive",
+   "librarian-books",
+   "librarian-door",
+   "librarian-read"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p33-friends": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "poses",
+  "cells": [
+   "rabbit",
+   "rabbit-happy",
+   "bird",
+   "baker",
+   "baker-wave",
+   "postman"
+  ],
+  "clips": null,
+  "baseline": true
+ },
+ "p34-logo": {
+  "grid": [
+   1,
+   1
+  ],
+  "kind": "items",
+  "cells": [
+   "logo"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p35-icons": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "icon-clock",
+   "icon-package",
+   "icon-map",
+   "icon-bike",
+   "icon-trophy",
+   "icon-garage"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p36-screens": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "ui-clipboard",
+   "ui-chest",
+   "ui-banner",
+   "ui-turntable",
+   "ui-wardrobe",
+   "ui-library-door"
+  ],
+  "clips": null,
+  "baseline": false
+ },
+ "p37-effects": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "items",
+  "cells": [
+   "fx-sparkle",
+   "fx-dust",
+   "fx-confetti",
+   "fx-hearts",
+   "fx-splash",
+   "fx-pop"
+  ],
+  "clips": null,
+  "baseline": false
+ }
+}

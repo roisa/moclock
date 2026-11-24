@@ -1,7 +1,7 @@
 /**
  * AnimationController + placeholder rider rig.
  *
- * Until the generated riding sheets exist (docs/rush/04 batch 4), Baby Mo is
+ * Until the generated riding sheets exist (docs/rush/04, images 4–12), Baby Mo is
  * the render-1 "from behind" pose (baby-mo-pose-38), cropped at the waist as
  * the art rules ask, sitting on a procedurally drawn rear-view balance bike
  * with drawn legs (scooting / gliding) and arms to the grips. When a sheet for
@@ -163,4 +163,46 @@ function shade(hex: string) {
   const n = parseInt(hex.slice(1), 16);
   const f = (v: number) => Math.max(0, Math.round(v * 0.78));
   return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`;
+}
+
+/**
+ * Baby Mo from the approved riding sheet (6 rear frames, art-src/rush/p04-ride-user.png):
+ * frames 2 / 5 straight, 1 / 4 turning left, 3 / 6 turning right — alternated with each
+ * push stride, plus procedural lean (steering + curves), stride bob and sway, jump
+ * squash / stretch and a gentle wobble on bumps.
+ */
+export function drawRiderStrip(g: CanvasRenderingContext2D, x: number, y: number, H: number, r: Rider, clock: number, strip: HTMLImageElement, stride: number, curve: number) {
+  const n = 6, fw = strip.naturalWidth / n, fh = strip.naturalHeight;
+  const anim = animOf(r);
+  const foot = Math.sin(stride) > 0 ? 0 : 1;
+  let idx = foot ? 4 : 1;
+  if (r.lean < -0.3) idx = foot ? 3 : 0;
+  else if (r.lean > 0.3) idx = foot ? 5 : 2;
+  if (r.stopped || r.air) idx = 4;
+  const lift = r.h * H * 1.5;
+  // soft shadow (shrinks while airborne)
+  g.fillStyle = "rgba(40,50,40,.22)";
+  g.beginPath();
+  g.ellipse(x, y, H * (0.2 - Math.min(0.08, r.h * 0.12)), H * 0.045, 0, 0, 7);
+  g.fill();
+  g.save();
+  const moving = !r.stopped && !r.air;
+  const bob = moving ? Math.abs(Math.sin(stride)) * H * 0.016 : 0;
+  const sway = moving ? Math.sin(stride) * H * 0.008 : 0;
+  let hop = 0;
+  if (anim === "celebrate") hop = Math.abs(Math.sin(clock * 6)) * H * 0.08;
+  g.translate(x + sway, y - lift - bob - hop);
+  let rot = r.lean * 0.14 + Math.max(-0.08, Math.min(0.08, curve * 0.025 * Math.min(1, r.speed / 2300)));
+  if (r.wobble > 0) rot += Math.sin(r.wobble * 22) * 0.16 * (r.wobble / 0.6) * r.wobbleDir;
+  if (r.air) rot += Math.sin(clock * 5) * 0.04;
+  g.rotate(rot);
+  let sx = 1, sy = 1;
+  if (r.prep > 0) { sx = 1.06; sy = 0.92; }
+  if (r.land > 0) { const k = r.land / 0.2; sx = 1 + 0.1 * k; sy = 1 - 0.1 * k; }
+  if (r.air) { sx = 0.97; sy = 1.04; }
+  if (moving) sy *= 1 - Math.abs(Math.sin(stride)) * 0.012;
+  g.scale(sx, sy);
+  const dh = H, dw = (dh * fw) / fh;
+  g.drawImage(strip, idx * fw, 0, fw, fh, -dw / 2, -dh, dw, dh);
+  g.restore();
 }
