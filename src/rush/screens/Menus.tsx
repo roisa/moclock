@@ -45,6 +45,10 @@ export function Home({ onGate }: { onGate: () => void }) {
             <Pill color="blue" onClick={() => go("garage")}>{t("ru.garage")}</Pill>
             <Pill color="pink" onClick={() => go("collection")}>{t("ru.collection")}</Pill>
           </div>
+          <nav className="ru-more" aria-label={t("ru.moreGames")}>
+            <a href="./learn/">{t("ru.toLearn")}</a>
+            <a href="./racers/">{t("ru.toRacers")}</a>
+          </nav>
         </div>
       </div>
     </div>

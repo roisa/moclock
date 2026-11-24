@@ -164,7 +164,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
         </div>
         <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><i /><i /></button>
       </div>
-      {line && <div className="ru-say" role="status"><img src={"../characters/mo-wave.webp"} alt="" />{line}</div>}
+      {line && <div className="ru-say" role="status"><img src={"characters/mo-wave.webp"} alt="" />{line}</div>}
       {phase === "ready" && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
       {phase === "ride" && (
         <div className="ru-controls">

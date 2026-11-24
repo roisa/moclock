@@ -231,3 +231,6 @@
   .ru-mission-body { flex-direction: column; }
   .ru-mission-mo { height: 22vh !important; }
 }
+.ru-more { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.ru-more a { font: 700 15px "Fredoka"; color: #2a6fb0; background: rgba(255,255,255,.85); padding: 7px 14px; border-radius: 999px; text-decoration: none; box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+:root[data-theme="dark"] .ru-more a { background: rgba(30,40,55,.9); color: #9fd6ff; }

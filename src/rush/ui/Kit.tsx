@@ -6,8 +6,8 @@ import type { CSSProperties, ReactNode } from "react";
 import { sfx } from "../../platform/audio";
 import { useRush } from "../state";
 
-// the page lives at <site>/rush/, its art next to it (public/rush/kit → rush/kit)
-export const KIT = "kit/";
+// the page is the site root; its kit art lives in public/rush/kit
+export const KIT = "rush/kit/";
 export const kit = (f: string) => KIT + f;
 
 type RoundIcon = "play" | "back" | "home" | "settings" | "restart" | "lock" | "sound" | "sound-off" | "close";
@@ -59,5 +59,5 @@ export function Top({ title, onBack, right }: { title: ReactNode; onBack: () => 
 
 /** render-1 Baby Mo pose from the shared character set */
 export function Mo({ pose, h, className = "" }: { pose: string; h: number | string; className?: string }) {
-  return <img className={"ru-mo " + className} src={"../characters/" + pose + "-800.webp"} alt="Baby Mo" style={{ height: h }} draggable={false} />;
+  return <img className={"ru-mo " + className} src={"characters/" + pose + "-800.webp"} alt="Baby Mo" style={{ height: h }} draggable={false} />;
 }

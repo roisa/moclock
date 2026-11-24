@@ -1,7 +1,7 @@
 # Baby Mo Time Rush — Technical Architecture
 
 ## Stack
-Same repo and build as Time Adventure / Time Racers: React 18 + TypeScript + Vite multi-page. New entry `rush/index.html` → `src/rush/main.tsx`, deployed at `/moclock/rush/`. **No 3D engine:** the 2.5D "pre-rendered" look is a custom Canvas2D pseudo-3D road (segment projection, as in classic arcade racers) with sprite billboards. This keeps the bundle small (≈ 60 kB JS) and runs at 60 fps on low-end Android tablets.
+Same repo and build as Time Adventure / Time Racers: React 18 + TypeScript + Vite multi-page. Entry `index.html` (the site home page) → `src/rush/main.tsx`, deployed at `/moclock/`. Time Adventure moved to `learn/index.html` (`/moclock/learn/`), Time Racers stays at `/moclock/racers/`. **No 3D engine:** the 2.5D "pre-rendered" look is a custom Canvas2D pseudo-3D road (segment projection, as in classic arcade racers) with sprite billboards. This keeps the bundle small (≈ 60 kB JS) and runs at 60 fps on low-end Android tablets.
 
 ## Layers
 ```
@@ -51,7 +51,7 @@ Fallback chain per catalog id: `public/rush/art/<id>.webp` (generated) → `kit:
 `localStorage` key `babymo.rush.v1` via shared `platform/storage` (time-stamped). Contains stars, best per world, unlocks, equipped bike/helmet/bag, settings (sound, voice, reduced motion, left-handed, language), parent unlock-all.
 
 ## Offline
-`scripts/gen-sw.mjs` precaches core; `/rush/` files are cached on demand (`CACHE_RUSH` message from the rush entry), same pattern as racers.
+`scripts/gen-sw.mjs` precaches the home page (Time Rush: its chunks, kit art and character art) on install; Time Adventure (`CACHE_LEARN`) and Time Racers (`CACHE_RACERS`) files are cached when their pages ask.
 
 ## Performance budget
 ≤ 4 ms sim+render on mid phones; canvas DPR capped at 2 (1.5 on low-memory devices); sprites drawn from pre-scaled offscreen canvases (procedural painters render once to cache).

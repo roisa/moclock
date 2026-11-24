@@ -19,6 +19,14 @@ const DEST = join(WWW, "time-adventure");
 rmSync(DEST, { recursive: true, force: true });
 cpSync(SRC, DEST, { recursive: true });
 rmSync(join(DEST, "icons", "icon-1024.png"), { force: true });
+// the website serves Time Adventure from /learn/; in the hub it is the folder's own index
+// (the hub build only has the learn entry, so "../" in its page and manifest becomes "./")
+for (const [from, to, fix] of [["learn/index.html", "index.html", (t) => t.replaceAll('"../', '"./')], ["learn/manifest.webmanifest", "manifest.webmanifest", (t) => t.replaceAll('"../icons/', '"icons/')]]) {
+  writeFileSync(join(DEST, to), fix(readFileSync(join(DEST, from), "utf8")));
+}
+// other games' files that come along with public/ are not part of the hub game
+for (const d of ["learn", "rush", "racers"]) rmSync(join(DEST, d), { recursive: true, force: true });
+for (const f of readdirSync(join(DEST, "icons"))) if (/^(rush|racers)-/.test(f)) rmSync(join(DEST, "icons", f));
 copyFileSync("scripts/hub-icon.svg", join(WWW, "icons", "games", "time-adventure.svg"));
 
 const files = [];

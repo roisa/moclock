@@ -8,8 +8,8 @@
 type Img = HTMLCanvasElement | HTMLImageElement;
 export interface Sprite { img: Img; w: number; h: number; /** world width in road half-widths */ ww: number; /** ground anchor (0..1 of height) */ base: number }
 
-// relative to the page (<site>/rush/): kit/… and art/…
-const BASE = "";
+// relative to the page (the site root): rush/kit/… and rush/art/…
+const BASE = "rush/";
 const cache = new Map<string, Sprite>();
 const loading = new Map<string, Promise<void>>();
 

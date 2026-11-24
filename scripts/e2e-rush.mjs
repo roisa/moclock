@@ -12,7 +12,7 @@ import { createRequire } from "module";
 import { mkdirSync } from "fs";
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
-const BASE = (process.env.BASE || "http://localhost:4174") + "/rush/";
+const BASE = (process.env.BASE || "http://localhost:4174") + "/";
 const OUT = "qa-shots/rush";
 mkdirSync(OUT, { recursive: true });
 const fails = [];

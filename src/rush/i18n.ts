@@ -108,6 +108,9 @@ export const rushEn = {
   "ru.learnText": "Reading o'clock, quarter past, half past and quarter to on real clock faces; morning routines; time passing during a journey.",
   "ru.rides": "Deliveries",
   "ru.rotate": "Turn your device sideways for a bigger road",
+  "ru.moreGames": "More Baby Mo games",
+  "ru.toLearn": "⏰ Time Adventure",
+  "ru.toRacers": "🏎️ Time Racers",
 } as const;
 
 export const rushId: Record<keyof typeof rushEn, string> = {
@@ -217,6 +220,9 @@ export const rushId: Record<keyof typeof rushEn, string> = {
   "ru.learnText": "Membaca jam tepat, lewat seperempat, setengah, dan kurang seperempat pada jam sungguhan; rutinitas pagi; waktu yang berjalan selama perjalanan.",
   "ru.rides": "Antaran",
   "ru.rotate": "Miringkan perangkat agar jalannya lebih besar",
+  "ru.moreGames": "Game Baby Mo lainnya",
+  "ru.toLearn": "⏰ Petualangan Waktu",
+  "ru.toRacers": "🏎️ Balap Waktu",
 };
 
 let done = false;

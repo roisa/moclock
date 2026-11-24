@@ -2,31 +2,27 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#fff8ec" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="Baby Mo: Time Adventure — learn clocks, days, routines and durations with Baby Mo. Ages 3–8. English & Bahasa Indonesia. No ads, no tracking." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#8fd3a0" />
+    <meta name="description" content="Baby Mo: Time Rush — ride a balance bike through Morning Town delivering storybooks while the clocks tell the time. Ages 3–8. English & Bahasa Indonesia." />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Time Adventure" />
+    <meta name="apple-mobile-web-app-title" content="Time Rush" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
-    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
-    <title>Baby Mo: Time Adventure</title>
+    <link rel="icon" type="image/png" href="./icons/rush-192.png" />
+    <link rel="apple-touch-icon" href="./icons/rush-180.png" />
+    <title>Baby Mo: Time Rush</title>
     <style>
-      /* boot splash: shown until the app has loaded progress */
-      html, body { margin: 0; background: #fff8ec; }
-      @media (prefers-color-scheme: dark) { html, body { background: #13201a; } }
-      #boot { position: fixed; inset: 0; display: grid; place-items: center; }
-      #boot img { width: 132px; height: 132px; animation: b 1.2s ease-in-out infinite; }
-      @keyframes b { 50% { transform: translateY(-10px); } }
+      html, body { margin: 0; height: 100%; background: #8fd3a0; overflow: hidden; }
+      #boot { position: fixed; inset: 0; display: grid; place-items: center; background: linear-gradient(#8fd3a0, #e9f7ff); }
+      #boot img { width: 140px; height: 140px; animation: b 1s ease-in-out infinite; border-radius: 30px; }
+      @keyframes b { 50% { transform: translateY(-10px) rotate(-3deg); } }
     </style>
   </head>
   <body>
-    <div id="boot"><img src="./icons/icon-512.png" alt="Baby Mo" /></div>
+    <div id="boot"><img src="./icons/rush-512.png" alt="Baby Mo: Time Rush" /></div>
     <div id="root"></div>
-    <noscript>Baby Mo: Time Adventure needs JavaScript.</noscript>
-    <script type="module" src="/src/main.tsx"></script>
+    <noscript>Baby Mo: Time Rush needs JavaScript.</noscript>
+    <script type="module" src="/src/rush/main.tsx"></script>
   </body>
 </html>

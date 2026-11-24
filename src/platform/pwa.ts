@@ -37,8 +37,11 @@ export function initPwa() {
     navigator.serviceWorker.register("../sw.js").then(() => ((state.offlineReady = true), emit())).catch(() => {});
     return;
   }
+  // the site-wide worker lives one level up (Time Adventure is served from /learn/);
+  // ask it to keep this game's files for offline play
+  navigator.serviceWorker.ready.then((reg) => reg.active?.postMessage({ type: "CACHE_LEARN" })).catch(() => {});
   navigator.serviceWorker
-    .register("./sw.js")
+    .register("../sw.js")
     .then((reg) => {
       const track = (w: ServiceWorker | null) => {
         if (!w) return;
