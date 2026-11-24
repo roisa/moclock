@@ -75,6 +75,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     ro.observe(c);
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
     image("mo/ride.webp").then((i) => (sc.riderStrip = i)).catch(() => {}); // the approved riding sheet
+    image("far-morning.webp").then((i) => (sc.far = i)).catch(() => {});
     for (const c of Object.keys(CLIP_FRAMES) as ClipName[]) image(`mo/${c}.webp`).then((i) => (sc.clips[c] = i)).catch(() => {});
     for (const id of ["ais", "adam"] as const) image(`mo/${id}-ride.webp`).then((i) => (sc.rivalStrips[id] = i)).catch(() => {});
     preload(ALL_SPRITES).catch(() => {});

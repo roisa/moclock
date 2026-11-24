@@ -31,16 +31,16 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
   }, [f.praise]);
   const s = f.s;
   return (
-    <div className="ru-screen ru-delivered">
+    <div className="ru-screen ru-delivered" style={{ backgroundImage: "url(rush/bg-delivered.webp)" }}>
       <Confetti />
       <Ribbon>{t("ru.delivered")}</Ribbon>
       <div className="ru-delivered-body">
         <div className="ru-door">
-          <img className="lib" src={kit("v-school.webp")} alt="" />
+          <div className="lib" />
           <Celebrate />
           <img className="books" src="rush/art/books.webp" alt="" />
           <span className="ru-bubble mo">{t("ru.salam")}</span>
-          <span className="ru-bubble lib">{t("ru.salamReply")}</span>
+          <span className="ru-bubble reply">{t("ru.salamReply")}</span>
         </div>
         <div className="ru-panel ru-result">
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>
@@ -66,7 +66,7 @@ export function Rewards({ f }: { f: Finished }) {
   useEffect(() => { audio.sfx("correct"); }, []);
   const next = WORLDS[WORLDS.indexOf(f.world) + 1];
   return (
-    <div className="ru-screen ru-rewards" style={{ backgroundImage: "url(rush/bg-market.webp)" }}>
+    <div className="ru-screen ru-rewards" style={{ backgroundImage: "url(rush/bg-rewards.webp)" }}>
       <Ribbon color="purple">{t("ru.rewards")}</Ribbon>
       <div className="ru-rewards-body">
         <div className="ru-reward-art"><img className="chest" src="rush/art/chest.webp" alt="" /><img className="pair" src="rush/mo/pair-highfive.webp" alt="Baby Mo and Baby Ais" /></div>
@@ -91,7 +91,7 @@ export function WorldUnlock({ world }: { world: WorldId }) {
   const { t } = useRush();
   useEffect(() => { audio.sfx("fanfare"); }, []);
   return (
-    <div className="ru-screen ru-unlockw" style={{ backgroundImage: "url(rush/bg-market.webp)" }}>
+    <div className="ru-screen ru-unlockw" style={{ backgroundImage: "url(rush/bg-rewards.webp)" }}>
       <Confetti />
       <Ribbon>{t("ru.worldUnlocked")}</Ribbon>
       <div className="ru-panel ru-unlockw-card">

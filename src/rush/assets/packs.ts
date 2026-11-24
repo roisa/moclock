@@ -304,6 +304,7 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p26-worlds": ["done", "your six road scenes are the adventure cards"],
   "p35-icons": ["done", "your power-ups: coin, winged shoe (rainbow ring), magnet, shield bubble, slow-motion clock, gift"],
   "p35-ui": ["done", "your UI kit: play, home, settings, sound, back, left / right / jump / pause controls, shop and bag icons"],
+  "p22-buildings": ["done", "your library, clock tower (game paints the time), bakery, fruit stall and two houses"],
   "p36-screens": ["covered", "your treasure chest (rewards) + app-ayah props", "later"],
   "p38-ais-ref": ["done", "your Baby Ais poses (home, mission card)"],
   "p39-ais-ride": ["done", "your Baby Ais riding frames — she races on the road"],
@@ -323,7 +324,7 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
 /** the few images still worth making for Morning Town; everything else waits */
 const NOW = new Set(["p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles", "p38-ais-ref", "p39-ais-ride", "p40-adam-ref", "p41-adam-ride"]);
 for (const p of PACKS) if (!STATUS[p.id]) p.priority = NOW.has(p.id) ? "now" : "later";
-export const BG_DONE: Record<string, string> = { "bg-home": "your masjid street (home screen)", "bg-mission": "your houses street (mission)", "bg-rewards": "your market street (rewards, new adventure)", "far-park": "your park + bridge (adventure picker)" };
+export const BG_DONE: Record<string, string> = { "bg-home": "your meadow with the clock tower and masjid", "bg-splash": "your sunrise road", "bg-mission": "your house with stepping stones", "bg-delivered": "your library reading room", "bg-rewards": "your rainbow meadow", "bg-garage": "your garage with the turntable", "bg-collection": "your helmet and backpack room", "bg-parents": "your stars, moons and clocks pattern", "far-morning": "your Morning Town horizon (behind the road)", "far-park": "your park horizon (ready for Sunny Park)", "far-seaside": "your seaside horizon (ready for Playtime Village)" };
 for (const p of PACKS) { const s = STATUS[p.id]; if (s) { p.status = s[0]; p.note = s[1]; if (s[2]) p.priority = s[2]; } }
 
 export const GROUPS = [...new Set(PACKS.map((p) => p.group))];

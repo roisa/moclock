@@ -1,4 +1,9 @@
 {
+ "bakery": {
+  "frames": 1,
+  "h": 354,
+  "w": 420
+ },
  "balloon-0": {
   "fr": 0.27,
   "frames": 1,
@@ -88,6 +93,16 @@
   "h": 319,
   "w": 360
  },
+ "house": {
+  "frames": 1,
+  "h": 393,
+  "w": 420
+ },
+ "house2": {
+  "frames": 1,
+  "h": 367,
+  "w": 420
+ },
  "icon-calendar": {
   "frames": 1,
   "h": 360,
@@ -97,6 +112,11 @@
   "frames": 1,
   "h": 360,
   "w": 288
+ },
+ "library": {
+  "frames": 1,
+  "h": 410,
+  "w": 420
  },
  "log": {
   "frames": 1,
@@ -173,10 +193,23 @@
   "h": 283,
   "w": 420
  },
+ "shop": {
+  "frames": 1,
+  "h": 329,
+  "w": 420
+ },
  "signpost": {
   "frames": 1,
   "h": 360,
   "w": 323
+ },
+ "tower": {
+  "fr": 0.2,
+  "frames": 1,
+  "fx": 0.5,
+  "fy": 0.452,
+  "h": 420,
+  "w": 360
  },
  "wingshoe": {
   "frames": 1,

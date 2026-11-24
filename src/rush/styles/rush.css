@@ -302,7 +302,7 @@
 .ru-dua-play:active { transform: translateY(2px); box-shadow: 0 1px 0 #2a9147; }
 .ru-bubble { position: absolute; width: max-content; max-width: 60%; background: #fff; border-radius: 16px; padding: 6px 12px; font: 700 14px "Nunito"; color: #23372a; box-shadow: 0 4px 0 rgba(0,0,0,.08); white-space: nowrap; animation: ru-in .4s both; }
 .ru-bubble.mo { left: -6%; top: 18%; animation-delay: .6s; }
-.ru-bubble.lib { right: -4%; top: 6%; animation-delay: 1.4s; background: #fff8e0; }
+.ru-bubble.reply { right: -4%; top: 6%; animation-delay: 1.4s; background: #fff8e0; }
 @media (max-height: 520px) { .ru-dua .ar { font-size: 20px; } .ru-dua .mean { display: none; } }
 .ru-dua-play { animation: ru-pulse 1.6s ease-in-out infinite; }
 .ru-clip { padding: 26px 22px 16px; gap: 8px; }
@@ -466,3 +466,8 @@
   .ru-playbtn { width: 130px; }
   .ru-home-menu .ru-logo .l2 { font-size: 34px; }
 }
+/* painted screen backgrounds */
+.ru-splash, .ru-garage, .ru-collection, .ru-parents, .ru-delivered, .ru-rewards, .ru-unlockw { background-size: cover !important; background-position: center !important; }
+.ru-splash { justify-content: space-between; }
+.ru-splash-hero { margin-bottom: 2vh; }
+.ru-door .lib { width: 100%; aspect-ratio: 420 / 368; }

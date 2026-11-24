@@ -6,9 +6,9 @@ import { TrackBuilder, LANES, SEG, PETS, type Track, type Deco } from "./track";
 import { MORNING, progressAt } from "./clock";
 import { make } from "../../engine/time";
 
-const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "bench", "house", "tree", "busstop", "fountain"];
+const TOWN: Deco[] = ["tree", "tree2", "house", "bush", "flowers", "bench", "house2", "tree", "busstop", "fountain"];
 const PARK: Deco[] = ["tree", "tree2", "bush", "flowers", "tree", "pond", "windmill", "flowerarch", "tent", "bench"];
-const SHOPS: Deco[] = ["shop", "bakery", "fruitcart", "house", "flowers", "tree", "lamp"];
+const SHOPS: Deco[] = ["shop", "bakery", "fruitcart", "house", "house2", "flowers", "tree", "lamp"];
 
 export const MORNING_BALLOONS = [make(8, 10), make(8, 15), make(8, 20), make(8, 30), make(8, 40), make(8, 45), make(8, 50)];
 

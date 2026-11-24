@@ -12,11 +12,7 @@ import { NextPrayerChip, usePrayer, CITIES, PRAYERS, PRAYER_NAMES, defaultCity }
 export function Splash({ onStart }: { onStart: () => void }) {
   const { t } = useRush();
   return (
-    <button className="ru-screen ru-splash" onClick={onStart} aria-label={t("ru.tapToStart")}>
-      <div className="ru-sun" />
-      <div className="ru-road-art" />
-      <img className="ru-splash-l" src={kit("v-house.webp")} alt="" />
-      <img className="ru-splash-r" src={kit("v-school.webp")} alt="" />
+    <button className="ru-screen ru-splash" onClick={onStart} aria-label={t("ru.tapToStart")} style={{ backgroundImage: "url(rush/bg-splash.webp)" }}>
       <Logo />
       <div className="ru-splash-hero"><PairRide /></div>
       <span className="ru-tap">{t("ru.tapToStart")}</span>
@@ -27,7 +23,7 @@ export function Splash({ onStart }: { onStart: () => void }) {
 export function Home({ onGate }: { onGate: () => void }) {
   const { p, t, update } = useRush();
   return (
-    <div className="ru-screen ru-home" style={{ backgroundImage: "url(rush/bg-home.webp)" }}>
+    <div className="ru-screen ru-home" style={{ backgroundImage: "url(rush/bg-home2.webp)" }}>
       <div className="ru-home-top">
         <StarCount n={p.stars} />
         <NextPrayerChip />
@@ -104,7 +100,7 @@ export function Mission({ world }: { world: WorldId }) {
     return () => clearTimeout(h);
   }, [lang]);
   return (
-    <div className="ru-screen ru-mission" style={{ backgroundImage: "url(rush/bg-street.webp)" }}>
+    <div className="ru-screen ru-mission" style={{ backgroundImage: "url(rush/bg-mission.webp)" }}>
       <Top title={t("ru.w." + world)} onBack={() => go("worlds")} />
       <div className="ru-mission-body">
         <div className="ru-stage mission" aria-hidden="true">
@@ -173,7 +169,7 @@ export function Garage() {
   const { p, t, update } = useRush();
   const bikes = UNLOCKS.filter((u) => u.kind === "bike");
   return (
-    <div className="ru-screen ru-garage">
+    <div className="ru-screen ru-garage" style={{ backgroundImage: "url(rush/bg-garage.webp)" }}>
       <Top title={t("ru.garage")} onBack={() => go("")} right={<StarCount n={p.stars} />} />
       <div className="ru-garage-body">
         <Turntable bike={p.equip.bike} />
@@ -190,7 +186,7 @@ export function Collection() {
   const [tab, setTab] = useState<"helmet" | "bag" | "tokens">("bag");
   const list = UNLOCKS.filter((u) => u.kind === tab);
   return (
-    <div className="ru-screen ru-collection">
+    <div className="ru-screen ru-collection" style={{ backgroundImage: "url(rush/bg-collection.webp)" }}>
       <Top title={t("ru.collection")} onBack={() => go("")} right={<StarCount n={p.stars} />} />
       <div className="ru-tabs" role="tablist">
         {(["bag", "helmet", "tokens"] as const).map((k) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? "on" : ""} onClick={() => { audio.sfx("tap"); setTab(k); }}>{t(k === "tokens" ? "ru.tokens" : k === "bag" ? "ru.bags" : "ru.helmets")}</button>)}
@@ -250,7 +246,7 @@ export function Parents() {
     <label className="ru-row"><span>{t(label)}</span><input type="checkbox" checked={p.settings[k]} onChange={(e) => set(k, e.target.checked)} /></label>
   );
   return (
-    <div className="ru-screen ru-parents">
+    <div className="ru-screen ru-parents" style={{ backgroundImage: "url(rush/bg-parents.webp)" }}>
       <Top title={t("ru.parentTitle")} onBack={() => go("")} />
       <div className="ru-parent-grid">
         <section className="ru-panel">

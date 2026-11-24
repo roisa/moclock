@@ -2,7 +2,7 @@
 
 > Generated from `src/rush/assets/packs.ts` by `npm run docs:rush`.
 
-**Only 8 images are left to make — 0 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 35 (✅ / 📚 in the checklist).
+**Only 7 images are left to make — 0 marked ⭐ NOW.** Your approved Baby Mo + bike art and the app-ayah library already cover the other 36 (✅ / 📚 in the checklist).
 Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 grid, on a PNG with a transparent background.
 
 ## How to use
@@ -37,7 +37,7 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 19 | Packages to deliver | ✅ done | your packages: storybook bundle, gift, box, letter, picnic basket, carrot bag |
 | 20 | Helmet colours | later | `p20-helmets.png` |
 | 21 | Bike accessories | 📚 already covered | later polish |
-| 22 | Town buildings | later | `p22-buildings.png` |
+| 22 | Town buildings | ✅ done | your library, clock tower (game paints the time), bakery, fruit stall and two houses |
 | 23 | Trees | 📚 already covered | drawn by the game |
 | 24 | Roadside things | ✅ done | your bench + lamp, bus stop, fruit cart, signpost, flower arch, fountain |
 | 25 | Sky things | 📚 already covered | the game paints sky, sun and clouds |
@@ -166,30 +166,6 @@ PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate ite
 OUTPUT: PNG, transparent background.
 ```
 
-### 22. Town buildings (later)
-
-**Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
-**Save as:** `art-src/rush/p22-buildings.png`
-
-```text
-PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate items for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Town buildings. Pastel storybook buildings with rounded roofs (no letters on any sign).
-2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
-5. CAMERA: Front three-quarter, slightly low angle (seen from the road), all at a consistent storybook scale.
-6. THE 6 CELLS:
-   1. the town library: cream walls, teal roof, big wooden double door, a sign shaped like an open book
-   2. a tall cream clock tower with an orange roof; the clock face is a BLANK white circle with only 12 hour marks and NO hands
-   3. a bakery with a striped orange awning and bread in the window
-   4. a fruit stall with a red-and-white awning
-   5. a small pastel house with a round window
-   6. a different pastel house with a chimney and flower boxes
-7. GRID RULES: exactly one item per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.
-8. LIGHTING: warm morning key light from the upper left, soft cool fill from the right, subtle rim light — identical in every cell.
-9. BACKGROUND: fully transparent (PNG with alpha) — no white, grey or coloured backdrop, no floor, no sky, no drop shadow.
-10. AVOID: extra or missing limbs, extra fingers, two characters inside one cell; changes to Baby Mo's face, hair, skin tone or outfit colours; text, letters, numbers or watermarks (unless asked); realistic photographic humans, scary or sharp elements, violence; busy backgrounds, floor shadows or scenery in transparent sprites; pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike; any background colour.
-OUTPUT: PNG, transparent background.
-```
-
 ### 30. Arches, tunnel and rings (later)
 
 **Attach:** docs/rush/concept-board.png (the Time Rush concept board)  
@@ -287,17 +263,17 @@ The backgrounds are generated one per image (never 6 in a grid) so each keeps fu
 
 | # | Background | Size | File name |
 |---|---|---|---|
-| B1 | Home screen | 1536×1024 | ✅ your masjid street (home screen) |
-| B2 | Splash screen (portrait) | 1024×1536 | `art-src/rush/bg-splash.png` |
-| B3 | Mission screen | 1536×1024 | ✅ your houses street (mission) |
-| B4 | Delivered screen | 1536×1024 | `art-src/rush/bg-delivered.png` |
-| B5 | Rewards screen | 1536×1024 | ✅ your market street (rewards, new adventure) |
-| B6 | Bike garage | 1536×1024 | `art-src/rush/bg-garage.png` |
-| B7 | My collection | 1536×1024 | `art-src/rush/bg-collection.png` |
-| B8 | Parent settings | 1536×1024 | `art-src/rush/bg-parents.png` |
-| B9 | Ride horizon — Morning Town | 1536×1024 | `art-src/rush/far-morning.png` |
-| B10 | Ride horizon — Sunny Park | 1536×1024 | ✅ your park + bridge (adventure picker) |
-| B11 | Ride horizon — Playtime Village (seaside) | 1536×1024 | `art-src/rush/far-seaside.png` |
+| B1 | Home screen | 1536×1024 | ✅ your meadow with the clock tower and masjid |
+| B2 | Splash screen (portrait) | 1024×1536 | ✅ your sunrise road |
+| B3 | Mission screen | 1536×1024 | ✅ your house with stepping stones |
+| B4 | Delivered screen | 1536×1024 | ✅ your library reading room |
+| B5 | Rewards screen | 1536×1024 | ✅ your rainbow meadow |
+| B6 | Bike garage | 1536×1024 | ✅ your garage with the turntable |
+| B7 | My collection | 1536×1024 | ✅ your helmet and backpack room |
+| B8 | Parent settings | 1536×1024 | ✅ your stars, moons and clocks pattern |
+| B9 | Ride horizon — Morning Town | 1536×1024 | ✅ your Morning Town horizon (behind the road) |
+| B10 | Ride horizon — Sunny Park | 1536×1024 | ✅ your park horizon (ready for Sunny Park) |
+| B11 | Ride horizon — Playtime Village (seaside) | 1536×1024 | ✅ your seaside horizon (ready for Playtime Village) |
 | B12 | Ride horizon — Sunset Town | 1536×1024 | `art-src/rush/far-sunset.png` |
 | B13 | Ride horizon — Dreamland (night) | 1536×1024 | `art-src/rush/far-dream.png` |
 
