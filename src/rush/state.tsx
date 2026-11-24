@@ -2,6 +2,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { load, save, hub } from "../platform/storage";
 import { setAudioPrefs } from "../platform/audio";
+import { audio } from "./audio";
 import { t as tr, type Mode } from "../i18n";
 import type { Lang, Msg } from "../i18n/types";
 import type { Stats } from "./core/sim";
@@ -109,6 +110,7 @@ export function RushProvider({ initial, children }: { initial: RushProgress; chi
     document.documentElement.lang = lang;
     hub.setLang(lang);
     setAudioPrefs({ lang, voice: p.settings.voice, sfx: p.settings.sound, music: p.settings.music });
+    audio.setVoice(p.settings.voice);
   }, [lang, p.settings.voice, p.settings.sound, p.settings.music]);
   const t = useCallback((m: Msg | string, mode?: Mode) => tr(m, lang, mode), [lang]);
   const v = useMemo(() => ({ p, update, t, lang }), [p, update, t, lang]);

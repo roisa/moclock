@@ -39,6 +39,8 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
           <img className="lib" src={kit("v-school.webp")} alt="" />
           <Celebrate />
           <img className="books" src={kit("books.webp")} alt="" />
+          <span className="ru-bubble mo">{t("ru.salam")}</span>
+          <span className="ru-bubble lib">{t("ru.salamReply")}</span>
         </div>
         <div className="ru-panel ru-result">
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>

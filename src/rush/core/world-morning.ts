@@ -21,6 +21,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   b.road(K * 14).scenery(K * 14, SHOPS, 0.7);
   b.add("arch-start", 0, 4 * SEG, { wide: true });
   b.add("tower", -1.9, 10 * SEG);
+  b.add("masjid", 2.1, K * 9 * SEG); // the neighbourhood masjid near home
   b.trail("star", 1, K * -8, 5);
   b.road(K * 30, 2).scenery(K * 30, TOWN);
   b.trail("star", 0, K * -26, 6);
@@ -85,6 +86,7 @@ export function buildMorningTown(seed = "morning-town"): Track {
   // library
   b.road(K * 22, 0, -400).scenery(K * 22, SHOPS, 0.6);
   b.add("library", 0, b.z - K * 6 * SEG, { wide: true });
+  b.add("masjid", -2.2, b.z - K * 14 * SEG); // and one in town, near the library
   b.add("arch-start", 0, b.z - K * 6 * SEG - 3 * SEG, { wide: true, n: 1 }); // finish arch
   b.add("ball", 0, b.z - K * 16 * SEG, { move: true, n: 4 });
   b.fill(7);
