@@ -1,7 +1,7 @@
 /**
  * AnimationController + placeholder rider rig.
  *
- * Until the generated riding sheets exist (docs/rush/04 batch 4), Baby Mo is
+ * Until the generated riding sheets exist (docs/rush/04, images 4–12), Baby Mo is
  * the render-1 "from behind" pose (baby-mo-pose-38), cropped at the waist as
  * the art rules ask, sitting on a procedurally drawn rear-view balance bike
  * with drawn legs (scooting / gliding) and arms to the grips. When a sheet for

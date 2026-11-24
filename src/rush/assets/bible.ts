@@ -1,7 +1,7 @@
 /**
  * Shared text blocks for every image-generation prompt (Baby Mo Time Rush).
  * The prompt library (docs/rush/04-PROMPT-LIBRARY.md) is generated from these +
- * catalog.ts, so the prompts and the game's asset manifest never drift apart.
+ * packs.ts, so the prompts and the game's asset manifest never drift apart.
  */
 
 /** Visual style shared by every asset. */
@@ -37,7 +37,7 @@ export const SPRITE_RULES = `SPRITE SHEET RULES: equal-sized cells in a strict g
 export const STILL_RULES = `IMAGE RULES: PNG with a fully transparent background (alpha channel) — no white, grey, coloured or gradient backdrop, no floor, no sky fill; no text, no logos, no watermark, no border; the subject is complete and centred with a small even margin; no ground shadow (the game draws its own soft shadow).`;
 
 export const NEGATIVE_BASE = [
-  "extra or missing limbs, extra fingers, duplicated characters",
+  "extra or missing limbs, extra fingers, two characters inside one cell",
   "changes to Baby Mo's face, hair, skin tone or outfit colours",
   "text, letters, numbers or watermarks (unless asked)",
   "realistic photographic humans, scary or sharp elements, violence",

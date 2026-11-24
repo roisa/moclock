@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { GameSim, type SimEvent, type Stats } from "../core/sim";
 import { morningWorld } from "../core/morning";
 import { Scene } from "../render/scene";
-import { preload, ALL_SPRITES, image } from "../render/sprites";
+import { preload, ALL_SPRITES, image, artAtlas } from "../render/sprites";
 import { BIKES } from "../render/rider";
 import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
@@ -56,6 +56,12 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     ro.observe(c);
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
     preload(ALL_SPRITES).catch(() => {});
+    // generated animation strips (rush-slice.py) replace the placeholder rider clip by clip
+    artAtlas().then((at) => {
+      for (const [id, a] of Object.entries(at)) {
+        if (a.frames > 1) image("art/" + id + ".webp").then((img) => (sc.sheets[id] = { img, w: a.w, h: a.h, frames: a.frames, fps: (a as { fps?: number }).fps ?? 12 })).catch(() => {});
+      }
+    });
     let raf = 0, last = performance.now(), acc = 0, clock = 0;
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
