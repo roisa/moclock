@@ -31,7 +31,7 @@ Every image holds 6 poses, 6 items or the 6 frames of one animation in a 3 × 2 
 | 13 | Looking around and waving to friends | later | `p13-look-wave.png` |
 | 14 | Face portraits for the HUD and speech bubbles | 📚 already covered | face cut from your turnaround |
 | 15 | Delivery celebration | ✅ done | your celebration sheet (Delivered screen) |
-| 16 | Helping the squirrel | later | `p16-help.png` |
+| 16 | Helping the bunny | later | `p16-help.png` |
 | 17 | Bike colours | ✅ done | recoloured from your bike art |
 | 18 | Delivery backpacks | 📚 already covered | the backpack is part of your riding frames |
 | 19 | Packages to deliver | 📚 already covered | app-ayah MoColorAndDraw book stack (storybooks) |
@@ -260,14 +260,14 @@ HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized 
 OUTPUT: PNG, transparent background.
 ```
 
-### 16. Helping the squirrel (later)
+### 16. Helping the bunny (later)
 
 **Attach:** art-src/rush/p01-mo-turnaround.png (approved Baby Mo); babymo-app/www/baby-mo-poses/baby-mo-pose-42.png (render 1, walking, 3/4 side)  
 **Save as:** `art-src/rush/p16-help.png`
 
 ```text
 PNG, transparent background. Create ONE image (1536 × 1024) with 6 separate animation frames for the children's game "Baby Mo Time Rush", arranged in a 3 × 2 grid: 3 columns, 2 rows, six equal 512 × 512 cells, read left to right, top row first.
-1. WHAT: Helping the squirrel. Baby Mo (helmet on) giving an acorn to a small squirrel; leave empty space on the right of each cell (the game places the squirrel).
+1. WHAT: Helping the bunny. Baby Mo (helmet on) giving carrots to a small white bunny; leave empty space on the right of each cell (the game places the bunny from the app-ayah library).
 2. RENDER STYLE: premium 3D animated children's-movie render (original character design, not imitating any studio), soft clay-like matte materials with gentle subsurface glow, rounded friendly shapes, chibi proportions, soft ambient occlusion, warm morning key light from the upper left (about 45°), soft cool fill light from the right, subtle rim light, gentle bloom on bright highlights. Colour palette: fresh green #4CBF5A, orange-peach #FF9E6B, sunny yellow #FFD23F, sky blue #7FCAFF, soft lavender #B8A5FF, warm cream #FFF6E3. Crisp, clean edges, high detail but uncluttered, no outlines, no painterly brush strokes, no film grain.
 3. CHARACTER — BABY MO (must match the attached reference exactly):
 - Cute toddler boy, about 3 years old, chibi proportions: about 3.2 heads tall, the head is large (about 40% of total height), round face, round soft cheeks with a light rosy blush.
@@ -280,10 +280,10 @@ NEVER change his face shape, eye size, hair style, skin tone, clothing colours, 
 HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
 5. CAMERA: Side view facing right, full body.
 6. THE 6 CELLS (animation frames in order; change ONLY what each frame describes):
-   1. standing, holding an acorn
+   1. standing, holding a carrot
    2. crouching down
-   3. holding the acorn out, palm up
-   4. the acorn is gone from his palm, delighted
+   3. holding the carrot out, palm up
+   4. the carrot is gone from his palm, delighted
    5. hands on cheeks, so happy
    6. standing, small wave to the right
 7. GRID RULES: exactly one frame per cell, centred, complete (never cut off by the cell edge), with a small empty margin around it; nothing touches or overlaps a neighbour; the same size and scale in every cell; feet / wheels / bases all on the same ground line, about 92% down each cell; no grid lines, borders, numbers, labels or captions.

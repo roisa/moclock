@@ -78,7 +78,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 |---|---|---|---|---|
 | 14 | Face portraits for the HUD and speech bubbles | 📚 already covered | poses | `mo-face-happy`, `mo-face-blink`, `mo-face-surprised`, `mo-face-excited`, `mo-face-thinking`, `mo-face-proud` |
 | 15 | Delivery celebration | ✅ done | anim | `mo-celebrate` (frames 1–6, 8 fps) |
-| 16 | Helping the squirrel | later | anim | `mo-help` (frames 1–6, 6 fps) |
+| 16 | Helping the bunny | later | anim | `mo-help` (frames 1–6, 6 fps) |
 
 ### Bikes & gear
 
