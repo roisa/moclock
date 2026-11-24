@@ -471,3 +471,11 @@
 .ru-splash { justify-content: space-between; }
 .ru-splash-hero { margin-bottom: 2vh; }
 .ru-door .lib { width: 100%; aspect-ratio: 420 / 368; }
+/* Sunny Park: hosts at the picnic, du'a before eating */
+.ru-mission-books .host { height: 52px; width: auto; }
+.ru-hosts { position: absolute; right: 0; bottom: -4%; display: flex; align-items: flex-end; gap: 0; }
+.ru-hosts img { height: 30vh; filter: drop-shadow(0 8px 8px rgba(0,0,0,.2)); }
+.ru-hosts img + img { margin-left: -3vh; }
+.ru-delivered.w-park .books { right: 44%; }
+.ru-dua-eat { padding: 4px 10px; }
+.ru-dua-eat .ar { font-size: 24px; }

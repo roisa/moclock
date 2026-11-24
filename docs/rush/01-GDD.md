@@ -42,7 +42,7 @@ Riding is automatic. Speed eases up to cruise; boosts add +45% for 2 s.
 | # | World | Time | Delivery | Status |
 |---|---|---|---|---|
 | 1 | **Morning Town** | 8:00 → 9:00 | Books to the library | **Vertical slice** |
-| 2 | Sunny Park | 12:00 | Picnic basket | Coming soon |
+| 2 | **Sunny Park** | 11:00 → 12:00 | Picnic (fruit, lunch box, basket) to Abi and Umi; duckling apple quest; du'a before eating | **Playable** |
 | 3 | Playtime Village | 3:00 | Toy train to the toy shop | Coming soon |
 | 4 | Sunset Town | 6:00 | Dinner to grandma's house | Coming soon |
 | 5 | Dreamland | 8:00 pm | Teddy bear at bedtime | Coming soon |

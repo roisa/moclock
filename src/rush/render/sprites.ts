@@ -18,13 +18,13 @@ export const WORLD_W: Record<string, number> = {
   star: 0.2, coin: 0.18, gift: 0.26, balloon: 0.34, carrot: 0.2, pocketclock: 0.22, ring: 0.5, token: 0.2,
   log: 0.5, boxes: 0.36, blocks: 0.4, ball: 0.36, puddle: 0.5, ramp: 0.5, boost: 0.46,
   pickup: 2.4, tunnel: 0.72, "paper-arch": 2.6, bunny: 0.5, "bunny-home": 0.75, library: 2.2, "arch-start": 2.4,
-  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, house2: 0.85, bench: 0.45, busstop: 0.7, fruitcart: 0.6, flowerarch: 0.7, fountain: 0.6, magnet: 0.26, shield: 0.28, timeclock: 0.28, "carrot-bag": 0.3, signpost: 0.5, tent: 0.75, books: 0.4,
+  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, house2: 0.85, apple: 0.2, picnic: 2.0, bench: 0.45, busstop: 0.7, fruitcart: 0.6, flowerarch: 0.7, fountain: 0.6, magnet: 0.26, shield: 0.28, timeclock: 0.28, "carrot-bag": 0.3, signpost: 0.5, tent: 0.75, books: 0.4,
   "pet-puppy": 0.32, "pet-kitten": 0.3, "pet-duckling": 0.26, "pet-chick": 0.24, "pet-lamb": 0.32, "pet-hamster": 0.26, "pet-cow": 0.36, "pet-turtle-green": 0.3,
 };
 /** kit images used as the sprite until bespoke art exists */
 const KIT: Record<string, string> = {
   star: "kit/star.webp", coin: "kit/coin.webp", gift: "kit/gift-red.webp", carrot: "kit/carrot.webp", ball: "kit/ball-beach-rainbow.webp",
-  bunny: "kit/pet-rabbit.webp", masjid: "kit/v-masjid.webp", "bunny-home": "kit/v-garden.webp", signpost: "kit/signpost.webp", tent: "kit/tent.webp", books: "kit/books.webp",
+  bunny: "kit/pet-rabbit.webp", apple: "kit/apple.webp", masjid: "kit/v-masjid.webp", "bunny-home": "kit/v-garden.webp", signpost: "kit/signpost.webp", tent: "kit/tent.webp", books: "kit/books.webp",
   "pet-puppy": "kit/pet-puppy.webp", "pet-kitten": "kit/pet-kitten.webp", "pet-duckling": "kit/pet-duckling.webp", "pet-chick": "kit/pet-chick.webp",
   "pet-lamb": "kit/pet-lamb.webp", "pet-hamster": "kit/pet-hamster.webp", "pet-cow": "kit/pet-cow.webp", "pet-turtle-green": "kit/pet-turtle-green.webp", house: "kit/v-house.webp", shop: "kit/v-market.webp",
   flowers: "kit/v-garden.webp", sign: "kit/v-sign.webp", library: "kit/v-school.webp", pond: "kit/v-pond.webp", token: "kit/p-badge.webp",
@@ -204,6 +204,17 @@ const P: Record<string, Painter> = {
     g.fillStyle = "#fff6e3"; rr(g, 230, 40, 180, 110, 26); g.fill(); g.strokeStyle = "#ffd23f"; g.lineWidth = 6; g.stroke();
     // little book icon on the sign
     g.fillStyle = "#ff9e6b"; rr(g, 268, 66, 50, 62, 6); g.fill(); g.fillStyle = "#7fcaff"; rr(g, 322, 66, 50, 62, 6); g.fill(); g.fillStyle = "#fff"; g.fillRect(316, 66, 8, 62);
+  } },
+  // Sunny Park picnic spot: a checked blanket under a big shady tree
+  picnic: { w: 700, h: 460, draw(g) {
+    g.fillStyle = "#7a4a26"; rr(g, 520, 120, 44, 250, 18); g.fill();
+    blob(g, 545, 110, 120, "#9be585", "#3f9a43"); blob(g, 450, 150, 80, "#8fe07a", "#3a9140"); blob(g, 640, 150, 70, "#a6eb90", "#45a249");
+    g.save(); g.beginPath(); g.ellipse(300, 395, 270, 62, 0, 0, Math.PI * 2); g.clip();
+    for (let y = 330; y < 460; y += 24) for (let x = 20; x < 580; x += 24) { g.fillStyle = ((x + y) / 24) % 2 < 1 ? "#ff6b6b" : "#fff6e3"; g.fillRect(x, y, 24, 24); }
+    g.restore();
+    g.strokeStyle = "rgba(200,60,60,.6)"; g.lineWidth = 4; g.beginPath(); g.ellipse(300, 395, 270, 62, 0, 0, Math.PI * 2); g.stroke();
+    blob(g, 150, 380, 22, "#ff7a7a", "#d94848"); blob(g, 185, 392, 18, "#ffe06a", "#e2b21f"); // apples / oranges on the blanket
+    g.fillStyle = "#fff"; rr(g, 380, 368, 70, 30, 12); g.fill(); g.fillStyle = "#7fcaff"; rr(g, 390, 362, 50, 14, 6); g.fill(); // plates
   } },
   books: { w: 200, h: 180, draw(g) {
     const bk = (y: number, w: number, c: string, d: string) => { g.fillStyle = lin(g, y, y + 44, c, d); rr(g, 100 - w / 2, y, w, 44, 8); g.fill(); g.fillStyle = "#fffaf0"; rr(g, 100 - w / 2 + 8, y + 8, w - 16, 10, 4); g.fill(); };

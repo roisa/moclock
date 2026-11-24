@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { buildMorningTown, buildTunnel, libraryZ, MORNING_BALLOONS } from "./world-morning";
-import { morningWorld } from "./morning";
+import { morningWorld, parkWorld } from "./morning";
+import { buildSunnyPark, PARK_BALLOONS, NOON } from "./world-park";
 import { GameSim, praiseStars, type SimEvent } from "./sim";
 import { storyTime, MORNING, progressAt } from "./clock";
 import { CRUISE } from "./player";
@@ -28,7 +29,7 @@ function smartBot(takeShortcut: boolean) {
     const haz = ahead.find((i) => ["log", "boxes", "blocks"].includes(i.kind) && Math.abs(i.x - r.x) < 0.3 && i.z < r.z + SEG * 2.2);
     if (haz && !r.air) s.input.jump = true;
     const tun = ahead.find((i) => i.kind === "tunnel");
-    const want = tun ? (takeShortcut ? 2 : 0) : (() => {
+    const want = tun ? (takeShortcut ? LANES.indexOf(tun.x as (typeof LANES)[number]) : (LANES.indexOf(tun.x as (typeof LANES)[number]) + 2) % 3) : (() => {
       const c = ahead.find((i) => ["star", "coin", "balloon", "carrot", "gift", "ramp", "ring", "pocketclock"].includes(i.kind));
       return c ? LANES.indexOf(c.x as (typeof LANES)[number]) : -1;
     })();
@@ -217,5 +218,36 @@ describe("GameSim", () => {
     expect(sim.r.speed).toBeLessThan(2300 * 0.7);
     expect(w.main.items.some((i) => i.kind === "shield")).toBe(true);
     expect(w.main.items.some((i) => i.kind === "timeclock")).toBe(true);
+  });
+});
+
+describe("Sunny Park", () => {
+  it("is well formed: 3 pickups, a shortcut, a picnic spot, balloons at their times", () => {
+    const t = buildSunnyPark();
+    expect(t.items.filter((i) => i.kind === "pickup")).toHaveLength(3);
+    expect(t.shortcut!.to).toBeGreaterThan(t.shortcut!.from);
+    const end = libraryZ(t);
+    const bs = t.items.filter((i) => i.kind === "balloon");
+    expect(bs.map((b) => b.n)).toEqual(PARK_BALLOONS);
+    for (const b of bs) expect(storyTime(NOON, b.z / end)).toBe(b.n);
+    const s = end / CRUISE;
+    expect(s).toBeGreaterThan(80);
+    expect(s).toBeLessThan(150);
+  });
+  it("an idle child still delivers the picnic at 12:00 and helps the duckling", () => {
+    const sim = new GameSim(parkWorld());
+    ride(sim);
+    expect(sim.done).toBe(true);
+    expect(sim.stats.packages).toBe(3);
+    expect(sim.stats.time % 720).toBe(make(12, 0));
+    expect(sim.stats.balloons.length).toBe(PARK_BALLOONS.length);
+    expect(sim.stats.token).toBe(true);
+  });
+  it("a skilled ride through the shortcut works too", () => {
+    const sim = new GameSim(parkWorld());
+    const ev = ride(sim, smartBot(true));
+    expect(ev.some((e) => e.type === "tunnel-out")).toBe(true);
+    expect(sim.done).toBe(true);
+    expect(praiseStars(sim.stats)).toBeGreaterThanOrEqual(2);
   });
 });

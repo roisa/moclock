@@ -5,7 +5,9 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GameSim, type SimEvent, type Stats } from "../core/sim";
-import { morningWorld } from "../core/morning";
+import { morningWorld, BUILD } from "../core/morning";
+import { look } from "../worlds";
+import { wkey } from "../i18n";
 import { Scene } from "../render/scene";
 import { preload, ALL_SPRITES, image, artAtlas, sprite } from "../render/sprites";
 import { BIKES, CLIP_FRAMES, type ClipName } from "../render/rider";
@@ -24,7 +26,8 @@ const SIM_SPEED = Math.min(8, Math.max(1, Number(new URLSearchParams(location.se
 
 export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldId; onDone: (s: Stats) => void; onQuit: () => void; onRestart: () => void }) {
   const { p, t, lang } = useRush();
-  const sim = useMemo(() => new GameSim(morningWorld()), []);
+  const L = look(world);
+  const sim = useMemo(() => new GameSim((BUILD[world] ?? morningWorld)()), [world]);
   // automated QA only (?qa): lets the playthrough script jump along the road
   if (/[?&]qa\b/.test(location.search)) (window as unknown as { __rush: GameSim }).__rush = sim;
   const cv = useRef<HTMLCanvasElement>(null);
@@ -53,7 +56,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
   const lefty = p.settings.lefty;
   void world;
 
-  const say = (m: Msg | string, opts: { gap?: number; force?: boolean } = {}) => {
+  const say = (m0: Msg | string, opts: { gap?: number; force?: boolean } = {}) => {
+    const m = typeof m0 === "string" ? wkey(m0, world) : m0; // the world's own line when it has one
     audio.say(m, lang, opts);
     setLine(t(m));
     window.clearTimeout((say as unknown as { h: number }).h);
@@ -75,7 +79,10 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     ro.observe(c);
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
     image("mo/ride.webp").then((i) => (sc.riderStrip = i)).catch(() => {}); // the approved riding sheet
-    image("far-morning.webp").then((i) => (sc.far = i)).catch(() => {});
+    image(L.far).then((i) => (sc.far = i)).catch(() => {});
+    sc.alias = L.alias;
+    sc.sky = L.sky;
+    (L.hosts ?? []).forEach((src, k) => { const im = new Image(); im.src = src; sc.hosts[k] = im; });
     for (const c of Object.keys(CLIP_FRAMES) as ClipName[]) image(`mo/${c}.webp`).then((i) => (sc.clips[c] = i)).catch(() => {});
     for (const id of ["ais", "adam"] as const) image(`mo/${id}-ride.webp`).then((i) => (sc.rivalStrips[id] = i)).catch(() => {});
     preload(ALL_SPRITES).catch(() => {});
@@ -229,8 +236,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           <Digital t={hud.time} size="s" />
         </div>
         <div className="ru-hud-pk" aria-label={t({ k: "ru.packages", p: { a: hud.pk, b: 3 } })}>
-          {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src="rush/art/books.webp" alt="" />)}
-          {sim.friendMet && !sim.stats.token && <span className="carrots"><img src={kit("carrot.webp")} alt="" />{hud.carrots}/3</span>}
+          {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src={L.bundles[i]} alt="" />)}
+          {sim.friendMet && !sim.stats.token && <span className="carrots"><img src={L.friend.item} alt="" />{hud.carrots}/3</span>}
         </div>
         <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><img src="rush/ui/ctl-pause.webp" alt="" draggable={false} /></button>
       </div>

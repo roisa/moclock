@@ -127,6 +127,22 @@ export const rushEn = {
   "ru.learnText": "Reading o'clock, quarter past, half past and quarter to on real clock faces; morning routines; time passing during a journey.",
   "ru.rides": "Deliveries",
   "ru.rotate": "Turn your device sideways for a bigger road",
+  "ru.m.park": "Abi and Umi are waiting at the picnic spot. Lunch is at {t}! Collect the fruit, the lunch box and the picnic basket and bring them to the park.",
+  "ru.m.parkSay": "Assalamu'alaikum! It's eleven o'clock. Abi and Umi are waiting at the park for a picnic lunch at twelve. Let's collect the food and bring it to them!",
+  "ru.m.to@park": "Lunch time",
+  "ru.say.pickup1@park": "Got the fruit basket!",
+  "ru.say.pickup2@park": "The lunch box! One more!",
+  "ru.say.pickup3@park": "The picnic basket! To the picnic!",
+  "ru.say.friend@park": "A duckling! She dropped her apples. Let's collect them!",
+  "ru.say.friendThanks@park": "Jazakallahu khairan, Baby Mo! Quack quack! Here is a special token!",
+  "ru.say.friendThanksSmall@park": "Jazakallahu khairan, Baby Mo! Quack!",
+  "ru.say.tunnelHint@park": "Psst! A secret tunnel on the left!",
+  "ru.say.arrive@park": "We made it at twelve o'clock, just in time for lunch!",
+  "ru.deliveredMsg@park": "Alhamdulillah! Mo kept his amanah: lunch is ready for the whole family.",
+  "ru.salamReply@park": "Wa'alaikumussalam, Mo!",
+  "ru.doa.eat": "Du'a before eating",
+  "ru.doa.eatMeaning": "In the name of Allah.",
+  "ru.token.duck": "Duckling token",
   "ru.pray.title": "It's time for {name} prayer",
   "ru.pray.text": "Let's stop riding and pray first. Your road will wait for you!",
   "ru.pray.done": "I have prayed",
@@ -278,6 +294,22 @@ export const rushId: Record<keyof typeof rushEn, string> = {
   "ru.learnText": "Membaca jam tepat, lewat seperempat, setengah, dan kurang seperempat pada jam sungguhan; rutinitas pagi; waktu yang berjalan selama perjalanan.",
   "ru.rides": "Antaran",
   "ru.rotate": "Miringkan perangkat agar jalannya lebih besar",
+  "ru.m.park": "Abi dan Umi menunggu di tempat piknik. Makan siang jam {t}! Kumpulkan buah, kotak bekal, dan keranjang piknik, lalu bawa ke taman.",
+  "ru.m.parkSay": "Assalamu'alaikum! Sekarang jam sebelas. Abi dan Umi menunggu di taman untuk makan siang jam dua belas. Ayo kumpulkan makanannya dan bawa ke sana!",
+  "ru.m.to@park": "Makan siang",
+  "ru.say.pickup1@park": "Dapat keranjang buah!",
+  "ru.say.pickup2@park": "Kotak bekal! Satu lagi!",
+  "ru.say.pickup3@park": "Keranjang piknik! Ayo ke tempat piknik!",
+  "ru.say.friend@park": "Ada anak bebek! Apelnya jatuh. Ayo kita kumpulkan!",
+  "ru.say.friendThanks@park": "Jazakallahu khairan, Baby Mo! Kwek kwek! Ini token istimewa untukmu!",
+  "ru.say.friendThanksSmall@park": "Jazakallahu khairan, Baby Mo! Kwek!",
+  "ru.say.tunnelHint@park": "Psst! Ada terowongan rahasia di kiri!",
+  "ru.say.arrive@park": "Kita sampai jam dua belas, pas waktu makan siang!",
+  "ru.deliveredMsg@park": "Alhamdulillah! Mo menjaga amanah: makan siang siap untuk seluruh keluarga.",
+  "ru.salamReply@park": "Wa'alaikumussalam, Mo!",
+  "ru.doa.eat": "Doa sebelum makan",
+  "ru.doa.eatMeaning": "Dengan nama Allah.",
+  "ru.token.duck": "Token bebek",
   "ru.pray.title": "Waktunya sholat {name}",
   "ru.pray.text": "Ayo berhenti bersepeda dan sholat dulu. Jalannya menunggumu!",
   "ru.pray.done": "Aku sudah sholat",
@@ -302,6 +334,12 @@ export const rushId: Record<keyof typeof rushEn, string> = {
   "ru.toLearn": "⏰ Petualangan Waktu",
   "ru.toRacers": "🏎️ Balap Waktu",
 };
+
+/** a world's own version of a line ("ru.say.arrive@park") when there is one */
+export function wkey(k: string, world: string): string {
+  const o = `${k}@${world}`;
+  return o in (DICTS.en as Record<string, string>) ? o : k;
+}
 
 let done = false;
 export function registerRushDicts() {

@@ -69,6 +69,14 @@ async function ride(lang) {
   await p.goto(BASE + "?noprayer#/worlds");
   await p.waitForSelector(".ru-world");
   check(!!(await p.$(".ru-world .praise")), "result saved across reload");
+  // Sunny Park opens after Morning Town and can be delivered too
+  await p.click(".ru-world >> nth=1");
+  await p.waitForSelector(".ru-clip");
+  const pm = await p.textContent(".ru-clip");
+  check(lang === "en" ? pm.includes("picnic") : pm.includes("piknik"), "Sunny Park mission opens");
+  await p.goto(BASE + "?simspeed=8&nodua&noprayer#/ride/park");
+  await p.waitForSelector(".ru-delivered", { timeout: 60000 });
+  check((await p.textContent(".ru-result")).includes("12:00"), "Sunny Park picnic delivered at 12:00");
   check(errs.length === 0, "no page errors " + errs.join(" | "));
   await ctx.close();
 }
