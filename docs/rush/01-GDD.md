@@ -95,3 +95,6 @@ Baby Ais (pink bike, same height as Mo) and Kak Adam (blue track suit, a little 
 | Star magnet | stars and coins within reach fly to Mo | 7 s |
 | Shield bubble | obstacles bounce off ("Boing!"), no wobble or splash | 9 s (blinks in the last second) |
 | Slow-motion clock | the ride slows to 60% so collecting is easy; Mo says the time; +3 stars | 5 s (golden ring sweeps around the screen) |
+
+## 17. Tilt steering
+"Tilt to steer" on the mission card (asks for motion access on iPhone, inside the tap). The phone's roll — `gamma` in portrait, `beta` in landscape (sign by screen angle) — is calibrated to the child's holding position at the start (and again if the phone is turned). Roll beyond ±11° moves Mo into the left / right lane, with 3° hysteresis so a wobbly hand doesn't flicker; the arrow buttons keep working. A small badge shows the tilt is live; without a sensor the game quietly stays on buttons.

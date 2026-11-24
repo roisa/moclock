@@ -7,6 +7,7 @@ import { audio } from "../audio";
 import { go } from "../router";
 import { randomRng, int } from "../../engine/rng";
 import { LANGS } from "../../i18n";
+import { askTilt } from "../tiltSensor";
 import { BUILD } from "../core/morning";
 import { look } from "../worlds";
 import { wkey } from "../i18n";
@@ -97,7 +98,8 @@ export function Worlds() {
 }
 
 export function Mission({ world }: { world: WorldId }) {
-  const { p, t, lang } = useRush();
+  const { p, t, lang, update } = useRush();
+  const [tiltMsg, setTiltMsg] = useState<string | null>(null);
   useEffect(() => {
     const h = setTimeout(() => audio.say(`ru.m.${world}Say`, lang, { force: true }), 400);
     return () => clearTimeout(h);
@@ -131,6 +133,20 @@ export function Mission({ world }: { world: WorldId }) {
           <div className="ru-mission-row">
             <div className="ru-mission-books">{L.bundles.map((b, i) => <img key={i} className="bk" src={b} alt="" />)}{L.hosts ? L.hosts.map((h) => <img key={h} className="host" src={h} alt="" />) : <img src={kit("v-school.webp")} alt="" />}</div>
             <div className="ru-friends" title={t("ru.friends")}><img src="rush/mo/ais-front.webp" alt="Baby Ais" /><img src="rush/mo/adam-front.webp" alt="Kak Adam" /></div>
+          </div>
+          <div className="ru-tiltrow">
+            <button className={"ru-tilt" + (p.settings.tilt ? " on" : "")} aria-pressed={p.settings.tilt}
+              onClick={async () => {
+                audio.sfx("tap");
+                if (p.settings.tilt) { update((x) => ({ ...x, settings: { ...x.settings, tilt: false } })); return; }
+                const ok = await askTilt();
+                if (ok === "granted") update((x) => ({ ...x, settings: { ...x.settings, tilt: true } }));
+                else setTiltMsg(t(ok === "none" ? "ru.tiltNone" : "ru.tiltDenied"));
+              }}>
+              <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="10" y="4" width="12" height="22" rx="3" transform="rotate(-18 16 16)" fill="currentColor" opacity=".9" /><path d="M4 22c2 4 6 6 10 6M28 10c-2-4-6-6-10-6" stroke="currentColor" strokeWidth="2.4" fill="none" strokeLinecap="round" /></svg>
+              {t("ru.tilt")}: <b>{t(p.settings.tilt ? "ru.tiltOn" : "ru.tiltOff")}</b>
+            </button>
+            {tiltMsg && <small className="ru-err">{tiltMsg}</small>}
           </div>
           <Pill big onClick={() => go("ride/" + world)}>{t("ru.letsGo")}</Pill>
         </div>

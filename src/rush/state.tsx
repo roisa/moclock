@@ -41,13 +41,15 @@ export interface RushProgress {
   onboarded: boolean;
   settings: { lang: Lang; sound: boolean; voice: boolean; music: boolean; reduced: boolean; lefty: boolean; unlockAll: boolean;
     /** prayer-time pause (babymo-app times); city from the parent, or the device time zone */
-    prayer: boolean; city: string | null; loc: { lat: number; lng: number } | null };
+    prayer: boolean; city: string | null; loc: { lat: number; lng: number } | null;
+    /** steer by tilting the phone */
+    tilt: boolean };
 }
 const KEY = "rush";
 export function defaults(lang: Lang): RushProgress {
   const reduced = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
   return { v: 1, stars: 0, worlds: {}, tokens: [], seen: [], equip: { bike: "green", helmet: "white", bag: "yellow" }, seenUnlocks: [], onboarded: false,
-    settings: { lang, sound: true, voice: true, music: false, reduced, lefty: false, unlockAll: false, prayer: true, city: null, loc: null } };
+    settings: { lang, sound: true, voice: true, music: false, reduced, lefty: false, unlockAll: false, prayer: true, city: null, loc: null, tilt: false } };
 }
 function migrate(raw: unknown, lang: Lang): RushProgress {
   const d = defaults(lang);
