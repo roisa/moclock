@@ -479,3 +479,18 @@
 .ru-delivered.w-park .books { right: 44%; }
 .ru-dua-eat { padding: 4px 10px; }
 .ru-dua-eat .ar { font-size: 24px; }
+/* Delivered: calm celebration + phone layout (Mo fits under the ribbon, bubbles beside his head) */
+.ru-celebrate.hold { animation: ru-breathe 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.ru-delivered .ru-ribbon { position: relative; z-index: 3; }
+@media (orientation: portrait) {
+  .ru-delivered-body { flex-direction: column; flex-wrap: nowrap; justify-content: flex-start; gap: 1vh; }
+  .ru-door { width: 100%; height: 25vh; flex: none; margin-top: 1vh; }
+  .ru-door .lib { display: none; }
+  .ru-celebrate { left: 4%; bottom: 0; height: 24vh; }
+  .ru-door .books { right: 22%; bottom: 0; width: 16%; }
+  .ru-hosts { right: 2%; bottom: 0; } .ru-hosts img { height: 23vh; }
+  .ru-bubble { font-size: 13px; padding: 5px 10px; }
+  .ru-bubble.mo { left: 34%; top: 6%; }
+  .ru-bubble.reply { right: 4%; top: 30%; }
+  .ru-delivered .ru-result { width: 100%; max-width: 460px; }
+}
