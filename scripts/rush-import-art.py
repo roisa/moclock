@@ -367,11 +367,21 @@ def horizon(src, out):
         # no real transparency (white / fake checker sky): clear everything above the scenery in each column
         rgb = a[..., :3]
         mx, mn = rgb.max(axis=2), rgb.min(axis=2)
-        colourful = ((mx - mn) > 38) | (mx < 205)
+        colourful = ((mx - mn) > 38) | (mx < 150)  # grey checker squares are not scenery
         top = np.argmax(colourful, axis=0)
         rows = np.arange(a.shape[0])[:, None]
         alpha = np.clip((rows - top[None, :] + 2) * 85, 0, 255)  # 3-px soft edge
         a[..., 3] = np.minimum(a[..., 3], alpha)
+        # white sky trapped under palm fronds etc.: clear near-white pixels connected to the open sky
+        from PIL import ImageChops
+        white = Image.fromarray((((mn > 228) & ((mx - mn) < 14)) * 255).astype(np.uint8))
+        cur = Image.fromarray(((a[..., 3] == 0) * 255).astype(np.uint8))
+        for _ in range(400):
+            nxt = ImageChops.lighter(cur, ImageChops.darker(cur.filter(ImageFilter.MaxFilter(5)), white))
+            if ImageChops.difference(nxt, cur).getbbox() is None: break
+            cur = nxt
+        sky = np.array(cur.filter(ImageFilter.MaxFilter(3))) > 0
+        a[..., 3] = np.where(sky, 0, a[..., 3])
     else:
         a[a[..., 3] < 140, 3] = 0  # drop the yellow glow fringe around the hills
     im = Image.fromarray(a.astype(np.uint8)).crop(Image.fromarray(a[..., 3].astype(np.uint8)).getbbox())
@@ -381,3 +391,5 @@ def horizon(src, out):
 horizon("far-morning.png", "far-morning")
 horizon("far-park.png", "far-park")
 horizon("far-seaside.png", "far-seaside")
+horizon("far-sunset.png", "far-sunset")
+horizon("far-dream.png", "far-dream")

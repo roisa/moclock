@@ -274,8 +274,8 @@ The backgrounds are generated one per image (never 6 in a grid) so each keeps fu
 | B9 | Ride horizon — Morning Town | 1536×1024 | ✅ your Morning Town horizon (behind the road) |
 | B10 | Ride horizon — Sunny Park | 1536×1024 | ✅ your park horizon (ready for Sunny Park) |
 | B11 | Ride horizon — Playtime Village (seaside) | 1536×1024 | ✅ your seaside horizon (ready for Playtime Village) |
-| B12 | Ride horizon — Sunset Town | 1536×1024 | `art-src/rush/far-sunset.png` |
-| B13 | Ride horizon — Dreamland (night) | 1536×1024 | `art-src/rush/far-dream.png` |
+| B12 | Ride horizon — Sunset Town | 1536×1024 | ✅ your autumn town with the masjid (ready for Sunset Town) |
+| B13 | Ride horizon — Dreamland (night) | 1536×1024 | ✅ your night village with the lit masjid (ready for Dreamland) |
 
 ### B1. Home screen
 
