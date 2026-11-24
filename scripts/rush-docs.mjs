@@ -12,7 +12,6 @@ const B = await vite.ssrLoadModule("/src/rush/assets/bible.ts");
 await vite.close();
 
 const refName = (r) => (B.EXISTING_REFS[r] ? B.EXISTING_REFS[r] : byId(r) ? `${r}.png — your approved "${byId(r).title}" output` : r);
-const transparent = (a) => a.transparent ?? (a.kind !== "scene" || a.cat !== "ui");
 
 /* ---------------- 03 Asset Bible */
 let bible = `# Baby Mo Time Rush — Visual Asset Bible
@@ -29,17 +28,18 @@ ${B.MO_BIBLE}
 
 **Helmet.** ${B.HELMET}
 
-**Render 1 first** (owner rule): the existing real-render series \`babymo-app/www/baby-mo-poses/\` (800×800 PNG) is the identity reference for every Baby Mo prompt. Until the new riding sheets exist, the game uses render-1 \`baby-mo-pose-38.png\` (from behind), cropped to head and torso, on a procedurally drawn balance bike. Render 2 is not used. The old "Kata Baik" poses are not used.
+**Render 1 first** (owner rule): the existing real-render series \`babymo-app/www/baby-mo-poses/\` (800×800 PNG) is the identity reference for every Baby Mo prompt. Until the new riding sheets exist, the game uses render-1 \`baby-mo-pose-38.png\` (from behind), cropped to head and torso, on a procedurally drawn push balance bike. Render 2 is not used. The old "Kata Baik" poses are not used.
 
-## 3. Balance bike
+## 3. Push balance bike
 ${B.BIKE_BIBLE}
 
-It is a balance bike, so the brief's "pedalling" is shown as **scooting strides** (\`mo-push\`) and **gliding** (\`mo-ride-loop\`).
+It is a **push balance bike** (push bike / run bike) with **no pedals, no cranks and no chain**, so the brief's "pedalling" is shown as **push-off strides** with the feet on the ground (\`mo-push\`) and **gliding** with the feet on the footrests (\`mo-ride-loop\`).
 
 ## 4. Camera & sprite rules
 - **Gameplay:** ${B.GAME_CAMERA}
 - ${B.SPRITE_RULES}
 - ${B.STILL_RULES}
+- **Every asset is a PNG with a transparent background** — including key art, cards and menu art, which are drawn as isolated vignettes / floating dioramas. Sky and road are painted by the game, so they have no prompts.
 - **Never paint the time.** Clock faces (balloons, tower, pocket clock) are generated BLANK; the game draws the hands so every clock is correct.
 - **Scale:** Baby Mo on the bike fills ~70% of the cell height in every gameplay sheet; match \`mo-ride-34\`.
 - **Anchors:** the rear-wheel contact point sits at 50% x / 92% y of each cell; the backpack anchor is the top centre of the bag.
@@ -66,8 +66,7 @@ writeFileSync("docs/rush/03-ASSET-BIBLE.md", bible);
 /* ---------------- 04 Prompt library */
 const promptFor = (a) => {
   const L = [];
-  const tr = transparent(a) && a.kind !== "scene" ? true : a.transparent ?? false;
-  L.push(`Create ${a.kind === "sheet" ? `${a.frames === 8 ? "an" : "a"} ${a.frames}-frame sprite sheet` : a.kind === "strip" ? "a seamless horizontal parallax layer" : a.kind === "scene" && !tr ? "a full illustration" : "a single game asset"} for the children's game "Baby Mo Time Rush".`);
+  L.push(`PNG, transparent background. Create ${a.kind === "sheet" ? `${a.frames === 8 ? "an" : "a"} ${a.frames}-frame sprite sheet` : a.kind === "strip" ? "a seamless horizontal parallax layer" : a.kind === "scene" ? "an image" : "a single game asset"} for the children's game "Baby Mo Time Rush".`);
   L.push(`1. ASSET: ${a.title} (id ${a.id}).`);
   L.push(`2. PURPOSE IN GAME: ${a.game}`);
   L.push(`3. ${B.STYLE}`);
@@ -78,7 +77,7 @@ const promptFor = (a) => {
   L.push(`8. POSE / ACTION: ${a.pose ?? (a.kind === "sheet" ? "see frame list" : "as described in SUBJECT")}.`);
   L.push(`9. EXPRESSION: ${a.expression ?? (a.mo ? "happy, curious, gentle smile" : "friendly")}.`);
   L.push(`10. LIGHTING: ${a.lighting ?? "warm morning key light from the upper left, soft cool fill from the right, subtle rim light."}`);
-  L.push(`11. BACKGROUND: ${a.transparent === false ? "full background as described (not transparent)." : "fully transparent background (PNG with alpha), nothing else in the image."}`);
+  L.push(`11. BACKGROUND: PNG with a fully transparent background (alpha channel) — no white, grey or coloured backdrop, no floor, no sky fill; nothing in the image except the subject.`);
   L.push(`12. CANVAS: ${a.size[0]}×${a.size[1]} px${a.grid ? `, ${a.grid[0]} columns × ${a.grid[1]} rows of equal cells (${Math.round(a.size[0] / a.grid[0])}×${Math.round(a.size[1] / a.grid[1])} px each), read left-to-right, top-to-bottom` : ""}.`);
   if (a.kind === "sheet") {
     L.push(`13. ${B.SPRITE_RULES}`);
@@ -88,7 +87,8 @@ const promptFor = (a) => {
     L.push(`14. FRAMES: single image${a.kind === "scene" && a.subject.includes("grid") ? " (items arranged in the stated grid, evenly spaced, not touching, so they can be cut apart)" : ""}.`);
   }
   if (a.anchor) L.push(`    ANCHOR: ${a.anchor}.`);
-  L.push(`15. AVOID: ${[...B.NEGATIVE_BASE, ...(a.mustNot ?? [])].join("; ")}.`);
+  L.push(`15. AVOID: ${[...B.NEGATIVE_BASE, ...(a.mustNot ?? [])].join("; ")}; any background colour or backdrop.`);
+  L.push(`OUTPUT: PNG, transparent background.`);
   return L.join("\n");
 };
 
@@ -97,6 +97,7 @@ let lib = `# Baby Mo Time Rush — ChatGPT Image Prompt Library
 > Generated from \`src/rush/assets/catalog.ts\`. ${CATALOG.length} prompts in ${Object.keys(BATCHES).length} batches. **Generate in order**: each batch uses approved outputs of earlier batches as references.
 
 ## How to use
+0. **Every prompt asks for a PNG with a transparent background** (first and last line of each prompt). If ChatGPT returns a white or grey backdrop, reply: "Same image, PNG with a fully transparent background." (\`rush-slice.py\` can also key out a plain white backdrop.)
 1. Start a fresh ChatGPT image chat per batch. Attach the listed reference images **before** pasting the prompt.
 2. Approve one output before moving on; regenerate rather than "fix" if Mo's face/outfit drifts.
 3. Save each approved image as \`art-src/rush/<id>.png\` and run \`scripts/rush-slice.py\` (see the Asset Bible §6).

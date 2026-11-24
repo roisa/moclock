@@ -19,23 +19,24 @@ NEVER change his face shape, eye size, hair style, skin tone, clothing colours, 
 
 **Helmet.** HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.
 
-**Render 1 first** (owner rule): the existing real-render series `babymo-app/www/baby-mo-poses/` (800×800 PNG) is the identity reference for every Baby Mo prompt. Until the new riding sheets exist, the game uses render-1 `baby-mo-pose-38.png` (from behind), cropped to head and torso, on a procedurally drawn balance bike. Render 2 is not used. The old "Kata Baik" poses are not used.
+**Render 1 first** (owner rule): the existing real-render series `babymo-app/www/baby-mo-poses/` (800×800 PNG) is the identity reference for every Baby Mo prompt. Until the new riding sheets exist, the game uses render-1 `baby-mo-pose-38.png` (from behind), cropped to head and torso, on a procedurally drawn push balance bike. Render 2 is not used. The old "Kata Baik" poses are not used.
 
-## 3. Balance bike
-BALANCE BIKE (must match the attached bike reference exactly):
-- A toddler balance bike with NO pedals and NO chain: the child pushes along the ground with his feet and glides; small grey footrests on each side of the lower frame for gliding.
+## 3. Push balance bike
+PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
 - Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
 - Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
 - Seat: a small padded saddle in orange-peach (#FF9E6B), low enough that the toddler's feet touch the ground flat.
 - Proportions: the bike is about as tall as Baby Mo's hip; wheelbase about 1.3 times Baby Mo's height.
 
-It is a balance bike, so the brief's "pedalling" is shown as **scooting strides** (`mo-push`) and **gliding** (`mo-ride-loop`).
+It is a **push balance bike** (push bike / run bike) with **no pedals, no cranks and no chain**, so the brief's "pedalling" is shown as **push-off strides** with the feet on the ground (`mo-push`) and **gliding** with the feet on the footrests (`mo-ride-loop`).
 
 ## 4. Camera & sprite rules
 - **Gameplay:** CAMERA: gameplay chase view — seen from directly behind and slightly above, camera about 1.5 m behind and 1.2 m up, looking down about 15°; Baby Mo and the bike face AWAY from the viewer, riding into the image; centred horizontally; a slight three-quarter hint is allowed only when the frame describes turning.
 - SPRITE SHEET RULES: equal-sized cells in a strict grid; fully transparent background (PNG with alpha) — no floor, no ground plane, no drop shadow, no scenery; no cell borders, no captions, no frame numbers, no watermark; exactly ONE complete character per cell, never cropped by the cell edge, centred the same way in every cell with the wheels' ground contact on the same baseline (about 92% down each cell); identical scale, lighting, colours and outfit in every cell; poses change ONLY as described per frame; the last frame flows smoothly into the first for looping animations.
-- IMAGE RULES: fully transparent background (PNG with alpha) unless the prompt says "full scene"; no text, no logos, no watermark, no border; the subject is complete and centred with a small even margin; no ground shadow (the game draws its own soft shadow).
+- IMAGE RULES: PNG with a fully transparent background (alpha channel) — no white, grey, coloured or gradient backdrop, no floor, no sky fill; no text, no logos, no watermark, no border; the subject is complete and centred with a small even margin; no ground shadow (the game draws its own soft shadow).
+- **Every asset is a PNG with a transparent background** — including key art, cards and menu art, which are drawn as isolated vignettes / floating dioramas. Sky and road are painted by the game, so they have no prompts.
 - **Never paint the time.** Clock faces (balloons, tower, pocket clock) are generated BLANK; the game draws the hands so every clock is correct.
 - **Scale:** Baby Mo on the bike fills ~70% of the cell height in every gameplay sheet; match `mo-ride-34`.
 - **Anchors:** the rear-wheel contact point sits at 50% x / 92% y of each cell; the backpack anchor is the top centre of the bag.
@@ -50,7 +51,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons, effects and village piece
 4. Stills: `python3 scripts/rush-slice.py art-src/rush/<id>.png <id> --still` (trim + WebP).
 5. The game picks the file up automatically (it falls back to the placeholder when missing).
 
-## 7. Asset list (113 assets)
+## 7. Asset list (111 assets)
 
 ### Batch 1 — Baby Mo master references
 
@@ -60,11 +61,11 @@ Buttons, panels, coins, gifts, chests, stars, ribbons, effects and village piece
 | `mo-stand-front` | Baby Mo standing — front | still | 1024×1024 | — | — | `render1:mo-wave` | Main menu, mission intro. |
 | `mo-stand-back` | Baby Mo standing — back | still | 1024×1024 | — | — | `render1:mo-back` | Mission intro (looking at the road ahead). |
 
-### Batch 2 — Balance bike
+### Batch 2 — Push balance bike
 
 | id | asset | type | canvas | frames | fps / loop | placeholder now | used for |
 |---|---|---|---|---|---|---|---|
-| `bike-master` | Balance bike master turnaround | scene | 1536×1024 | — | — | `procedural:bike` | Reference only — attach to every later bike or riding prompt. |
+| `bike-master` | Push balance bike master turnaround | scene | 1536×1024 | — | — | `procedural:bike` | Reference only — attach to every later bike or riding prompt. |
 | `bike-side` | Bike — side view | still | 1536×1024 | — | — | `procedural:bike` | Garage, bike unlock screen. |
 | `bike-front` | Bike — front view | still | 1024×1024 | — | — | `procedural:bike` | Garage turntable frame. |
 | `bike-rear` | Bike — rear view | still | 1024×1024 | — | — | `procedural:bike` | Garage turntable frame; bike-only layer tests. |
@@ -90,7 +91,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons, effects and village piece
 |---|---|---|---|---|---|---|---|
 | `mo-idle-bike` | Idle on bike | sheet | 1536×1024 | 6 (3×2) | 6 loop | `rig:rider` | Start line, pause, mission intro. |
 | `mo-ride-loop` | Riding loop (glide) | sheet | 1536×1024 | 8 (4×2) | 12 loop | `rig:rider` | Default cruising animation (speed scales fps 8–16). |
-| `mo-push` | Scoot / push-off loop (the balance-bike 'pedal') | sheet | 1536×1024 | 8 (4×2) | 12 loop | `rig:rider` | Accelerating / below cruise speed. |
+| `mo-push` | Scoot / push-off loop (the push-balance-bike 'pedal') | sheet | 1536×1024 | 8 (4×2) | 12 loop | `rig:rider` | Accelerating / below cruise speed. |
 | `mo-lean-left` | Turning left | sheet | 1536×1024 | 6 (3×2) | 12 once | `rig:rider` | Steering left; F4–F6 hold while the stick is held. |
 | `mo-lean-right` | Turning right | sheet | 1536×1024 | 6 (3×2) | 12 once | `rig:rider` | Steering right. |
 | `mo-jump-prep` | Jump anticipation | sheet | 1024×1024 | 4 (2×2) | 14 once | `rig:rider` | 0.12 s before take-off. |
@@ -137,7 +138,6 @@ Buttons, panels, coins, gifts, chests, stars, ribbons, effects and village piece
 | id | asset | type | canvas | frames | fps / loop | placeholder now | used for |
 |---|---|---|---|---|---|---|---|
 | `env-key-art` | Morning Town key art (full scene) | scene | 1536×1024 | — | — | `kit:bg-home` | Adventure card, mission intro, loading screen. |
-| `env-road` | Road surface tile | still | 1024×1024 | — | — | `procedural:road` | Optional texture for the road strips (the default road is drawn procedurally). |
 | `env-far` | Far background (sky + hills) | strip | 1536×1024 | — | — | `kit:bg-garden` | Parallax layer 1 (scroll 0.1× with curves). |
 | `env-mid-houses` | Midground houses strip | strip | 1536×1024 | — | — | `procedural:houses` | Parallax layer 2 (scroll 0.25×). |
 | `env-trees` | Roadside trees | scene | 1536×1024 | — | — | `procedural:tree` | Roadside sprites (sliced into env-tree-1…6). |
@@ -148,7 +148,6 @@ Buttons, panels, coins, gifts, chests, stars, ribbons, effects and village piece
 | `env-bridge` | Stone bridge (road piece) | still | 1536×1024 | — | — | `procedural:bridge` | Road event: the road turns into a bridge for a short stretch. |
 | `env-deco` | Roadside decorations | scene | 1536×1024 | — | — | `kit:v-sign` | Roadside sprites; lamps switch on in the evening worlds. |
 | `env-clouds` | Clouds | scene | 1536×1024 | — | — | `procedural:cloud` | Drifting sky layer. |
-| `env-sky` | Sky gradients (4 times of day) | scene | 1536×1024 | — | — | `procedural:sky` | Reference palette for the procedural sky (and optional texture). |
 | `env-sun` | Sun (shimmer) | sheet | 1024×1024 | 4 (2×2) | 4 loop | `procedural:sun` | Sky layer; position follows the time of day. |
 | `env-birds` | Flying birds | sheet | 1536×1024 | 6 (3×2) | 10 loop | `kit:fly-robin` | Ambient birds crossing the sky. |
 | `env-moving` | Moving town elements | sheet | 1536×1024 | 8 (4×2) | 8 loop | `procedural:windmill` | Roadside animated landmark. |

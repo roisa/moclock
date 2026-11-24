@@ -20,9 +20,9 @@ NEVER change his face shape, eye size, hair style, skin tone, clothing colours, 
 /** Safety helmet worn while riding (new design element for Time Rush). */
 export const HELMET = `HELMET (worn in all riding assets): a smooth rounded white bicycle helmet sized for a toddler, with a soft-blue five-point star on the forehead and two thin light-blue vent stripes running front to back, a white chin strap with a small orange buckle. The helmet sits snugly on top of his black hair; the fringe and side hair stay visible under the front and sides.`;
 
-/** The balance bike (no pedals: toddlers push and glide with their feet). */
-export const BIKE_BIBLE = `BALANCE BIKE (must match the attached bike reference exactly):
-- A toddler balance bike with NO pedals and NO chain: the child pushes along the ground with his feet and glides; small grey footrests on each side of the lower frame for gliding.
+/** The push balance bike (no pedals: toddlers push and glide with their feet). */
+export const BIKE_BIBLE = `PUSH BALANCE BIKE (a pedal-less push bike / run bike for toddlers — must match the attached bike reference exactly):
+- It is a PUSH BIKE: there are NO pedals, NO crank arms, NO chain, NO chainring, NO gears and NO training wheels. The child sits on the saddle and pushes along the ground with his own feet (walking / running strides), then lifts his feet and glides. Small flat grey footrests on each side of the lower frame are only for resting the feet while gliding — they are NOT pedals and do not turn.
 - Frame: a smooth rounded tube frame in fresh green (#4CBF5A) with a cream-white accent stripe, a low slung shape like a gentle "V".
 - Wheels: two equal 12-inch wheels with chunky soft-grey rubber tyres, cream-white rims and five rounded spokes, a small yellow star cap on each wheel hub.
 - Handlebar: rounded swept-back handlebar with soft orange grips and a small yellow bell on the right side.
@@ -34,7 +34,7 @@ export const GAME_CAMERA = `CAMERA: gameplay chase view — seen from directly b
 
 export const SPRITE_RULES = `SPRITE SHEET RULES: equal-sized cells in a strict grid; fully transparent background (PNG with alpha) — no floor, no ground plane, no drop shadow, no scenery; no cell borders, no captions, no frame numbers, no watermark; exactly ONE complete character per cell, never cropped by the cell edge, centred the same way in every cell with the wheels' ground contact on the same baseline (about 92% down each cell); identical scale, lighting, colours and outfit in every cell; poses change ONLY as described per frame; the last frame flows smoothly into the first for looping animations.`;
 
-export const STILL_RULES = `IMAGE RULES: fully transparent background (PNG with alpha) unless the prompt says "full scene"; no text, no logos, no watermark, no border; the subject is complete and centred with a small even margin; no ground shadow (the game draws its own soft shadow).`;
+export const STILL_RULES = `IMAGE RULES: PNG with a fully transparent background (alpha channel) — no white, grey, coloured or gradient backdrop, no floor, no sky fill; no text, no logos, no watermark, no border; the subject is complete and centred with a small even margin; no ground shadow (the game draws its own soft shadow).`;
 
 export const NEGATIVE_BASE = [
   "extra or missing limbs, extra fingers, duplicated characters",
@@ -42,7 +42,7 @@ export const NEGATIVE_BASE = [
   "text, letters, numbers or watermarks (unless asked)",
   "realistic photographic humans, scary or sharp elements, violence",
   "busy backgrounds, floor shadows or scenery in transparent sprites",
-  "pedals or a chain on the balance bike",
+  "pedals, crank arms, a chain, chainring, gears or training wheels on the push balance bike",
 ];
 
 /** References to attach, by id (generated in the order of the batches). */
