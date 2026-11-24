@@ -71,6 +71,8 @@ export const EXISTING_REFS: Record<string, string> = {
   "ais-wave": "babymo-app/www/ais-garden/wave-hello.webp (Baby Ais, waving)",
   "ais-run": "babymo-app/www/ais-garden/run.webp (Baby Ais, running)",
   "adam-wave": "babymo-app/www/adam-tennis-v2/wave-1.webp (Kak Adam, waving)",
+  "p39-ais-ride": "art-src/rush/p39-ais-ride.png (current Baby Ais riding frames — keep the look, fix the legs)",
+  "p41-adam-ride": "art-src/rush/p41-adam-ride.png (current Kak Adam riding frames — keep the look, fix the legs)",
   "mo-ride-approved": "art-src/rush/p04-ride-user.png (approved Baby Mo riding frames — match this framing)",
   "bike-approved": "art-src/rush/bike-side.png (approved push balance bike)",
 };

@@ -279,6 +279,41 @@ export const PACKS: Pack[] = [
     cells: [["race-finish", "a finish arch with a checkered banner and colourful flags"], ["race-start-light", "a cute start light on a post with three round lights (red, yellow, green)"], ["race-flag", "a small checkered flag on a stick"],
       ["race-podium", "a three-step podium with stars instead of numbers"], ["race-medal", "a golden medal with a star on a ribbon"], ["race-cones", "two soft orange traffic cones with smiley stripes"]],
     refs: ["concept"] },
+
+  /* ---------------- 44–46 · REDO: rear riding sheets as a real push-bike RUNNING stride */
+  { id: "p44-mo-run", n: 44, group: "Riding (redo)", title: "Baby Mo riding from behind — running stride (REDO)", priority: "now", kind: "anim", baseline: true,
+    camera: "Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Mo and the bike face AWAY from the viewer, riding straight into the picture, centred in each cell, the rear wheel at the bottom centre of every cell, exactly the same size and position in all six cells.",
+    subject: "Baby Mo on the green push balance bike, small yellow star backpack, riding straight ahead and pushing the road with running steps. RUNNING STRIDE (most important): a push balance bike has NO pedals, so the child RUNS while sitting: bottom stays on the saddle, knees bent under the body, feet step DOWN onto the road one after the other like slow running steps, and push backwards. The feet are ALWAYS low — in every frame at least one sole touches or almost touches the road, and no foot is ever higher than the wheel hub. The legs never stick out sideways, never kick up behind, never dangle in the air, and never rest on anything like pedals.",
+    cells: [["f1", "LEFT foot plants flat on the road just in front of the saddle, under Mo's knee; right foot lifted only a little (a few cm) just behind, toes pointing down"],
+      ["f2", "LEFT foot pushes BACK along the road (sole still on the ground, leg straightening behind the hip); body leans forward a little; right foot swinging forward LOW, close to the road"],
+      ["f3", "passing moment: left foot just leaving the road behind, right foot passing under the saddle — BOTH feet low, close to the road, knees bent"],
+      ["f4", "RIGHT foot plants flat on the road just in front of the saddle; left foot lifted only a little just behind, toes pointing down"],
+      ["f5", "RIGHT foot pushes BACK along the road (sole on the ground, leg straightening behind the hip); body leans forward a little; left foot swinging forward low"],
+      ["f6", "passing moment: right foot leaving the road behind, left foot passing under the saddle — both feet low (loops back to frame 1)"]],
+    clips: anim("mo-run", 10, true), refs: ["mo-ride-approved", "p01-mo-ref", "bike-approved"], mo: true, helmet: true, bike: true,
+    mustNot: ["legs kicked out sideways or up behind", "feet floating above the road or higher than the wheel hub", "standing up off the saddle", "pedals, cranks or feet resting on the frame", "turning or leaning — all six frames ride straight"] },
+  { id: "p45-ais-run", n: 45, group: "Riding (redo)", title: "Baby Ais riding from behind — running stride (REDO)", priority: "now", kind: "anim", baseline: true,
+    camera: "Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Baby Ais and the bike face AWAY from the viewer, riding straight into the picture, centred in each cell, the rear wheel at the bottom centre of every cell, exactly the same size and position in all six cells.",
+    subject: "Baby Ais on the pink push balance bike, lavender moon backpack, white helmet over her pink hijab, riding straight ahead and pushing the road with running steps. RUNNING STRIDE (most important): a push balance bike has NO pedals, so the child RUNS while sitting: bottom stays on the saddle, knees bent under the body, feet step DOWN onto the road one after the other like slow running steps, and push backwards. The feet are ALWAYS low — in every frame at least one sole touches or almost touches the road, and no foot is ever higher than the wheel hub. The legs never stick out sideways, never kick up behind, never dangle in the air, and never rest on anything like pedals.",
+    cells: [["f1", "LEFT foot plants flat on the road just in front of the saddle, under Mo's knee; right foot lifted only a little (a few cm) just behind, toes pointing down"],
+      ["f2", "LEFT foot pushes BACK along the road (sole still on the ground, leg straightening behind the hip); body leans forward a little; right foot swinging forward LOW, close to the road"],
+      ["f3", "passing moment: left foot just leaving the road behind, right foot passing under the saddle — BOTH feet low, close to the road, knees bent"],
+      ["f4", "RIGHT foot plants flat on the road just in front of the saddle; left foot lifted only a little just behind, toes pointing down"],
+      ["f5", "RIGHT foot pushes BACK along the road (sole on the ground, leg straightening behind the hip); body leans forward a little; left foot swinging forward low"],
+      ["f6", "passing moment: right foot leaving the road behind, left foot passing under the saddle — both feet low (loops back to frame 1)"]],
+    clips: anim("ais-run", 10, true), refs: ["p39-ais-ride", "p38-ais-ref", "mo-ride-approved", "bike-approved"], ais: true, bike: true,
+    mustNot: ["legs kicked out sideways or up behind", "feet floating above the road or higher than the wheel hub", "standing up off the saddle", "pedals, cranks or feet resting on the frame", "turning or leaning — all six frames ride straight"] },
+  { id: "p46-adam-run", n: 46, group: "Riding (redo)", title: "Kak Adam riding from behind — running stride (REDO)", priority: "now", kind: "anim", baseline: true,
+    camera: "Gameplay chase camera: seen from directly behind and slightly above (about 15° down); Kak Adam and the bike face AWAY from the viewer, riding straight into the picture, centred in each cell, the rear wheel at the bottom centre of every cell, exactly the same size and position in all six cells.",
+    subject: "Kak Adam on the sky-blue push balance bike (a slightly bigger size), navy star backpack, sky-blue helmet, riding straight ahead and pushing the road with running steps. RUNNING STRIDE (most important): a push balance bike has NO pedals, so the child RUNS while sitting: bottom stays on the saddle, knees bent under the body, feet step DOWN onto the road one after the other like slow running steps, and push backwards. The feet are ALWAYS low — in every frame at least one sole touches or almost touches the road, and no foot is ever higher than the wheel hub. The legs never stick out sideways, never kick up behind, never dangle in the air, and never rest on anything like pedals.",
+    cells: [["f1", "LEFT foot plants flat on the road just in front of the saddle, under Mo's knee; right foot lifted only a little (a few cm) just behind, toes pointing down"],
+      ["f2", "LEFT foot pushes BACK along the road (sole still on the ground, leg straightening behind the hip); body leans forward a little; right foot swinging forward LOW, close to the road"],
+      ["f3", "passing moment: left foot just leaving the road behind, right foot passing under the saddle — BOTH feet low, close to the road, knees bent"],
+      ["f4", "RIGHT foot plants flat on the road just in front of the saddle; left foot lifted only a little just behind, toes pointing down"],
+      ["f5", "RIGHT foot pushes BACK along the road (sole on the ground, leg straightening behind the hip); body leans forward a little; left foot swinging forward low"],
+      ["f6", "passing moment: right foot leaving the road behind, left foot passing under the saddle — both feet low (loops back to frame 1)"]],
+    clips: anim("adam-run", 10, true), refs: ["p41-adam-ride", "p40-adam-ref", "mo-ride-approved", "bike-approved"], adam: true, bike: true,
+    mustNot: ["legs kicked out sideways or up behind", "feet floating above the road or higher than the wheel hub", "standing up off the saddle", "pedals, cranks or feet resting on the frame", "turning or leaning — all six frames ride straight"] },
 ];
 
 /** what is already in the game (owner-approved art, app-ayah library, or drawn by the game) */
@@ -322,7 +357,7 @@ const STATUS: Record<string, [Pack["status"], string, Pack["priority"]?]> = {
   "p37-effects": ["covered", "game particles + app-ayah effects", "later"],
 };
 /** the few images still worth making for Morning Town; everything else waits */
-const NOW = new Set(["p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles", "p38-ais-ref", "p39-ais-ride", "p40-adam-ref", "p41-adam-ride"]);
+const NOW = new Set(["p44-mo-run", "p45-ais-run", "p46-adam-run", "p07-jump", "p08-boost", "p09-pickup", "p11-wobble", "p15-celebrate", "p29-obstacles", "p38-ais-ref", "p39-ais-ride", "p40-adam-ref", "p41-adam-ride"]);
 for (const p of PACKS) if (!STATUS[p.id]) p.priority = NOW.has(p.id) ? "now" : "later";
 export const BG_DONE: Record<string, string> = { "bg-home": "your meadow with the clock tower and masjid", "bg-splash": "your sunrise road", "bg-mission": "your house with stepping stones", "bg-delivered": "your library reading room", "bg-rewards": "your rainbow meadow", "bg-garage": "your garage with the turntable", "bg-collection": "your helmet and backpack room", "bg-parents": "your stars, moons and clocks pattern", "far-morning": "your Morning Town horizon (behind the road)", "far-park": "your park horizon (ready for Sunny Park)", "far-seaside": "your seaside horizon (ready for Playtime Village)", "far-sunset": "your autumn town with the masjid (ready for Sunset Town)", "far-dream": "your night village with the lit masjid (ready for Dreamland)" };
 for (const p of PACKS) { const s = STATUS[p.id]; if (s) { p.status = s[0]; p.note = s[1]; if (s[2]) p.priority = s[2]; } }

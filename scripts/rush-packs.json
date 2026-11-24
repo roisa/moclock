@@ -864,5 +864,80 @@
   ],
   "clips": null,
   "baseline": false
+ },
+ "p44-mo-run": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "mo-run",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p45-ais-run": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "ais-run",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
+ },
+ "p46-adam-run": {
+  "grid": [
+   3,
+   2
+  ],
+  "kind": "anim",
+  "cells": [
+   "f1",
+   "f2",
+   "f3",
+   "f4",
+   "f5",
+   "f6"
+  ],
+  "clips": [
+   {
+    "id": "adam-run",
+    "from": 0,
+    "to": 5,
+    "fps": 10,
+    "loop": true
+   }
+  ],
+  "baseline": true
  }
 }
