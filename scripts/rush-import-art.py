@@ -341,3 +341,43 @@ for n in ["home", "street", "park", "market"]:
     b = Image.open(f"{SRC}/bg-{n}.png").convert("RGB")
     b = b.resize((1600, round(b.height * 1600 / b.width)), Image.LANCZOS)
     b.save(f"public/rush/bg-{n}.webp", quality=82, method=6); print("bg", n, b.size)
+
+# ---------------------------------------------------------------- buildings, screen backgrounds, horizon layers
+atlas = json.load(open(atlas_p)) if os.path.exists(atlas_p) else {}
+bl = items("p22-buildings.png", ["library", "tower", "bakery", "shop", "house", "house2"], maxside=420)
+# the tower's printed face has tick marks and no hands: find it so the game paints the live time there
+c = bl["tower"]; a = np.array(c.convert("RGB")).astype(int); al2 = np.array(c.getchannel("A"))
+cream = (a.min(axis=2) > 200) & (al2 > 200)
+cream[: int(c.height * 0.12)] = False; cream[int(c.height * 0.5):] = False
+ys, xs = np.where(cream)
+atlas["tower"].update({"fx": round(float(np.median(xs)) / c.width, 3), "fy": round(float(np.median(ys)) / c.height, 3), "fr": round(float(np.percentile(xs, 97) - np.percentile(xs, 3)) / 2 / c.width, 3)})
+atlas["tower"].update({"fx": 0.5, "fy": 0.452, "fr": 0.2})  # measured by eye; the finder catches the cream wall
+json.dump(atlas, open(atlas_p, "w"), indent=1, sort_keys=True)
+
+for n in ["home2", "splash", "mission", "delivered", "rewards", "garage", "collection", "parents"]:
+    b = Image.open(f"{SRC}/bg-{n}.png").convert("RGB")
+    w = 1100 if n == "splash" else 1600
+    b = b.resize((w, round(b.height * w / b.width)), Image.LANCZOS)
+    b.save(f"public/rush/bg-{n}.webp", quality=82, method=6); print("bg", n, b.size)
+
+def horizon(src, out):
+    im = Image.open(f"{SRC}/{src}").convert("RGBA")
+    a = np.array(im).astype(np.int32)
+    if (a[..., 3] < 250).mean() < 0.05:
+        # no real transparency (white / fake checker sky): clear everything above the scenery in each column
+        rgb = a[..., :3]
+        mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+        colourful = ((mx - mn) > 38) | (mx < 205)
+        top = np.argmax(colourful, axis=0)
+        rows = np.arange(a.shape[0])[:, None]
+        alpha = np.clip((rows - top[None, :] + 2) * 85, 0, 255)  # 3-px soft edge
+        a[..., 3] = np.minimum(a[..., 3], alpha)
+    else:
+        a[a[..., 3] < 140, 3] = 0  # drop the yellow glow fringe around the hills
+    im = Image.fromarray(a.astype(np.uint8)).crop(Image.fromarray(a[..., 3].astype(np.uint8)).getbbox())
+    im = im.resize((2000, round(im.height * 2000 / im.width)), Image.LANCZOS)
+    save(im, f"public/rush/{out}.webp", 86)
+
+horizon("far-morning.png", "far-morning")
+horizon("far-park.png", "far-park")
+horizon("far-seaside.png", "far-seaside")

@@ -14,7 +14,7 @@ export const LANE_HALF = 0.3; // collision half-width
 export type Collect = "star" | "coin" | "gift" | "balloon" | "carrot" | "pocketclock" | "ring" | "token" | "magnet" | "shield" | "timeclock";
 export type Hazard = "log" | "boxes" | "blocks" | "ball" | "puddle";
 export type Feature = "ramp" | "boost" | "pickup" | "tunnel" | "bunny" | "bunny-home" | "library" | "arch-start" | "paper-arch";
-export type Deco = "tree" | "tree2" | "house" | "bush" | "flowers" | "lamp" | "shop" | "tower" | "fence" | "sign" | "windmill" | "bakery" | "pond" | "school" | "signpost" | "tent" | "masjid" | "bench" | "busstop" | "fruitcart" | "flowerarch" | "fountain" | Pet;
+export type Deco = "tree" | "tree2" | "house" | "bush" | "flowers" | "lamp" | "shop" | "tower" | "fence" | "sign" | "windmill" | "bakery" | "pond" | "school" | "signpost" | "tent" | "masjid" | "house2" | "bench" | "busstop" | "fruitcart" | "flowerarch" | "fountain" | Pet;
 /** cheering animal friends along the road (app-ayah library art) */
 export type Pet = "pet-puppy" | "pet-kitten" | "pet-duckling" | "pet-chick" | "pet-lamb" | "pet-hamster" | "pet-cow" | "pet-turtle-green";
 export const PETS: Pet[] = ["pet-puppy", "pet-kitten", "pet-duckling", "pet-chick", "pet-lamb", "pet-hamster", "pet-cow", "pet-turtle-green"];

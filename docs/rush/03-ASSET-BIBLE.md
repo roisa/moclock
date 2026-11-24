@@ -47,7 +47,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 2. `python3 scripts/rush-slice.py art-src/rush/<pack>.png` cuts the grid, removes a white backdrop if there is one, trims, aligns the ground line and writes `public/rush/art/<id>.webp` per item (or one strip per animation clip) plus `public/rush/art/atlas.json`.
 3. The game uses the new art automatically; anything missing keeps its placeholder.
 
-## 7. Packs (43 images: 35 done or covered, 8 to make, 0 of them now)
+## 7. Packs (43 images: 36 done or covered, 7 to make, 0 of them now)
 
 ### References
 
@@ -94,7 +94,7 @@ Buttons, panels, coins, gifts, chests, stars, ribbons and village pieces from th
 
 | # | image | status | kind | game files |
 |---|---|---|---|---|
-| 22 | Town buildings | later | items | `library`, `tower`, `bakery`, `shop`, `house`, `house2` |
+| 22 | Town buildings | ✅ done | items | `library`, `tower`, `bakery`, `shop`, `house`, `house2` |
 | 23 | Trees | 📚 already covered | items | `tree`, `tree2`, `tree3`, `tree4`, `tree5`, `tree6` |
 | 24 | Roadside things | ✅ done | items | `bush`, `flowers`, `lamp`, `fence`, `bench`, `mailbox` |
 | 25 | Sky things | 📚 already covered | items | `cloud1`, `cloud2`, `cloud3`, `bird-1`, `bird-2`, `sun` |

@@ -50,6 +50,8 @@ export class Scene {
   private flyers: { img: CanvasImageSource; w: number; h: number; x0: number; y0: number; t: number; dur: number; size: number }[] = [];
   /** Baby Mo riding sheet (6 rear frames) */
   riderStrip: HTMLImageElement | null = null;
+  /** painted far horizon layer */
+  far: HTMLImageElement | null = null;
   /** approved action sheets: jump, boost, pickup, bump */
   clips: Clips = {};
   /** Baby Ais and Kak Adam riding sheets (6 rear frames each) */
@@ -288,8 +290,29 @@ export class Scene {
       this.cloud(cx, cy, s);
     }
     // far hills + town strip (parallax, tiled)
-    this.tile(sprite("hill"), this.skyX * 0.6, HOR + 6, H * 0.2);
-    this.tile(sprite("town"), this.townX, HOR + 4, H * 0.11);
+    if (this.far && this.far.naturalWidth) {
+      // painted Morning Town horizon (approved art): one layer, its grass meets the road's horizon
+      const fh = H * 0.2, s = { img: this.far, w: this.far.naturalWidth, h: this.far.naturalHeight, ww: 1, base: 1 };
+      this.tile(s, this.townX * 0.7, HOR + fh * 0.12, fh);
+    } else {
+      this.tile(sprite("hill"), this.skyX * 0.6, HOR + 6, H * 0.2);
+      this.tile(sprite("town"), this.townX, HOR + 4, H * 0.11);
+    }
+  }
+  /** one puffy cloud drawn as a single path (no overlapping alpha seams) */
+  private cloud(x: number, y: number, s: number) {
+    const g = this.g;
+    g.fillStyle = "#ffffff";
+    g.globalAlpha = 0.92;
+    g.beginPath();
+    g.arc(x, y, s, 0, Math.PI * 2);
+    g.moveTo(x + s * 1.1 + s * 1.2, y - s * 0.4);
+    g.arc(x + s * 1.1, y - s * 0.4, s * 1.2, 0, Math.PI * 2);
+    g.moveTo(x + s * 2.2 + s * 0.9, y);
+    g.arc(x + s * 2.2, y, s * 0.9, 0, Math.PI * 2);
+    g.rect(x, y - s * 0.2, s * 2.2, s * 1.0);
+    g.fill("nonzero");
+    g.globalAlpha = 1;
   }
   /** one puffy cloud drawn as a single path (no overlapping alpha seams) */
   private cloud(x: number, y: number, s: number) {
@@ -387,7 +410,7 @@ export class Scene {
       if (s.face) this.face(bx + w * s.face.x, by + h * s.face.y, w * s.face.r * 1.04, it.n ?? time, 1);
       else this.face(x, by + h * 0.373, w * 0.3, it.n ?? time, 1);
     }
-    else if (it.kind === "tower") this.face(x, by + h * (220 / 520), w * (46 / 220), time, 0);
+    else if (it.kind === "tower") { if (s.face) this.face(bx + w * s.face.x, by + h * s.face.y, w * s.face.r * 0.8, time, 0); else this.face(x, by + h * (220 / 520), w * (46 / 220), time, 0); }
     else if (it.kind === "pocketclock" && !s.art) this.face(x, by + h * 0.55, w * 0.2, time, 1);
     else if (it.kind === "windmill") this.sails(x, by + h * 0.4, w * 0.48, clock);
     else if (it.kind === "pickup" && !it.hit) {
