@@ -38,13 +38,14 @@ export function Delivered({ f, onNext }: { f: Finished; onNext: () => void }) {
         <div className="ru-door">
           <img className="lib" src={kit("v-school.webp")} alt="" />
           <Celebrate />
-          <img className="books" src={kit("books.webp")} alt="" />
+          <img className="books" src="rush/art/books.webp" alt="" />
           <span className="ru-bubble mo">{t("ru.salam")}</span>
           <span className="ru-bubble lib">{t("ru.salamReply")}</span>
         </div>
         <div className="ru-panel ru-result">
           <div className="praise">{[0, 1, 2].map((k) => <img key={k} className={k < shown ? "pop" : ""} src={kit(k < f.praise && k < shown ? "star.webp" : "star-off.webp")} alt="" />)}</div>
           <p className="msg">{t("ru.deliveredMsg")}</p>
+          <p className="ru-friends-done"><img src="rush/mo/ais-front.webp" alt="" /><img src="rush/mo/adam-front.webp" alt="" />{t("ru.friendsDone")}</p>
           <div className="ru-arrived"><Clock t={s.time} size={70} /><span>{t({ k: "ru.arrivedAt", p: { t: { time: s.time } } })}<Digital t={s.time} size="s" /></span></div>
           {s.balloons.length > 0 && <div className="ru-seen-today"><small>{t("ru.timesSeen2")}</small><div>{[...s.balloons].sort((a, b) => a - b).map((b) => <figure key={b}><Clock t={b} size={40} /><figcaption>{digital(b)}</figcaption></figure>)}</div></div>}
           <ul>
@@ -68,7 +69,7 @@ export function Rewards({ f }: { f: Finished }) {
     <div className="ru-screen ru-rewards">
       <Ribbon color="purple">{t("ru.rewards")}</Ribbon>
       <div className="ru-rewards-body">
-        <div className="ru-reward-art"><img className="chest" src={kit("chest-open.webp")} alt="" /><img className="trophy" src={kit("trophy-gold.webp")} alt="" /></div>
+        <div className="ru-reward-art"><img className="chest" src={kit("chest-open.webp")} alt="" /><img className="pair" src="rush/mo/pair-highfive.webp" alt="Baby Mo and Baby Ais" /></div>
         <div className="ru-panel">
           <p className="gain">+{f.s.stars} <img src={kit("star.webp")} alt="" /></p>
           <StarCount n={p.stars} />
@@ -94,7 +95,7 @@ export function WorldUnlock({ world }: { world: WorldId }) {
       <Confetti />
       <Ribbon>{t("ru.worldUnlocked")}</Ribbon>
       <div className="ru-panel ru-unlockw-card">
-        <img src={kit("v-garden.webp")} alt="" />
+        <img src="rush/mo/pair-jump.webp" alt="Baby Mo and Baby Ais" />
         <h2>{t("ru.w." + world)}</h2>
         <p>{t("ru.wd." + world)}</p>
         <span className="soon">{t("ru.comingSoon")}</span>

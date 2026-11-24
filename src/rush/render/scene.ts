@@ -3,8 +3,8 @@
  * parallax hills/town, clouds, time-of-day) + sprite billboards + rider.
  * Classic pseudo-3D segment renderer drawn on a 2D canvas.
  */
-import { SEG, type Item, type Track } from "../core/track";
-import type { GameSim } from "../core/sim";
+import { SEG, LANES, type Item, type Track } from "../core/track";
+import type { GameSim, Rival, RivalId } from "../core/sim";
 import { handAngles } from "../../engine/time";
 import { sprite, star5, type Sprite } from "./sprites";
 import { drawRider, drawRiderStrip, type Clips, type Look, type Sheets } from "./rider";
@@ -52,6 +52,8 @@ export class Scene {
   riderStrip: HTMLImageElement | null = null;
   /** approved action sheets: jump, boost, pickup, bump */
   clips: Clips = {};
+  /** Baby Ais and Kak Adam riding sheets (6 rear frames each) */
+  rivalStrips: Partial<Record<RivalId, HTMLImageElement>> = {};
   private vis: { i: number; a: Proj; b: Proj; fog: number }[] = [];
   constructor(public canvas: HTMLCanvasElement) {
     this.g = canvas.getContext("2d")!;
@@ -175,11 +177,20 @@ export class Scene {
     // --- sprites back to front
     const items = this.segItems(track);
     this.pos.clear();
+    const rivals = sim.route === "main" ? sim.rivals : [];
     for (let n = DRAW - 1; n >= 0; n--) {
       const i = base + n;
+      const pa = this.proj[n], pb = this.proj[n + 1];
+      for (const v of rivals) {
+        if (Math.floor(v.z / SEG) !== i || v.z < r.z - SEG * 0.25) continue;
+        const f = (v.z - i * SEG) / SEG;
+        const sc = pa.scale + (pb.scale - pa.scale) * f;
+        if (sc <= 0) continue;
+        const unit = sc * ROAD_W * KX;
+        this.drawRival(v, pa.x + (pb.x - pa.x) * f + sc * v.x * ROAD_W * KX, pa.y + (pb.y - pa.y) * f, unit, pa.clip);
+      }
       const list = items[i];
       if (!list || !list.length) continue;
-      const pa = this.proj[n], pb = this.proj[n + 1];
       for (const it of list) {
         // things Mo has already passed sit between him and the camera: drawn there they would be
         // huge (a giant arch sign, a star glow wider than the screen) — so stop drawing them
@@ -347,11 +358,39 @@ export class Scene {
       const bw = w * 0.16, bh = (bw * bs.h) / bs.w;
       g.drawImage(bs.img, x - bw / 2, by + h * 0.36 + Math.sin(clock * 3) * bh * 0.08, bw, bh);
     } else if (it.kind === "bunny-home" && it.hit) {
+      const bag = sprite("carrot-bag"); // the carrots Mo brought back, by her door
+      const bw2 = w * 0.3;
+      g.drawImage(bag.img, x - bw2 * 1.1, by + h - bw2 * (bag.h / bag.w) * 0.95, bw2, bw2 * (bag.h / bag.w));
       const sq = sprite("bunny");
       const sw = w * 0.32;
       g.drawImage(sq.img, x - sw * 0.2, by + h * 0.55 - Math.abs(Math.sin(clock * 7)) * sw * 0.2, sw, (sw * sq.h) / sq.w);
     }
   }
+  /** a friend on the road: same scale as Mo at the same depth, stride frames, lean into lane changes */
+  private drawRival(v: Rival, x: number, y: number, unit: number, clip: number) {
+    const img = this.rivalStrips[v.id];
+    if (!img || y < 0) return;
+    const g = this.g;
+    const n = 6, fw = img.naturalWidth / n, fh = img.naturalHeight;
+    const H = this.riderH * 1.12 * (unit / this.KX) * (fh / 420);
+    if (H > this.H * 2) return;
+    const foot = Math.sin(v.stride) > 0 ? 0 : 1;
+    const dx = LANES[v.lane] - v.x;
+    let idx = foot ? 4 : 1;
+    if (dx < -0.05) idx = foot ? 3 : 0; else if (dx > 0.05) idx = foot ? 5 : 2;
+    if (v.air) idx = 4;
+    const lift = v.h * H * 1.5;
+    const dh = H, dw = (dh * fw) / fh;
+    if (y - dh - lift > clip) return; // hidden behind a hill crest
+    g.fillStyle = "rgba(40,50,40,.2)";
+    g.beginPath(); g.ellipse(x, y, dw * 0.32, dh * 0.04, 0, 0, 7); g.fill();
+    g.save();
+    g.translate(x, y - lift - Math.abs(Math.sin(v.stride)) * H * 0.014);
+    g.rotate(Math.max(-0.12, Math.min(0.12, dx * 0.25)));
+    g.drawImage(img, idx * fw, 0, fw, fh, -dw / 2, -dh, dw, dh);
+    g.restore();
+  }
+
   /** clock face with hands for a time (minutes of 12-h day) */
   private face(x: number, y: number, r: number, t: number, ring: number) {
     if (r < 3) return;

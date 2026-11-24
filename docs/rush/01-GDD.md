@@ -74,11 +74,16 @@ Baby Ais (pink bike, same height as Mo) and Kak Adam (blue bike, a little taller
 ## 14. Islamic values (as in the app-ayah Baby Mo games)
 | Moment | What happens | Voice |
 |---|---|---|
-| Mission card | Mo has an **amanah** (a trust) to deliver; the du'a before setting off: بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ (Bismillahi tawakkaltu 'alallah — "In the name of Allah, I put my trust in Allah") | recorded clips *bism* + *shuffle* |
+| Mission card | Mo has an **amanah** (a trust) to deliver; the du'a for leaving home: بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ (text and meaning from babymo-app Doa Harian) | babymo-app recording *d-leave_home* |
+| On the bike | the du'a for riding: سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ — then the countdown | babymo-app recording *d-vehicle* |
 | Go! | "Bismillah! Let's go!" | recorded *bismillah* |
 | Star streaks (8 / 16 / 24 / 32 / 40) | Masya Allah → Masya Allah → Subhanallah → Barakallahu fiikum → Allahu Akbar | recorded *masya1, masya2, subhan, barak, akbar* |
 | Helping the bunny | "Jazakallahu khairan, Baby Mo!" then "Being kind to Allah's creatures makes Allah happy." | text-to-speech |
 | Arrival | "Alhamdulillah! Well done!" — Mo kept his amanah | recorded *win* |
 | Library door | Assalamu'alaikum! / Wa'alaikumussalam! | bubbles |
 | Road | Two masjids (app-ayah village art) in Morning Town | — |
+| Prayer time | When a prayer time arrives during play (first 30 min), the ride pauses: "It's time for Dhuhr prayer"; "I have prayed" (Taqabbalallahu minna wa minkum, streak saved in babymo-app's `mo_prayer_streaks_v1` format) or "In a moment" (10 min). Times: babymo-app `bm-prayertimes.js` ported (Kemenag RI, on device); city from Parent settings or the device time zone (WIB → Jakarta, WITA → Makassar, WIT → Jayapura) or the device location. Home shows the next prayer. | recorded *pray-fajr … pray-isha*, *taqabbal* |
 Clips: `public/rush/voice/{en,id}/` copied from app-ayah NurConnect (Google TTS voice Algenib, the Baby Mo voice); a real recording with the same file name replaces them. Never depict Allah, prophets or angels; Arabic text kept exact.
+
+## 15. Friends on the road
+Baby Ais (pink bike, same height as Mo) and Kak Adam (blue track suit, a little taller) ride the Morning Town road with Mo using their approved riding sheets. They are rubber-banded around Mo (never far ahead or behind), change lanes every few seconds, move out of Mo's lane when close, hop over logs, boxes, blocks and balls, wait on the main road while Mo takes the tunnel and rejoin right behind him. Overtakes bring a cheer ("Ayo, Mo! Kejar aku!" / "Hebat, Dik!"). Nobody loses: the Delivered screen says they rode with Mo.

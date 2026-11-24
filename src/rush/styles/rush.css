@@ -310,3 +310,45 @@
 .ru-mission-books .bk { width: 36px; }
 .ru-mission-books img:last-child { width: 56px; }
 @media (max-height: 800px) { .ru-clip { padding-top: 22px; gap: 5px; } .ru-clip h2 { font-size: 20px; } .ru-clip p { font-size: 15px; } .ru-dua { padding: 5px 10px; } }
+/* ---------- prayer time */
+.ru-praychip { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px 6px 8px; border-radius: 999px; background: rgba(255,255,255,.92); font: 700 15px "Fredoka"; color: #2a9147; box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+.ru-praychip svg { width: 22px; height: 22px; }
+:root[data-theme="dark"] .ru-praychip { background: rgba(30,40,55,.9); color: #9be585; }
+.ru-pray-scrim { z-index: 80; background: rgba(20,40,30,.55); }
+.ru-pray { display: flex; align-items: center; gap: 18px; max-width: 560px; border-color: #9be585; }
+.ru-pray-mo { height: min(42vh, 280px); flex: none; }
+.ru-pray h2 { margin: 0 0 6px; color: #2a9147; }
+.ru-pray p { margin: 0 0 10px; font: 600 16px/1.4 "Nunito"; }
+.ru-pray .ru-pray-time { font: 700 18px "Fredoka"; color: #2a6fb0; }
+@media (max-width: 560px) { .ru-pray { flex-direction: column; text-align: center; } .ru-pray-mo { height: 24vh; } }
+.ru-praytimes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 8px 0; }
+.ru-praytimes span { display: flex; flex-direction: column; align-items: center; padding: 6px 2px; border-radius: 12px; background: var(--card-2, #fffaf2); font: 600 14px "Nunito"; }
+.ru-praytimes span.next { background: #dff5e4; outline: 2px solid #4cbf5a; }
+.ru-praytimes b { font: 700 13px "Fredoka"; }
+.ru-note { display: block; color: var(--ink-3); font: 500 12px/1.4 "Nunito"; margin-top: 4px; }
+.ru-dua-ride { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: min(560px, 90vw); box-shadow: 0 8px 0 rgba(0,0,0,.1); animation: ru-in .35s both; }
+.ru-dua-ride .ar { font-size: clamp(20px, 3.4vw, 30px); }
+.ru-dua-skip { align-self: flex-end; border: 0; background: none; color: #2a6fb0; font: 700 14px "Fredoka"; cursor: pointer; padding: 4px 6px; }
+/* ---------- friends: Baby Ais and Kak Adam */
+.ru-pairride { height: 46vh; aspect-ratio: 491 / 480; background: 0 0 / 600% 100% no-repeat; filter: drop-shadow(0 10px 12px rgba(0,0,0,.2)); }
+.ru-trio { display: flex; align-items: flex-end; }
+.ru-trio .ru-mo { height: 34vh; }
+.ru-trio .ais { margin-right: -3vh; }
+.ru-trio .mo { height: 34vh !important; position: relative; z-index: 1; }
+.ru-trio .adam { height: 37.4vh; margin-left: -3vh; }
+.ru-home-hero { align-items: flex-end; }
+.ru-home-hero .ru-bikeside { margin-left: -60px; }
+.ru-friends { display: flex; align-items: center; gap: 6px; }
+.ru-friends img { height: 46px; }
+.ru-friends small { font: 700 13px "Nunito"; color: #2a6fb0; }
+.ru-friends-done { display: flex; align-items: center; gap: 4px; margin: 0; font: 700 14px "Nunito"; color: #2a6fb0; }
+.ru-friends-done img { height: 34px; }
+.ru-reward-art .pair { position: absolute; right: -40%; bottom: -4%; width: 66%; }
+@media (orientation: portrait) { .ru-trio .ru-mo { height: 20vh !important; } .ru-trio .adam { height: 22vh !important; } .ru-pairride { height: 30vh; } }
+.ru-mission-row { display: flex; align-items: flex-end; justify-content: center; gap: 16px; }
+.ru-mission-clocks figure { width: 70px; }
+.ru-dua .ar { font-size: 22px; line-height: 1.5; }
+.ru-dua .mean { font-size: 12px; text-align: center; }
+.ru-dua .latin { font-size: 13px; text-align: center; }
+.ru-clip { max-width: 470px; }
+@media (max-height: 800px) { .ru-clip p { font-size: 14px; } .ru-mission-clocks figcaption { font-size: 12px; } }

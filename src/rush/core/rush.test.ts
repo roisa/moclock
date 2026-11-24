@@ -178,4 +178,26 @@ describe("GameSim", () => {
     expect(ball.x).not.toBe(x0);
     expect(Math.abs(ball.x)).toBeLessThanOrEqual(0.62 + 1e-9);
   });
+  it("Baby Ais and Kak Adam ride along near Mo, keep clear of him and arrive too", () => {
+    const sim = new GameSim(morningWorld());
+    sim.start();
+    let maxAhead = 0, maxBehind = 0, sameLaneClose = 0, passes = 0;
+    for (let i = 0; i < 60 * 300 && !sim.done; i++) {
+      if (i % 90 === 0) sim.input.steer.push(i % 180 ? 1 : -1);
+      sim.step(DT);
+      for (const e of sim.drain()) if (e.type === "rival-pass") passes++;
+      if (sim.t < 4 || sim.route === "tunnel") continue;
+      for (const v of sim.rivals) {
+        const gap = v.z - sim.r.z;
+        maxAhead = Math.max(maxAhead, gap); maxBehind = Math.min(maxBehind, gap);
+        if (Math.abs(gap) < SEG * 0.3 && Math.abs(v.x - sim.r.x) < 0.2 && !v.air) sameLaneClose++;
+      }
+    }
+    expect(sim.done).toBe(true);
+    expect(maxAhead).toBeLessThan(SEG * 20); // never disappear far ahead
+    expect(maxBehind).toBeGreaterThan(-SEG * 12); // never left far behind
+    expect(sameLaneClose).toBeLessThan(30); // they move out of Mo's way
+    expect(passes).toBeGreaterThan(0); // they overtake and get overtaken — a race!
+    for (const v of sim.rivals) expect(v.z).toBeGreaterThan(sim.w.end - SEG * 30);
+  });
 });

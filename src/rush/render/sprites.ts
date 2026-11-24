@@ -18,7 +18,7 @@ export const WORLD_W: Record<string, number> = {
   star: 0.2, coin: 0.18, gift: 0.26, balloon: 0.34, carrot: 0.2, pocketclock: 0.22, ring: 0.5, token: 0.2,
   log: 0.5, boxes: 0.36, blocks: 0.4, ball: 0.36, puddle: 0.5, ramp: 0.5, boost: 0.46,
   pickup: 2.4, tunnel: 0.72, "paper-arch": 2.6, bunny: 0.5, "bunny-home": 0.75, library: 2.2, "arch-start": 2.4,
-  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, signpost: 0.5, tent: 0.75, books: 0.4,
+  tree: 0.8, tree2: 0.6, house: 0.85, bush: 0.45, flowers: 0.45, lamp: 0.2, shop: 0.75, bakery: 0.85, tower: 0.75, fence: 0.55, sign: 0.35, windmill: 0.85, pond: 0.8, school: 1.2, masjid: 1.3, "carrot-bag": 0.3, signpost: 0.5, tent: 0.75, books: 0.4,
   "pet-puppy": 0.32, "pet-kitten": 0.3, "pet-duckling": 0.26, "pet-chick": 0.24, "pet-lamb": 0.32, "pet-hamster": 0.26, "pet-cow": 0.36, "pet-turtle-green": 0.3,
 };
 /** kit images used as the sprite until bespoke art exists */

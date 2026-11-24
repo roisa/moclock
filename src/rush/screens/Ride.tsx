@@ -12,6 +12,7 @@ import { BIKES, CLIP_FRAMES, type ClipName } from "../render/rider";
 import { Clock, Digital } from "../../ui/Clock";
 import { useRush, UNLOCKS, type WorldId } from "../state";
 import { audio, CLIP_TEXT, type Clip } from "../audio";
+import { usePrayer } from "../prayer/prayer";
 
 const STREAK_CLIPS: Record<number, Clip> = { 8: "masya1", 16: "masya2", 24: "subhan", 32: "barak", 40: "akbar" };
 import { kit, Pill } from "../ui/Kit";
@@ -31,6 +32,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
   const [hud, setHud] = useState({ stars: 0, pk: 0, time: sim.time, carrots: 0 });
   const [phase, setPhase] = useState<"ready" | "ride" | "arrive">("ready");
   const [count, setCount] = useState<number | null>(null);
+  const [dua, setDua] = useState(true);
+  const startRef = useRef<() => void>(() => {});
   const [paused, setPaused] = useState(false);
   const [line, setLine] = useState<string | null>(null);
   const [pulse, setPulse] = useState(0);
@@ -45,7 +48,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     (say as unknown as { h: number }).h = window.setTimeout(() => setLine(null), 2600);
   };
   const lastQuarter = useRef(-1);
-  pausedRef.current = paused;
+  const prayer = usePrayer();
+  pausedRef.current = paused || !!prayer.due; // the prayer-time pause holds the ride
   const lefty = p.settings.lefty;
   void world;
 
@@ -72,6 +76,7 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
     image("kit/mo-back-r1.webp").then((i) => (sc.body = i)).catch(() => {});
     image("mo/ride.webp").then((i) => (sc.riderStrip = i)).catch(() => {}); // the approved riding sheet
     for (const c of Object.keys(CLIP_FRAMES) as ClipName[]) image(`mo/${c}.webp`).then((i) => (sc.clips[c] = i)).catch(() => {});
+    for (const id of ["ais", "adam"] as const) image(`mo/${id}-ride.webp`).then((i) => (sc.rivalStrips[id] = i)).catch(() => {});
     preload(ALL_SPRITES).catch(() => {});
     // generated animation strips (rush-slice.py) replace the placeholder rider clip by clip
     artAtlas().then((at) => {
@@ -98,13 +103,25 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
       setHud((h) => (h.stars !== sim.stats.stars || h.pk !== sim.stats.packages || h.time !== time || h.carrots !== sim.stats.carrots ? { stars: sim.stats.stars, pk: sim.stats.packages, time, carrots: sim.stats.carrots } : h));
     };
     raf = requestAnimationFrame(loop);
-    // ready → 3, 2, 1, Go! (a friendly race start; the ride itself has no timer)
-    const steps = [1300, 1950, 2600, 3250];
-    const ts = steps.map((ms, i) => window.setTimeout(() => {
-      if (i < 3) { setCount(3 - i); audio.sfx("beep"); }
-      else { setCount(0); sim.start(); setPhase("ride"); window.setTimeout(() => setCount(null), 700); }
-    }, ms));
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); ts.forEach(clearTimeout); };
+    // on the bike: Baby Mo reads the du'a for riding (recorded), then 3, 2, 1, Go! (Bismillah)
+    let ts: number[] = [];
+    let started = false;
+    const countdown = () => {
+      if (started) return;
+      started = true;
+      setDua(false);
+      ts = [400, 1050, 1700, 2350].map((ms, i) => window.setTimeout(() => {
+        if (i < 3) { setCount(3 - i); audio.sfx("beep"); }
+        else { setCount(0); sim.start(); setPhase("ride"); window.setTimeout(() => setCount(null), 700); }
+      }, ms));
+    };
+    startRef.current = countdown;
+    const skipDua = /[?&]nodua\b/.test(location.search);
+    // the card stays at least 6.5 s so it can be read even with the voice off
+    const shownAt = performance.now();
+    const t0 = window.setTimeout(() => (skipDua ? countdown() : audio.clips(["d-vehicle"], lang, { force: true, done: () => window.setTimeout(countdown, Math.max(500, 6500 - (performance.now() - shownAt))) })), 700);
+    const fallback = window.setTimeout(countdown, skipDua ? 800 : 11000); // never wait forever (no audio, blocked autoplay)
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); ts.forEach(clearTimeout); clearTimeout(t0); clearTimeout(fallback); audio.stop(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -143,6 +160,8 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           window.setTimeout(() => say("ru.say.kind", { force: true }), 3200); break; }
         case "tunnel-in": audio.sfx("whoosh"); say("ru.say.tunnel", { force: true }); break;
         case "tunnel-near": say("ru.say.tunnelHint", { force: true }); break;
+        // friends overtaking cheer Mo on; when Mo passes them they cheer too (sparingly)
+        case "rival-pass": say(`ru.rival.${e.who}.${e.ahead ? "pass" : "passed"}`, { gap: 9 }); break;
         case "balloon-miss": say({ k: "ru.say.balloonMiss", p: { t: { time: e.time } } }, { gap: 5 }); break;
         case "arrive": {
           const sc2 = scene.current!;
@@ -205,13 +224,22 @@ export function RideScreen({ world, onDone, onQuit, onRestart }: { world: WorldI
           <Digital t={hud.time} size="s" />
         </div>
         <div className="ru-hud-pk" aria-label={t({ k: "ru.packages", p: { a: hud.pk, b: 3 } })}>
-          {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src={kit("books.webp")} alt="" />)}
+          {[0, 1, 2].map((i) => <img key={i} className={"bk" + (i < hud.pk ? " on" : "")} src="rush/art/books.webp" alt="" />)}
           {sim.friendMet && !sim.stats.token && <span className="carrots"><img src={kit("carrot.webp")} alt="" />{hud.carrots}/3</span>}
         </div>
         <button className="ru-round ru-hud-pause" aria-label={t("ru.pause")} onClick={() => { audio.sfx("tap"); setPaused(true); }}><i /><i /></button>
       </div>
       {line && <div className="ru-say" role="status"><img src="rush/mo/face.webp" alt="" />{line}</div>}
-      {phase === "ready" && count === null && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
+      {phase === "ready" && count === null && dua && (
+        <div className="ru-dua ru-dua-ride" role="status">
+          <small>{t("ru.dua.vehicle")}</small>
+          <p className="ar" dir="rtl" lang="ar">سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ</p>
+          <p className="latin">Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn</p>
+          <p className="mean">{t("ru.dua.vehicleMeaning")}</p>
+          <button className="ru-dua-skip" onClick={() => { audio.stop(); startRef.current(); }}>{t("ru.skip")} ›</button>
+        </div>
+      )}
+      {phase === "ready" && count === null && !dua && <div className="ru-ready">{t("ru.howTo")}{portrait && <small>{t("ru.rotate")}</small>}</div>}
       {count !== null && <div className={"ru-count-big" + (count === 0 ? " go" : "")} key={count} aria-live="assertive">{count === 0 ? t("ru.go") : count}</div>}
       {phase === "ride" && (
         <div className="ru-controls">
