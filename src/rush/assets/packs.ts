@@ -114,10 +114,10 @@ export const PACKS: Pack[] = [
     subject: "Baby Mo (helmet on, standing next to nothing — no bike) cheering after a delivery.",
     cells: [["f1", "fists at chest, excited"], ["f2", "crouching to jump"], ["f3", "jumping up, both arms up"], ["f4", "top of the jump, legs tucked, laughing"], ["f5", "landing, one fist pump"], ["f6", "final pose: arms wide, biggest smile"]],
     clips: anim("mo-celebrate", 8, false), refs: ["p01-mo-ref", "render1-happy"], mo: true, helmet: true },
-  { id: "p16-help", n: 16, group: "Baby Mo cut-scenes", title: "Helping the squirrel", priority: "later", kind: "anim", baseline: true,
+  { id: "p16-help", n: 16, group: "Baby Mo cut-scenes", title: "Helping the bunny", priority: "later", kind: "anim", baseline: true,
     camera: "Side view facing right, full body.",
-    subject: "Baby Mo (helmet on) giving an acorn to a small squirrel; leave empty space on the right of each cell (the game places the squirrel).",
-    cells: [["f1", "standing, holding an acorn"], ["f2", "crouching down"], ["f3", "holding the acorn out, palm up"], ["f4", "the acorn is gone from his palm, delighted"], ["f5", "hands on cheeks, so happy"], ["f6", "standing, small wave to the right"]],
+    subject: "Baby Mo (helmet on) giving carrots to a small white bunny; leave empty space on the right of each cell (the game places the bunny from the app-ayah library).",
+    cells: [["f1", "standing, holding a carrot"], ["f2", "crouching down"], ["f3", "holding the carrot out, palm up"], ["f4", "the carrot is gone from his palm, delighted"], ["f5", "hands on cheeks, so happy"], ["f6", "standing, small wave to the right"]],
     clips: anim("mo-help", 6, false), refs: ["p01-mo-ref", "render1-side"], mo: true, helmet: true },
 
   /* ---------------- 17–21 · bikes, bags, packages, helmets */

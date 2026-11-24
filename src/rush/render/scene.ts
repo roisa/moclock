@@ -135,7 +135,8 @@ export class Scene {
 
     // --- sky & environment
     const s0 = seg(base);
-    if (!r.stopped) { this.skyX += s0.curve * r.speed * dt * 0.00004; this.townX += s0.curve * r.speed * dt * 0.0001; }
+    // far layers drift gently on curves (hills slowest, town a bit faster) — never a fast slide
+    if (!r.stopped) { const k = s0.curve * Math.min(1.2, r.speed / 2300) * dt; this.skyX += k * 0.006; this.townX += k * 0.014; }
     this.drawSky(day, tunnel, dt);
 
     // --- road segments (front to back), remembering projections for sprites
@@ -180,6 +181,9 @@ export class Scene {
       if (!list || !list.length) continue;
       const pa = this.proj[n], pb = this.proj[n + 1];
       for (const it of list) {
+        // things Mo has already passed sit between him and the camera: drawn there they would be
+        // huge (a giant arch sign, a star glow wider than the screen) — so stop drawing them
+        if (it.z < r.z - SEG * 0.25) continue;
         if (it.hit && !it.wide && !["bunny", "bunny-home", "tunnel", "ramp", "boost"].includes(it.kind)) continue;
         const f = (it.z - i * SEG) / SEG;
         const sc = pa.scale + (pb.scale - pa.scale) * f;
@@ -300,11 +304,12 @@ export class Scene {
     if (it.kind === "balloon" || it.kind === "pocketclock") bob = Math.sin(clock * 2.4 + it.id) * h * 0.05;
     if (it.kind === "carrot" || it.kind === "gift") bob = Math.abs(Math.sin(clock * 5 + it.id)) * h * 0.15;
     if (it.kind === "bunny") bob = Math.abs(Math.sin(clock * 6)) * h * 0.06;
+    if (w > this.W * 3) return; // safety: nothing is ever drawn absurdly large
     const lift = it.y * unit;
     const bx = x - (w * sx) / 2, by = y - h - lift - bob;
     if (y - lift < 0 || bx > this.W || bx + w < 0) return;
     this.pos.set(it.id, { x, y: by + h / 2, s: w });
-    if ((it.kind === "star" || it.kind === "coin" || it.kind === "gift" || it.kind === "carrot") && w > 6) {
+    if ((it.kind === "star" || it.kind === "coin" || it.kind === "gift" || it.kind === "carrot") && w > 6 && w < this.W * 0.4) {
       const gl = g.createRadialGradient(x, by + h / 2, 0, x, by + h / 2, w * 0.75);
       gl.addColorStop(0, "rgba(255,240,160,.55)");
       gl.addColorStop(1, "rgba(255,240,160,0)");
