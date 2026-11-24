@@ -42,8 +42,8 @@ export function Logo({ small }: { small?: boolean }) {
   return (
     <div className={"ru-logo" + (small ? " small" : "")} role="img" aria-label={t("ru.title1") + " " + t("ru.title2")}>
       <span className="l1">{t("ru.title1")}</span>
-      <span className="l2">{t("ru.title2")}<img src={kit("star.webp")} alt="" /></span>
-      {!small && <span className="l3">{t("ru.tagline")}</span>}
+      <span className="l2">{t("ru.title2").split("").map((c, i) => <i key={i} style={{ animationDelay: `${i * 60}ms` }}>{c === " " ? "\u00a0" : c}</i>)}<img src={kit("star.webp")} alt="" /></span>
+      {!small && <span className="l3"><b>{t("ru.tagline")}</b></span>}
     </div>
   );
 }

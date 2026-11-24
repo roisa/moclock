@@ -36,13 +36,12 @@ export function Home({ onGate }: { onGate: () => void }) {
         <RoundBtn icon="settings" label={t("ru.parents")} size={56} onClick={onGate} />
       </div>
       <div className="ru-home-main">
-        <div className="ru-home-hero">
-          <div className="ru-trio">
-            <img className="ru-mo ais" src="rush/mo/ais-wave.webp" alt="Baby Ais" draggable={false} />
-            <img className="ru-mo ru-home-mo mo" src="rush/mo/wave.webp" alt="Baby Mo" draggable={false} />
-            <img className="ru-mo adam" src="rush/mo/adam-cool.webp" alt="Kak Adam" draggable={false} />
-          </div>
-          <BikeSide bike={p.equip.bike} width={230} />
+        {/* the family stands on the pavement of the painted street: one ground line, contact shadows, no floating */}
+        <div className="ru-stage" aria-hidden="true">
+          <span className="ru-stand bike"><BikeSide bike={p.equip.bike} width={300} /></span>
+          <span className="ru-stand ais"><img src="rush/mo/ais-wave.webp" alt="" draggable={false} /></span>
+          <span className="ru-stand mo"><img src="rush/mo/wave.webp" alt="" draggable={false} /></span>
+          <span className="ru-stand adam"><img src="rush/mo/adam-cool.webp" alt="" draggable={false} /></span>
         </div>
         <div className="ru-home-menu">
           <Logo />
@@ -99,7 +98,7 @@ export function Worlds() {
 }
 
 export function Mission({ world }: { world: WorldId }) {
-  const { t, lang } = useRush();
+  const { p, t, lang } = useRush();
   useEffect(() => {
     const h = setTimeout(() => audio.say("ru.m.morningSay", lang, { force: true }), 400);
     return () => clearTimeout(h);
@@ -108,7 +107,10 @@ export function Mission({ world }: { world: WorldId }) {
     <div className="ru-screen ru-mission" style={{ backgroundImage: "url(rush/bg-street.webp)" }}>
       <Top title={t("ru.w." + world)} onBack={() => go("worlds")} />
       <div className="ru-mission-body">
-        <div className="ru-mission-hero"><img className="ru-mo ru-mission-mo" src="rush/mo/front.webp" alt="Baby Mo" draggable={false} /><BikeSide bike="green" width={220} /></div>
+        <div className="ru-stage mission" aria-hidden="true">
+          <span className="ru-stand bike"><BikeSide bike={p.equip.bike} width={260} /></span>
+          <span className="ru-stand mo"><img src="rush/mo/front.webp" alt="" draggable={false} /></span>
+        </div>
         <div className="ru-clip">
           <div className="clip" />
           <h2>{t("ru.mission")}</h2>
