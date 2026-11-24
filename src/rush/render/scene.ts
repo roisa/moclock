@@ -6,7 +6,7 @@
 import { SEG, LANES, type Item, type Track } from "../core/track";
 import type { GameSim, Rival, RivalId } from "../core/sim";
 import { handAngles } from "../../engine/time";
-import { sprite, star5, type Sprite } from "./sprites";
+import { sprite, star5, WORLD_W, type Sprite } from "./sprites";
 import { drawRider, drawRiderStrip, type Clips, type Look, type Sheets } from "./rider";
 import { Particles } from "./particles";
 import { daylight } from "../core/clock";
@@ -50,6 +50,17 @@ export class Scene {
   private flyers: { img: CanvasImageSource; w: number; h: number; x0: number; y0: number; t: number; dur: number; size: number }[] = [];
   /** Baby Mo riding sheet (6 rear frames) */
   riderStrip: HTMLImageElement | null = null;
+  /** world look: art aliases (the sim's "library" is the picnic spot in Sunny Park, …), sky and hosts */
+  alias: Record<string, string> = {};
+  sky: "morning" | "noon" = "morning";
+  hosts: HTMLImageElement[] = [];
+  /** a sprite through the world's alias, keeping the original kind's size on the road */
+  private sp(kind: string): Sprite {
+    const a = this.alias[kind];
+    if (!a) return sprite(kind);
+    const s = sprite(a);
+    return { ...s, ww: WORLD_W[kind] ?? s.ww };
+  }
   /** painted far horizon layer */
   far: HTMLImageElement | null = null;
   /** approved action sheets: jump, boost, pickup, bump */
@@ -103,7 +114,7 @@ export class Scene {
     const track = sim.track;
     const r = sim.r;
     const time = sim.time;
-    const day = daylight(sim.w.span, time);
+    const day = this.sky === "noon" ? 1 : daylight(sim.w.span, time);
     const tunnel = sim.route === "tunnel";
     // camera
     const camZ = r.z - PLAYER_Z;
@@ -346,7 +357,7 @@ export class Scene {
 
   private drawItem(it: Item, x: number, y: number, unit: number, clip: number, clock: number, time: number) {
     const g = this.g;
-    const s = sprite(it.kind === "balloon" ? "balloon-" + (it.id % 6) : it.kind);
+    const s = this.sp(it.kind === "balloon" ? "balloon-" + (it.id % 6) : it.kind);
     const w = s.ww * unit;
     const h = (w * s.h) / s.w;
     let bob = 0;
@@ -380,7 +391,7 @@ export class Scene {
       const bw = w * 0.6, cx2 = x + w * 0.35, cy2 = by - bw * 0.45 + Math.sin(clock * 3) * 3;
       g.fillStyle = "rgba(255,255,255,.95)";
       g.beginPath(); g.arc(cx2, cy2, bw / 2, 0, 7); g.arc(x + w * 0.12, by + h * 0.02, bw * 0.1, 0, 7); g.fill();
-      const cr = sprite("carrot");
+      const cr = this.sp("carrot");
       g.drawImage(cr.img, cx2 - bw * 0.32, cy2 - bw * 0.32, bw * 0.64, bw * 0.64);
     }
     if (it.kind === "signpost" && w > 8) {
@@ -399,14 +410,25 @@ export class Scene {
     else if (it.kind === "pocketclock" && !s.art) this.face(x, by + h * 0.55, w * 0.2, time, 1);
     else if (it.kind === "windmill") this.sails(x, by + h * 0.4, w * 0.48, clock);
     else if (it.kind === "pickup" && !it.hit) {
-      const bs = sprite("books");
+      const bs = this.sp(this.alias["pickup-" + it.n] ? "pickup-" + it.n : "books");
       const bw = w * 0.16, bh = (bw * bs.h) / bs.w;
       g.drawImage(bs.img, x - bw / 2, by + h * 0.36 + Math.sin(clock * 3) * bh * 0.08, bw, bh);
+    } else if (it.kind === "library" && this.hosts.length) {
+      // the people waiting at the destination (Umi and Abi at the picnic), adult height ≈ 1.9 × Mo
+      // Mo on his bike is riderH·1.12 tall at the camera's depth; scale to this depth, adults ≈ 1.9 × Mo standing
+      const unit = w / (WORLD_W.library ?? 2);
+      const hh = this.riderH * 1.12 * (unit / this.KX) * 1.55;
+      this.hosts.forEach((im, k) => {
+        if (!im.naturalWidth) return;
+        const hw = (hh * im.naturalWidth) / im.naturalHeight, hx = x + (k ? 0.36 : -0.44) * w;
+        g.fillStyle = "rgba(40,50,40,.2)"; g.beginPath(); g.ellipse(hx, by + h * 0.82, hw * 0.35, hw * 0.07, 0, 0, 7); g.fill();
+        g.drawImage(im, hx - hw / 2, by + h * 0.82 - hh, hw, hh);
+      });
     } else if (it.kind === "bunny-home" && it.hit) {
-      const bag = sprite("carrot-bag"); // the carrots Mo brought back, by her door
+      const bag = this.sp("carrot-bag"); // the carrots Mo brought back, by her door
       const bw2 = w * 0.3;
       g.drawImage(bag.img, x - bw2 * 1.1, by + h - bw2 * (bag.h / bag.w) * 0.95, bw2, bw2 * (bag.h / bag.w));
-      const sq = sprite("bunny");
+      const sq = this.sp("bunny");
       const sw = w * 0.32;
       g.drawImage(sq.img, x - sw * 0.2, by + h * 0.55 - Math.abs(Math.sin(clock * 7)) * sw * 0.2, sw, (sw * sq.h) / sq.w);
     }

@@ -7,6 +7,9 @@ import { audio } from "../audio";
 import { go } from "../router";
 import { randomRng, int } from "../../engine/rng";
 import { LANGS } from "../../i18n";
+import { BUILD } from "../core/morning";
+import { look } from "../worlds";
+import { wkey } from "../i18n";
 import { NextPrayerChip, usePrayer, CITIES, PRAYERS, PRAYER_NAMES, defaultCity } from "../prayer/prayer";
 
 export function Splash({ onStart }: { onStart: () => void }) {
@@ -96,9 +99,11 @@ export function Worlds() {
 export function Mission({ world }: { world: WorldId }) {
   const { p, t, lang } = useRush();
   useEffect(() => {
-    const h = setTimeout(() => audio.say("ru.m.morningSay", lang, { force: true }), 400);
+    const h = setTimeout(() => audio.say(`ru.m.${world}Say`, lang, { force: true }), 400);
     return () => clearTimeout(h);
-  }, [lang]);
+  }, [lang, world]);
+  const span = BUILD[world]?.().span ?? { from: make(8, 0), to: make(9, 0) };
+  const L = look(world);
   return (
     <div className="ru-screen ru-mission" style={{ backgroundImage: "url(rush/bg-mission.webp)" }}>
       <Top title={t("ru.w." + world)} onBack={() => go("worlds")} />
@@ -110,11 +115,11 @@ export function Mission({ world }: { world: WorldId }) {
         <div className="ru-clip">
           <div className="clip" />
           <h2>{t("ru.mission")}</h2>
-          <p>{t({ k: "ru.m.morning", p: { t: { time: make(9, 0) } } })}</p>
+          <p>{t({ k: `ru.m.${world}`, p: { t: { time: span.to } } })}</p>
           <div className="ru-mission-clocks">
-            <figure><Clock t={make(8, 0)} size={54} /><figcaption>{t("ru.m.from")}<Digital t={make(8, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={span.from} size={54} /><figcaption>{t("ru.m.from")}<Digital t={span.from} size="s" /></figcaption></figure>
             <svg viewBox="0 0 60 20" width="56" aria-hidden="true"><path d="M2 10h50m-10-8 10 8-10 8" stroke="#4cbf5a" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <figure><Clock t={make(9, 0)} size={54} /><figcaption>{t("ru.m.to")}<Digital t={make(9, 0)} size="s" /></figcaption></figure>
+            <figure><Clock t={span.to % 720} size={54} /><figcaption>{t(wkey("ru.m.to", world))}<Digital t={span.to % 720} size="s" /></figcaption></figure>
           </div>
           <div className="ru-dua" lang="ar">
             <small>{t("ru.dua.title")}</small>
@@ -124,7 +129,7 @@ export function Mission({ world }: { world: WorldId }) {
             <button className="ru-dua-play" onClick={() => audio.clips(["d-leave_home"], lang, { force: true })}>🔊 {t("ru.dua.listen")}</button>
           </div>
           <div className="ru-mission-row">
-            <div className="ru-mission-books">{[0, 1, 2].map((i) => <img key={i} className="bk" src="rush/art/books.webp" alt="" />)}<img src={kit("v-school.webp")} alt="" /></div>
+            <div className="ru-mission-books">{L.bundles.map((b, i) => <img key={i} className="bk" src={b} alt="" />)}{L.hosts ? L.hosts.map((h) => <img key={h} className="host" src={h} alt="" />) : <img src={kit("v-school.webp")} alt="" />}</div>
             <div className="ru-friends" title={t("ru.friends")}><img src="rush/mo/ais-front.webp" alt="Baby Ais" /><img src="rush/mo/adam-front.webp" alt="Kak Adam" /></div>
           </div>
           <Pill big onClick={() => go("ride/" + world)}>{t("ru.letsGo")}</Pill>
@@ -193,6 +198,7 @@ export function Collection() {
       </div>
       {tab === "tokens" ? (
         <div className="ru-tokens">
+          <div className={"ru-token" + (p.tokens.includes("duck") ? " on" : "")}><img src={kit("pet-duckling.webp")} alt="" /><b>{t("ru.token.duck")}</b></div>
           <div className={"ru-token" + (p.tokens.includes("bunny") ? " on" : "")}><img src={kit("badge-pets.webp")} alt="" /><b>{t("ru.token.bunny")}</b></div>
           <h3>{t("ru.timesSeen")}</h3>
           <div className="ru-seen">{p.seen.length ? p.seen.map((s) => <figure key={s}><Clock t={s} size={60} /><Digital t={s} size="s" /></figure>) : <small>—</small>}</div>

@@ -10,9 +10,9 @@ import type { Lang, Msg } from "../i18n/types";
 
 export type Clip = "bism" | "bismillah" | "shuffle" | "masya1" | "masya2" | "subhan" | "barak" | "akbar" | "win"
   | "pray-fajr" | "pray-dhuhr" | "pray-asr" | "pray-maghrib" | "pray-isha" | "taqabbal"
-  | "d-leave_home" | "d-vehicle";
+  | "d-leave_home" | "d-vehicle" | "d-eating";
 /** Arabic du'a recordings from babymo-app (doa-voice/, Baby Mo's Algenib voice) — the same file for both languages */
-const ARABIC: Partial<Record<Clip, true>> = { "d-leave_home": true, "d-vehicle": true };
+const ARABIC: Partial<Record<Clip, true>> = { "d-leave_home": true, "d-vehicle": true, "d-eating": true };
 /** what each clip says (fallback + speech bubble) */
 export const CLIP_TEXT: Record<Clip, Record<Lang, string>> = {
   bism: { en: "Bismillah!", id: "Bismillah!" },
@@ -31,6 +31,7 @@ export const CLIP_TEXT: Record<Clip, Record<Lang, string>> = {
   "pray-isha": { en: "It is time to pray Isha.", id: "Waktunya sholat Isya." },
   taqabbal: { en: "Taqabbalallahu minna wa minkum.", id: "Taqabbalallahu minna wa minkum." },
   "d-leave_home": { en: "Bismillahi tawakkaltu 'alallah, la haula wa la quwwata illa billah.", id: "Bismillahi tawakkaltu 'alallah, la haula wa la quwwata illa billah." },
+  "d-eating": { en: "Bismillah.", id: "Bismillah." },
   "d-vehicle": { en: "Subhanalladzi sakhkhara lana hadza wa ma kunna lahu muqrinin, wa inna ila rabbina lamunqalibun.", id: "Subhanalladzi sakhkhara lana hadza wa ma kunna lahu muqrinin, wa inna ila rabbina lamunqalibun." },
 };
 
